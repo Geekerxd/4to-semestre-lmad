@@ -1,0 +1,4 @@
+﻿  Source.cpp
+c:\users\dell 66895\desktop\repositorio ~estructuras\serie\hmm\source.cpp(13): warning C4326: return type of 'main' should be 'int' instead of 'void'
+c:\users\dell 66895\desktop\repositorio ~estructuras\serie\hmm\source.cpp(17): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  hmm.vcxproj -> C:\Users\Dell 66895\Desktop\Repositorio ~estructuras\serie\Debug\hmm.exe

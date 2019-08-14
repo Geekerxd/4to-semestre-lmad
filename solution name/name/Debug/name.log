@@ -1,3 +1,5 @@
 ﻿  Source from source Files.cpp
-c:\users\dell 66895\desktop\repositorio ~estructuras\solution name\name\source from source files.cpp(15): warning C4326: return type of 'main' should be 'int' instead of 'void'
+c:\users\dell 66895\desktop\repositorio ~estructuras\solution name\name\source from source files.cpp(17): warning C4326: return type of 'main' should be 'int' instead of 'void'
+c:\users\dell 66895\desktop\repositorio ~estructuras\solution name\name\source from source files.cpp(21): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\solution name\name\source from source files.cpp(22): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   name.vcxproj -> C:\Users\Dell 66895\Desktop\Repositorio ~estructuras\solution name\Debug\name.exe
