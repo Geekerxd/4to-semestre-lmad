@@ -1,0 +1,3 @@
+﻿  Source.cpp
+c:\users\danielgm\desktop\gonzoc_solucion\gonzoc_name\source.cpp(32): warning C4326: el tipo de valor devuelto de 'main' debe ser 'int' en lugar de 'void'
+  gonzoc_name.vcxproj -> C:\Users\DanielGM\Desktop\gonzoc_solucion\Debug\gonzoc_name.exe
