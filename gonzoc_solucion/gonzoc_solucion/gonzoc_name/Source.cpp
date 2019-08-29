@@ -1,5 +1,5 @@
 #include <iostream>
-#include <math.h>
+//#include <math.h>
 using namespace std;
 
 char infija[12] = {"A-B/(C*D^E)"};
@@ -30,17 +30,17 @@ void pull(int i) {
 }
 
 void main() {
-	system("color 1A");
+	//system("color 1A");
 
 	for (int i = 0; i<12; i++) {
 		switch (infija[i]) {
 		case '(':
 			push(i);
 			
-
 			break;
 		case ')':
 
+			//aquo una funcion que siga hasta )
 			break;
 		case '+':
 			if (c == 0 || pila[c] == 40 || pila[c] == 42 || pila[c] == 47 || pila[c] == 40) {
@@ -92,8 +92,18 @@ void main() {
 
 			break;
 		default:
-			postfija[D] = infija[i];
-			D++;
+			
+			
+			
+
+			if (infija[i] >= 48 && infija[i] <= 57 || infija[i] >= 65 && infija[i] <= 90 || infija[i] >= 97 && infija[i] <= 122) {
+			
+				postfija[D] = infija[i];
+				D++;
+
+			}
+
+
 
 			break;
 
@@ -105,5 +115,5 @@ void main() {
 	}
 	
 
-	system("pause>NUL");
+	//system("pause>NUL");
 }
