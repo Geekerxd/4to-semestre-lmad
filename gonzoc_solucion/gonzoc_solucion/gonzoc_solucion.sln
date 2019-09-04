@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.489
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gonzoc_name", "gonzoc_name\gonzoc_name.vcxproj", "{4CE09B6B-F506-4C48-A47A-27E4D66F1CD1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4CE09B6B-F506-4C48-A47A-27E4D66F1CD1}.Debug|x64.ActiveCfg = Debug|x64
+		{4CE09B6B-F506-4C48-A47A-27E4D66F1CD1}.Debug|x64.Build.0 = Debug|x64
+		{4CE09B6B-F506-4C48-A47A-27E4D66F1CD1}.Debug|x86.ActiveCfg = Debug|Win32
+		{4CE09B6B-F506-4C48-A47A-27E4D66F1CD1}.Debug|x86.Build.0 = Debug|Win32
+		{4CE09B6B-F506-4C48-A47A-27E4D66F1CD1}.Release|x64.ActiveCfg = Release|x64
+		{4CE09B6B-F506-4C48-A47A-27E4D66F1CD1}.Release|x64.Build.0 = Release|x64
+		{4CE09B6B-F506-4C48-A47A-27E4D66F1CD1}.Release|x86.ActiveCfg = Release|Win32
+		{4CE09B6B-F506-4C48-A47A-27E4D66F1CD1}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5DCA4CE4-5FA5-4259-ADA8-726A979CE098}
+	EndGlobalSection
+EndGlobal
