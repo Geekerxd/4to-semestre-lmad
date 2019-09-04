@@ -10,7 +10,7 @@ using namespace std;
 char infija[12] = { "A-B/(C*D^E)" };
 char postfija[100];
 char pila[100];
-char gg[100];
+
 
 void push(int i);
 void pull(int c);
@@ -18,6 +18,7 @@ void imprimir();
 
 int c = 0;
 int d = 0;
+int _c = 0;
 
 int tamano;
 char ch[100];
@@ -38,16 +39,17 @@ int main() {
 	Postfija(expresion);
 
 
-/*
-	while (c >= 0) {
-	postfija[d - 1] = ' ';
+
+	while (c > 0) {
+		postfija[d] = pila[c - 1];
 	c--;
-	d--;
-}*/
+	d++;
+	pila[c ] = 0;//borra el ultimo de la pila de operadores
+}
 
 
-	postfija[d] = pila[c - 1];
-	pila[c - 1] = 0;//borra el ultimo de la pila de operadores
+	
+	
 	imprimir();
 
 	system("pause>NUL");
@@ -58,9 +60,10 @@ void Postfija(string exp) {
 
 	strcpy_s(ch, exp.c_str());
 
-	cout << "Su expresion en char es: " << ch << endl;
+	//cout << "Su expresion en char es: " << ch << endl;
 
 	system("pause>nul");
+
 	for (int i = 0; i < tamano; i++) {
 		switch (ch[i]) {
 		case '(':
@@ -78,11 +81,14 @@ void Postfija(string exp) {
 
 				
 			}
-			while (c > 0) {
+			
+			while (c-1 > 0) {//Esta bien?
 				c--;
 				pila[c] = 0;
-
-			}			
+				if (pila[c - 1] == 40|| pila[c - 1] == 45 || pila[c - 1] == 43 || pila[c - 1] == 42 || pila[c - 1] == 47 || pila[c - 1] == 94) {
+						break;
+				}
+			}
 			break;
 
 		case '+':
@@ -214,10 +220,13 @@ void pull(int c) {
 }
 
 void imprimir() {
-	cout << endl;
+	cout <<endl<<"postfija: ";
 	for (int i = 0; i < tamano; i++) {
 		if (postfija[i] != 40) {
+			
 			cout << postfija[i];
 		}
+		else _c += 1; 
 	}
+	cout << " , (: " << _c<<endl;
 }
