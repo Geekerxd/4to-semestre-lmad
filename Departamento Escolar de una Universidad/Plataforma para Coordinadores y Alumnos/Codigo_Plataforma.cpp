@@ -9,6 +9,9 @@
 #include <conio.h>
 using namespace std;
 
+char file[200]= { "C:\\Users\\Dell 66895\\Desktop\\Repositorio ~estructuras\\Departamento Escolar de una Universidad\\Plataforma para Coordinadores y Alumnos\\UANL_logoBlancoModify.bmp" };
+char file2[200] = { "C:\\Users\\Dell 66895\\Desktop\\Repositorio ~estructuras\\Departamento Escolar de una Universidad\\Plataforma para Coordinadores y Alumnos\\FCFM_logoBlanco.bmp" };
+char file3[200] = { "C:\\Users\\Dell 66895\\Desktop\\Repositorio ~estructuras\\Departamento Escolar de una Universidad\\Plataforma para Coordinadores y Alumnos\\UsersNames.txt " };
 
 HWND ghDlg = 0;
 HINSTANCE _hInst;
@@ -16,6 +19,9 @@ int _show = 0;
 
 
 BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
+
+void PonImagen(HWND dialog, WPARAM IDC, char *imagen, int m, int n);
+void LlenarUsuario(HWND objeto, UINT mensa, char *file);
 
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, PSTR cmd, int show)
 {
@@ -52,22 +58,13 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	{
 	case WM_INITDIALOG:
 	{
+		PonImagen(Dlg, IDC_STATIC_iz,file,70,70);
+		PonImagen(Dlg, IDC_STATIC_de, file2, 70, 70);
 
+		static HWND hCboUser = 0; //handle conbo box users
+		hCboUser = GetDlgItem(Dlg, IDC_COMBO1);
 
-		static HBITMAP bmp1, bmp2;
-		//Al objeto bmp1, se le asigna sin imagen:
-		bmp1 = (HBITMAP)SendDlgItemMessage(Dlg, IDC_STATIC_01,
-			STM_GETIMAGE, IMAGE_BITMAP, 0);
-		//Al objeto bmp2, se le asigna una imagen local:
-		bmp2 = (HBITMAP)LoadImage(NULL, "C:\\Users\\rishar\\Pictures\\coasa geniales\\seislo.bmp",
-			IMAGE_BITMAP, 162, 162, LR_LOADFROMFILE);
-
-		SendDlgItemMessage(
-			Dlg,
-			IDC_STATIC_01,
-			STM_SETIMAGE,
-			IMAGE_BITMAP,
-			(LPARAM)bmp2);
+		LlenarUsuario(hCboUser, CB_ADDSTRING, file3 );
 
 		return true;
 	}
@@ -110,4 +107,43 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	return false;///el return false
 }
 
-//phone: -->> goto phone;
+void PonImagen(HWND dialog, WPARAM IDC, char *imagen, int m, int n) {
+
+	static HBITMAP bmp1, bmp2;
+	//Al objeto bmp1, se le asigna sin imagen:
+	bmp1 = (HBITMAP)SendDlgItemMessage(dialog, IDC,
+		STM_GETIMAGE, IMAGE_BITMAP, 0);
+	//Al objeto bmp2, se le asigna una imagen local:
+	bmp2 = (HBITMAP)LoadImage(NULL, imagen,
+		IMAGE_BITMAP, m, n, LR_LOADFROMFILE);
+
+	SendDlgItemMessage(
+		dialog,
+		IDC,
+		STM_SETIMAGE,
+		IMAGE_BITMAP,
+		(LPARAM)bmp2);
+
+}
+void LlenarUsuario(HWND objeto, UINT mensa, char *file)
+{
+	// objeto  ===   hCboSpc
+	// mensa   ===   CB_ADDSTRING
+	// file    ===   _arch_esp
+
+	ifstream archi;
+	char row[30] = "";
+	archi.open(file);
+	if (archi.is_open())
+	{
+		archi.getline(row, 30);
+		while (!archi.eof())
+		{
+			SendMessage(objeto, mensa, 0, (LPARAM)row);
+			archi.getline(row, 30);
+		}
+
+		archi.close();
+	}
+
+}
