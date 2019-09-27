@@ -1,3 +1,2 @@
 Cordinador General
 Cordinador Carrera
-Alumno
