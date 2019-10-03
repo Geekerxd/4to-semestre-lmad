@@ -12,8 +12,8 @@ char file2[_MAX_PATH] = { "FCFM_logoBlanco.bmp" };
 char file3[_MAX_PATH] = { "UsersNames.txt " };
 char file4[_MAX_PATH] = { "Foto_Coordi_General.bmp " };
 
-char file5[_MAX_PATH];
-
+char file5[_MAX_PATH]; //auxiliar
+char file6[]="CordiNamesSave.txt"; //
 
 
 

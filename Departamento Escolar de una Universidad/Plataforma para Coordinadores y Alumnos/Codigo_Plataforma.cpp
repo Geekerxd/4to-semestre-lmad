@@ -18,6 +18,7 @@
 #include <string>
 
 using namespace std;
+
 OPENFILENAME ofn;
 CooCarr *inicio = 0, *last = 0, *nuevo = 0;
 
@@ -45,10 +46,14 @@ void validar(HWND Dlg, CooCarr *aux);
 void openfilename();
 
 void AgregaDatosNodo(HWND Dlg);
+void LeeArchivo();                                         //Lista con coordi
+void EscribirArchivo();
+
 
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, PSTR cmd, int show)
 {
-
+	LeeArchivo();
+	
 	
 	//GetCurrentDirectory(MAX_PATH,Folder);
 
@@ -72,6 +77,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, PSTR cmd, int show)
 
 
 	return (int)msg.wParam;
+	EscribirArchivo();
 }
 
 
@@ -147,7 +153,7 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 					 break;
 					 }
-					 aux = aux->CC_sig;
+					 aux = aux->sig;
 	             }
 	             
 				
@@ -490,8 +496,8 @@ void AgregaDatosNodo(HWND Dlg) {
 
 	CooCarr *aux = 0;
 	aux = new CooCarr;
-	aux->CC_sig = 0;
-	aux->CC_ante = 0;
+	aux->sig = 0;
+	aux->ante = 0;
 
 
 
@@ -520,8 +526,8 @@ void AgregaDatosNodo(HWND Dlg) {
 	}
 	else
 	{
-		last->CC_sig = aux;
-		aux->CC_ante = last;
+		last->sig = aux;
+		aux->ante = last;
 
 		last = aux;
 	}
@@ -614,4 +620,77 @@ void openfilename() {
 		OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT;
 	ofn.lpstrDefExt = "txt";
 }
+
+void LeeArchivo()
+{
+	//node info;
+	CooCarr *pinfo = 0;
+
+	ifstream archivaldo;
+	archivaldo.open(file6, ios::binary);  // | ios::trunc
+	if (archivaldo.is_open())
+	{
+		pinfo = new CooCarr;
+		archivaldo.read((char*)pinfo, sizeof(CooCarr));
+		pinfo->ante = 0;
+		pinfo->sig = 0;
+
+		while (!archivaldo.eof()) {
+			if (inicio == 0)
+			{
+				inicio = pinfo;
+				last = pinfo;
+			}
+			else
+			{
+				last->sig = pinfo;
+				pinfo->ante = last;
+
+				last = pinfo;
+			}
+
+			pinfo = new CooCarr;
+			archivaldo.read((char*)pinfo, sizeof(CooCarr));
+			pinfo->ante = 0;
+			pinfo->sig = 0;
+
+		}
+		//AgregaNodo(info);                                //aqui se acomoda el nodo en la lista ligada
+		//archivaldo.read((char*)&info, sizeof(node));
+
+		archivaldo.close();
+	}
+	else
+	{
+		printf("El archivo no se pudo abrir.");
+	}
+};
+void EscribirArchivo()
+{
+	CooCarr info;
+	CooCarr *aux = 0, *borrar;
+
+	ofstream archivaldo;
+	archivaldo.open(file6, ios::binary | ios::trunc);
+	if (archivaldo.is_open())
+	{
+		// LEER la lista ligada
+		aux = inicio;
+		while (aux != 0)
+		{
+			archivaldo.write((char*)aux, sizeof(CooCarr));
+			borrar = aux;
+			aux = aux->sig;
+			delete borrar;
+		}
+		archivaldo.close();
+	}
+	else
+	{
+		printf("El archivo no se pudo abrir.");
+	}
+
+
+}
+
 
