@@ -118,6 +118,8 @@
     <ClCompile Include="Codigo_Plataforma.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Files.h" />
+    <ClInclude Include="LLCooCarr.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

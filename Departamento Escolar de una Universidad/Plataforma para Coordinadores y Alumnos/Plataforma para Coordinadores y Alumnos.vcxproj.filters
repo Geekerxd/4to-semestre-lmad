@@ -23,6 +23,12 @@
     <ClInclude Include="resource.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="LLCooCarr.h">
+      <Filter>Archivos de origen</Filter>
+    </ClInclude>
+    <ClInclude Include="Files.h">
+      <Filter>Archivos de origen</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Plataforma para Coordinadores y Alumnos.rc">
