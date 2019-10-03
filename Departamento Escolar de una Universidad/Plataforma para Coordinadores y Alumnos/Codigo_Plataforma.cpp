@@ -11,8 +11,13 @@
 #include <CommDlg.h> 
 #include <iostream>
 #include <conio.h>
-using namespace std;
 
+
+#include <cstring>
+#include <string.h>
+#include <string>
+
+using namespace std;
 OPENFILENAME ofn;
 CooCarr *inicio = 0, *last = 0, *nuevo = 0;
 
@@ -90,6 +95,15 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		hCboUser = GetDlgItem(Dlg, IDC_COMBO1);
 
 		LlenarUsuario(hCboUser, CB_ADDSTRING, file3);
+
+
+
+		GetCurrentDirectory(MAX_PATH, file0);
+		strcat(file0, "\\");
+		strcat(file0, file4);
+		SetWindowText(GetDlgItem(Dlg, IDC_EDIT_aux), file0);
+		PonImagen(Dlg, IDC_STATIC_aux, file0, 75, 75);
+
 
 		return true;
 	}
@@ -268,6 +282,14 @@ BOOL CALLBACK RegiCarre(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 			return true;
 		}
+		case IDC_Edit_Photo: {
+			openfilename();
+			if (GetOpenFileName(&ofn) == TRUE) {
+				SetWindowText(GetDlgItem(Dlg, IDC_EDIT_aux2), ofn.lpstrFile);
+			}
+			return true;
+		}
+
 
 		case ID_OPCIONES_Regresar: {//Menú
 
@@ -408,7 +430,9 @@ void AgregaDatosNodo(HWND Dlg) {
 	SendDlgItemMessage(Dlg, IDC_EDIT5, WM_GETTEXT, (WPARAM)80, (LPARAM)aux->CC_Name);
 	SendDlgItemMessage(Dlg, IDC_EDIT6, WM_GETTEXT, (WPARAM)80, (LPARAM)aux->CC_UserName);
 	SendDlgItemMessage(Dlg, IDC_EDIT7, WM_GETTEXT, (WPARAM)80, (LPARAM)aux->CC_Pass);
-
+	strcpy(aux->foto, ofn.lpstrFile);
+	
+	// ofn.lpstrFile
 	validar(Dlg, aux);
 
 	if (inicio == 0)
@@ -500,5 +524,3 @@ void 	validar(HWND Dlg, CooCarr *aux) {
 
 
 }
-
-

@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ generated include file.
-// Used by Plataforma para Coordinadores y Alumnos.rc
+// Archivo de inclusión generado de Microsoft Visual C++.
+// Usado por Plataforma para Coordinadores y Alumnos.rc
 //
 #define IDD_DIALOG1                     101
 #define IDD_DIALOG_GENE                 103
@@ -21,6 +21,7 @@
 #define IDC_ENTRAR_MAIN                 1008
 #define IDC_B_Registro_de_Carreras      1009
 #define IDC_EDIT5                       1009
+#define IDC_STATIC_aux                  1009
 #define IDC_NAME_GENE                   1010
 #define IDC_EDIT6                       1010
 #define IDC_EDIT7                       1011
@@ -32,6 +33,9 @@
 #define IDC_RADIO2                      1019
 #define IDC_Buttor_confirmation_SEM     1021
 #define IDC_BUTTON_Regi_Mate            1022
+#define IDC_EDIT_aux                    1023
+#define IDC_Edit_Photo                  1024
+#define IDC_EDIT_aux2                   1025
 #define ID_OPCIONES_ATRAS               40001
 #define ID_OPCIONES_Regresar            40002
 #define ID_OPCIONES_SALIRYGUARDAR       40003
@@ -42,7 +46,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        112
 #define _APS_NEXT_COMMAND_VALUE         40004
-#define _APS_NEXT_CONTROL_VALUE         1023
+#define _APS_NEXT_CONTROL_VALUE         1026
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

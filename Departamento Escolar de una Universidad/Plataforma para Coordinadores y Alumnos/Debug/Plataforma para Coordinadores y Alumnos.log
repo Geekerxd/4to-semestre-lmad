@@ -1,6 +1,8 @@
 ﻿  Codigo_Plataforma.cpp
-<<<<<<< HEAD
-  Plataforma para Coordinadores y Alumnos.vcxproj -> C:\Users\rishar\Desktop\4to semestre__2da compu\Departamento Escolar de una Universidad\Debug\Plataforma para Coordinadores y Alumnos.exe
-=======
-  Plataforma para Coordinadores y Alumnos.vcxproj -> C:\Users\Dell 66895\Desktop\Repositorio ~estructuras\Departamento Escolar de una Universidad\Debug\Plataforma para Coordinadores y Alumnos.exe
->>>>>>> c47ac6fd886eb71fabeb1ed99018bc120be929d5
+c:\users\rishar\desktop\4to semestre__2da compu\departamento escolar de una universidad\plataforma para coordinadores y alumnos\files.h(16): error C2065: 'ofn': identificador no declarado
+c:\users\rishar\desktop\4to semestre__2da compu\departamento escolar de una universidad\plataforma para coordinadores y alumnos\files.h(17): error C2065: 'ofn': identificador no declarado
+c:\users\rishar\desktop\4to semestre__2da compu\departamento escolar de una universidad\plataforma para coordinadores y alumnos\files.h(18): error C2065: 'ofn': identificador no declarado
+c:\users\rishar\desktop\4to semestre__2da compu\departamento escolar de una universidad\plataforma para coordinadores y alumnos\files.h(19): error C2065: 'ofn': identificador no declarado
+c:\users\rishar\desktop\4to semestre__2da compu\departamento escolar de una universidad\plataforma para coordinadores y alumnos\files.h(20): error C2065: 'ofn': identificador no declarado
+c:\users\rishar\desktop\4to semestre__2da compu\departamento escolar de una universidad\plataforma para coordinadores y alumnos\files.h(22): error C2065: 'ofn': identificador no declarado
+c:\users\rishar\desktop\4to semestre__2da compu\departamento escolar de una universidad\plataforma para coordinadores y alumnos\files.h(24): error C2065: 'ofn': identificador no declarado
