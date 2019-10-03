@@ -23,24 +23,26 @@ CooCarr *inicio = 0, *last = 0, *nuevo = 0;
 
 
 
-char CC_Archi[] = "CordiCarrLista.txt";
 
 
 HWND ghDlg = 0;
 HINSTANCE _hInst;
 int _show = 0;
 
+CooCarr*aux;
 
 BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK VentaCooGee(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK RegiCarre(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK CreaSem(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK RegiMate(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
+BOOL CALLBACK CooCarrera(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 
 void PonImagen(HWND dialog, WPARAM IDC, char *imagen, int m, int n);
 void LlenarUsuario(HWND objeto, UINT mensa, char *file);
 void icon(HWND Dlg);
 void validar(HWND Dlg, CooCarr *aux);
+void openfilename();
 
 void AgregaDatosNodo(HWND Dlg);
 
@@ -76,8 +78,8 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, PSTR cmd, int show)
 
 BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 {
-	char usu_CooGene[20] = { "General" };
-	char pass_CooGene[20] = { "passgeneral" };
+	char usu_CooGene[20] = { "a" };
+	char pass_CooGene[20] = { "a" };
 
 	char ti_aux[20];
 	char usu_aux[20];
@@ -100,7 +102,7 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 		GetCurrentDirectory(MAX_PATH, file0);
 		strcat(file0, "\\");
-		strcat(file0, file4);
+		strcat(file0, file3);
 		SetWindowText(GetDlgItem(Dlg, IDC_EDIT_aux), file0);
 		PonImagen(Dlg, IDC_STATIC_aux, file0, 75, 75);
 
@@ -121,8 +123,8 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 			if (strcmp(ti_aux, "Cordinador General") == 0 && strcmp(usu_CooGene, usu_aux) == 0 && strcmp(pass_CooGene, pass_aux) == 0) {
 
-				SendDlgItemMessage(Dlg, IDC_EDIT1, WM_SETTEXT, 50, (LPARAM)0);
-				SendDlgItemMessage(Dlg, IDC_EDIT2, WM_SETTEXT, 50, (LPARAM)0);
+				SendDlgItemMessage(Dlg, IDC_EDIT1, WM_SETTEXT, 50, (LPARAM)0);//lo limpio
+				SendDlgItemMessage(Dlg, IDC_EDIT2, WM_SETTEXT, 50, (LPARAM)0);//lo limpio
 
 				DialogBox(_hInst, MAKEINTRESOURCE(IDD_DIALOG_GENE), Dlg, VentaCooGee);
 
@@ -135,10 +137,14 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 				
 				//        busqueda de coordinadores de carrera  
-	             CooCarr*aux=inicio;
+	             aux=inicio;
 	                while(aux != NULL){
 	                 if(strcmp(usu_aux, aux->CC_UserName) == 0 && strcmp(pass_aux, aux->CC_Pass) == 0){
-					 MessageBox(Dlg, aux->CC_UserName, aux->D_Silgas, MB_OK | MB_ICONINFORMATION);
+					
+						 
+						 //MessageBox(Dlg, aux->CC_UserName, aux->D_Silgas, MB_OK | MB_ICONINFORMATION);
+						 DialogBox(_hInst, MAKEINTRESOURCE(IDD_DIALOG_CooCarr), Dlg, CooCarrera);
+
 					 break;
 					 }
 					 aux = aux->CC_sig;
@@ -283,10 +289,17 @@ BOOL CALLBACK RegiCarre(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			return true;
 		}
 		case IDC_Edit_Photo: {
+
 			openfilename();
 			if (GetOpenFileName(&ofn) == TRUE) {
-				SetWindowText(GetDlgItem(Dlg, IDC_EDIT_aux2), ofn.lpstrFile);
+
+				SetWindowText(GetDlgItem(Dlg, IDC_EDIT8), ofn.lpstrFile);
+
+				strcpy(file5, ofn.lpstrFile);
+
 			}
+
+
 			return true;
 		}
 
@@ -323,6 +336,15 @@ BOOL CALLBACK CreaSem(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	case WM_INITDIALOG:
 	{
 		icon(Dlg);
+
+		aux = inicio;
+		
+		SendDlgItemMessage(Dlg, IDC_STATIC_name_cc, WM_SETTEXT, 50, (LPARAM)aux->CC_Name);
+		SendDlgItemMessage(Dlg, IDC_STATIC_user_cc2, WM_SETTEXT, 50, (LPARAM)aux->CC_UserName);
+		SendDlgItemMessage(Dlg, IDC_STATIC_pass_cc3, WM_SETTEXT, 50, (LPARAM)aux->CC_Pass);
+		PonImagen(Dlg, IDC_Pho_CooCarr, aux->foto, 75, 75);
+
+
 		return true;
 	}
 	case WM_COMMAND:
@@ -407,6 +429,59 @@ BOOL CALLBACK RegiMate(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	return false;///el return false
 }
 
+BOOL CALLBACK CooCarrera(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
+{
+
+	switch (Mensaje)
+	{
+	case WM_INITDIALOG:
+	{
+		icon(Dlg);
+
+
+		SendDlgItemMessage(Dlg, IDC_STATIC_name_cc, WM_SETTEXT, 50, (LPARAM)aux->CC_Name);
+		PonImagen(Dlg, IDC_Pho_CooCarr, aux->foto, 75, 75);
+
+
+		return true;
+	}
+	case WM_COMMAND:
+	{
+		switch (LOWORD(wParam))
+		{
+
+
+
+		//case IDC_BUTTON_Regi_Mate: {
+		//	MessageBox(Dlg, "Hello moto", "informacion", MB_OK | MB_ICONINFORMATION);
+
+		//	return true;
+		//}
+		//case ID_OPCIONES_Regresar: {//Menú
+
+		//	EndDialog(Dlg, 0);
+
+		//	return true;
+		//}
+
+		}
+		/// fin de "switch (LOWORD(wParam))"
+		return true;
+	}
+	/// fin de "case WM_COMMAND"
+	case WM_CLOSE:
+	{
+
+
+		EndDialog(Dlg, 0);
+		return true; }
+	}
+	///fin de "switch (Mensaje)"
+
+
+
+	return false;///el return false
+}
 
 
 
@@ -430,7 +505,10 @@ void AgregaDatosNodo(HWND Dlg) {
 	SendDlgItemMessage(Dlg, IDC_EDIT5, WM_GETTEXT, (WPARAM)80, (LPARAM)aux->CC_Name);
 	SendDlgItemMessage(Dlg, IDC_EDIT6, WM_GETTEXT, (WPARAM)80, (LPARAM)aux->CC_UserName);
 	SendDlgItemMessage(Dlg, IDC_EDIT7, WM_GETTEXT, (WPARAM)80, (LPARAM)aux->CC_Pass);
-	strcpy(aux->foto, ofn.lpstrFile);
+
+	strcpy(aux->foto, file5);
+
+
 	
 	// ofn.lpstrFile
 	validar(Dlg, aux);
@@ -500,7 +578,7 @@ void icon(HWND Dlg) {
 	oldSmallIco = reinterpret_cast<HICON>(SendMessage(Dlg, WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(newSmallIco)));
 	oldBigIco = reinterpret_cast<HICON>(SendMessage(Dlg, WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(newBigIco)));
 }
-void 	validar(HWND Dlg, CooCarr *aux) {
+void validar(HWND Dlg, CooCarr *aux) {
 
 	//int i = 0;
 	//
@@ -524,3 +602,16 @@ void 	validar(HWND Dlg, CooCarr *aux) {
 
 
 }
+
+void openfilename() {
+	ZeroMemory(&ofn, sizeof(ofn));
+	ofn.lStructSize = sizeof(ofn);
+	ofn.lpstrFilter = "Todos\0*.*\0Archivos Texto\0*.TXT\0Archivos Word (97-2003)\0*.doc\0Archivos Word\0*.docx\0Imagenes jpg\0*.jpg\0";
+	ofn.lpstrFile = szFileName;
+	ofn.nMaxFile = MAX_PATH;
+	//ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY; 
+	ofn.Flags = OFN_EXPLORER | OFN_PATHMUSTEXIST |
+		OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT;
+	ofn.lpstrDefExt = "txt";
+}
+

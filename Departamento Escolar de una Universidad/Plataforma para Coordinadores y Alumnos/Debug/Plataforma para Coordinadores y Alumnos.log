@@ -1,8 +1,3 @@
 ﻿  Codigo_Plataforma.cpp
-c:\users\rishar\desktop\4to semestre__2da compu\departamento escolar de una universidad\plataforma para coordinadores y alumnos\files.h(16): error C2065: 'ofn': identificador no declarado
-c:\users\rishar\desktop\4to semestre__2da compu\departamento escolar de una universidad\plataforma para coordinadores y alumnos\files.h(17): error C2065: 'ofn': identificador no declarado
-c:\users\rishar\desktop\4to semestre__2da compu\departamento escolar de una universidad\plataforma para coordinadores y alumnos\files.h(18): error C2065: 'ofn': identificador no declarado
-c:\users\rishar\desktop\4to semestre__2da compu\departamento escolar de una universidad\plataforma para coordinadores y alumnos\files.h(19): error C2065: 'ofn': identificador no declarado
-c:\users\rishar\desktop\4to semestre__2da compu\departamento escolar de una universidad\plataforma para coordinadores y alumnos\files.h(20): error C2065: 'ofn': identificador no declarado
-c:\users\rishar\desktop\4to semestre__2da compu\departamento escolar de una universidad\plataforma para coordinadores y alumnos\files.h(22): error C2065: 'ofn': identificador no declarado
-c:\users\rishar\desktop\4to semestre__2da compu\departamento escolar de una universidad\plataforma para coordinadores y alumnos\files.h(24): error C2065: 'ofn': identificador no declarado
+c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(467): warning C4060: switch statement contains no 'case' or 'default' labels
+  Plataforma para Coordinadores y Alumnos.vcxproj -> C:\Users\Dell 66895\Desktop\Repositorio ~estructuras\Departamento Escolar de una Universidad\Debug\Plataforma para Coordinadores y Alumnos.exe
