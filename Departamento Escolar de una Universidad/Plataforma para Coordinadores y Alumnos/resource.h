@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
-// Archivo de inclusión generado de Microsoft Visual C++.
-// Usado por Plataforma para Coordinadores y Alumnos.rc
+// Microsoft Visual C++ generated include file.
+// Used by Plataforma para Coordinadores y Alumnos.rc
 //
 #define IDD_DIALOG1                     101
 #define IDD_DIALOG_GENE                 103
@@ -8,6 +8,7 @@
 #define IDD_DIALOG_Crear_SEM            107
 #define IDD_DIALOG_RegiMate             109
 #define IDR_MENU1                       111
+#define IDD_DIALOG_CooCarr              112
 #define IDC_STATIC_01                   1001
 #define IDC_COMBO1                      1002
 #define IDC_EDIT1                       1003
@@ -36,6 +37,14 @@
 #define IDC_EDIT_aux                    1023
 #define IDC_Edit_Photo                  1024
 #define IDC_EDIT_aux2                   1025
+#define IDC_Pho_CooCarr                 1026
+#define IDC_STATIC_name_cc              1027
+#define IDC_STATIC_user_cc              1028
+#define IDC_STATIC_photo                1029
+#define IDC_STATIC_pass_cc              1029
+#define IDC_CooCar_Photo                1030
+#define IDC_STATIC_name_cc4             1030
+#define IDC_STATIC_carr_cc              1030
 #define ID_OPCIONES_ATRAS               40001
 #define ID_OPCIONES_Regresar            40002
 #define ID_OPCIONES_SALIRYGUARDAR       40003
@@ -44,9 +53,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        112
+#define _APS_NEXT_RESOURCE_VALUE        114
 #define _APS_NEXT_COMMAND_VALUE         40004
-#define _APS_NEXT_CONTROL_VALUE         1026
+#define _APS_NEXT_CONTROL_VALUE         1031
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

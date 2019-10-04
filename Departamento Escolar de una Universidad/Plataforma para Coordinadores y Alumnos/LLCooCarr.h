@@ -14,10 +14,6 @@ public:
 	char	D_Silgas[10];
 	char	D_Descrip[50];
 
-
-
-	Carr	*C_sig;
-	Carr	*C_ante;
 };
 
 class CooCarr :public Carr                    // Para Lista Ligada de Cordinador de Carrera   
@@ -31,8 +27,8 @@ public:
 
 	
 
-	CooCarr	*CC_sig;
-	CooCarr	*CC_ante;
+	CooCarr	*sig;
+	CooCarr	*ante;
 };
 
 
