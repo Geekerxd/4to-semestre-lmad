@@ -39,9 +39,12 @@
 #define IDC_EDIT_aux2                   1025
 #define IDC_Pho_CooCarr                 1026
 #define IDC_STATIC_name_cc              1027
-#define IDC_STATIC_user_cc2             1028
-#define IDC_STATIC_photo                1028
-#define IDC_STATIC_pass_cc3             1029
+#define IDC_STATIC_user_cc              1028
+#define IDC_STATIC_photo                1029
+#define IDC_STATIC_pass_cc              1029
+#define IDC_CooCar_Photo                1030
+#define IDC_STATIC_name_cc4             1030
+#define IDC_STATIC_carr_cc              1030
 #define ID_OPCIONES_ATRAS               40001
 #define ID_OPCIONES_Regresar            40002
 #define ID_OPCIONES_SALIRYGUARDAR       40003
@@ -52,7 +55,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        114
 #define _APS_NEXT_COMMAND_VALUE         40004
-#define _APS_NEXT_CONTROL_VALUE         1029
+#define _APS_NEXT_CONTROL_VALUE         1031
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

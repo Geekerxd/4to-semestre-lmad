@@ -52,8 +52,6 @@ void EscribirArchivo();
 
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, PSTR cmd, int show)
 {
-	LeeArchivo();
-	
 	
 	//GetCurrentDirectory(MAX_PATH,Folder);
 
@@ -77,7 +75,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, PSTR cmd, int show)
 
 
 	return (int)msg.wParam;
-	EscribirArchivo();
+	
 }
 
 
@@ -95,22 +93,26 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	{
 	case WM_INITDIALOG:
 	{
-		icon(Dlg);
-		PonImagen(Dlg, IDC_STATIC_iz, file, 75, 75);
-		PonImagen(Dlg, IDC_STATIC_de, file2, 75, 75);
+
+		
+
+		icon(Dlg); //icono
+		PonImagen(Dlg, IDC_STATIC_iz, file, 75, 75); //logos de uanl
+		PonImagen(Dlg, IDC_STATIC_de, file2, 75, 75);//logos de uanl
 
 		static HWND hCboUser = 0; //handle conbo box users
 		hCboUser = GetDlgItem(Dlg, IDC_COMBO1);
-
 		LlenarUsuario(hCboUser, CB_ADDSTRING, file3);
-
 
 
 		GetCurrentDirectory(MAX_PATH, file0);
 		strcat(file0, "\\");
-		strcat(file0, file3);
-		SetWindowText(GetDlgItem(Dlg, IDC_EDIT_aux), file0);
-		PonImagen(Dlg, IDC_STATIC_aux, file0, 75, 75);
+		
+		
+
+		strcat(file0, file6);//¿? 
+		
+		LeeArchivo();                           //Leer
 
 
 		return true;
@@ -125,7 +127,16 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			SendDlgItemMessage(Dlg, IDC_COMBO1, WM_GETTEXT, (WPARAM)80, (LPARAM)ti_aux);
 			SendDlgItemMessage(Dlg, IDC_EDIT1, WM_GETTEXT, (WPARAM)80, (LPARAM)usu_aux);
 			SendDlgItemMessage(Dlg, IDC_EDIT2, WM_GETTEXT, (WPARAM)80, (LPARAM)pass_aux);
-		
+			//        busqueda de coordinadores de carrera  
+			aux = inicio;
+			bool CooCarr = 1;
+			while (aux != NULL) {
+				if (strcmp(usu_aux, aux->CC_UserName) == 0 && strcmp(pass_aux, aux->CC_Pass) == 0) {
+					CooCarr = 0;
+					break;
+			}
+			aux = aux->sig;
+			}
 
 			if (strcmp(ti_aux, "Cordinador General") == 0 && strcmp(usu_CooGene, usu_aux) == 0 && strcmp(pass_CooGene, pass_aux) == 0) {
 
@@ -139,23 +150,12 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 				ShowWindow(ghDlg, _show);*/
 
 			}
-			else if (strcmp(ti_aux, "Cordinador Carrera") == 0) {
+			else if (strcmp(ti_aux, "Cordinador Carrera") == 0 &&CooCarr==0) {
 
 				
-				//        busqueda de coordinadores de carrera  
-	             aux=inicio;
-	                while(aux != NULL){
-	                 if(strcmp(usu_aux, aux->CC_UserName) == 0 && strcmp(pass_aux, aux->CC_Pass) == 0){
-					
-						 
-						 //MessageBox(Dlg, aux->CC_UserName, aux->D_Silgas, MB_OK | MB_ICONINFORMATION);
-						 DialogBox(_hInst, MAKEINTRESOURCE(IDD_DIALOG_CooCarr), Dlg, CooCarrera);
+				
+				DialogBox(_hInst, MAKEINTRESOURCE(IDD_DIALOG_CooCarr), Dlg, CooCarrera);
 
-					 break;
-					 }
-					 aux = aux->sig;
-	             }
-	             
 				
 			}
 			else {
@@ -175,6 +175,8 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	/// fin de "case WM_COMMAND"
 	case WM_CLOSE:
 	{
+
+		EscribirArchivo();                       //Escribir
 
 
 		PostQuitMessage(0);
@@ -292,6 +294,8 @@ BOOL CALLBACK RegiCarre(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 			MessageBox(Dlg, "¿Se guardo?", "informacion", MB_OK );
 
+			EndDialog(Dlg, 0);
+
 			return true;
 		}
 		case IDC_Edit_Photo: {
@@ -299,9 +303,11 @@ BOOL CALLBACK RegiCarre(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			openfilename();
 			if (GetOpenFileName(&ofn) == TRUE) {
 
-				SetWindowText(GetDlgItem(Dlg, IDC_EDIT8), ofn.lpstrFile);
+				SetWindowText(GetDlgItem(Dlg, IDC_STATIC_photo), ofn.lpstrFile);
 
 				strcpy(file5, ofn.lpstrFile);
+				PonImagen(Dlg, IDC_CooCar_Photo, file5, 75, 97.65);
+				//IDC_CooCar_Photo
 
 			}
 
@@ -345,10 +351,7 @@ BOOL CALLBACK CreaSem(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 		aux = inicio;
 		
-		SendDlgItemMessage(Dlg, IDC_STATIC_name_cc, WM_SETTEXT, 50, (LPARAM)aux->CC_Name);
-		SendDlgItemMessage(Dlg, IDC_STATIC_user_cc2, WM_SETTEXT, 50, (LPARAM)aux->CC_UserName);
-		SendDlgItemMessage(Dlg, IDC_STATIC_pass_cc3, WM_SETTEXT, 50, (LPARAM)aux->CC_Pass);
-		PonImagen(Dlg, IDC_Pho_CooCarr, aux->foto, 75, 75);
+		
 
 
 		return true;
@@ -446,7 +449,10 @@ BOOL CALLBACK CooCarrera(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 
 		SendDlgItemMessage(Dlg, IDC_STATIC_name_cc, WM_SETTEXT, 50, (LPARAM)aux->CC_Name);
-		PonImagen(Dlg, IDC_Pho_CooCarr, aux->foto, 75, 75);
+		SendDlgItemMessage(Dlg, IDC_STATIC_user_cc, WM_SETTEXT, 50, (LPARAM)aux->CC_UserName);
+		SendDlgItemMessage(Dlg, IDC_STATIC_pass_cc, WM_SETTEXT, 50, (LPARAM)aux->CC_Pass);
+		SendDlgItemMessage(Dlg, IDC_STATIC_carr_cc, WM_SETTEXT, 50, (LPARAM)aux->D_DegreeName);
+		PonImagen(Dlg, IDC_Pho_CooCarr, aux->foto, 75, 97.65);
 
 
 		return true;
@@ -627,7 +633,9 @@ void LeeArchivo()
 	CooCarr *pinfo = 0;
 
 	ifstream archivaldo;
-	archivaldo.open(file6, ios::binary);  // | ios::trunc
+	
+	archivaldo.open(file0, ios::binary);  // | ios::trunc
+
 	if (archivaldo.is_open())
 	{
 		pinfo = new CooCarr;
@@ -671,7 +679,8 @@ void EscribirArchivo()
 	CooCarr *aux = 0, *borrar;
 
 	ofstream archivaldo;
-	archivaldo.open(file6, ios::binary | ios::trunc);
+	
+	archivaldo.open(file0, ios::binary | ios::trunc);
 	if (archivaldo.is_open())
 	{
 		// LEER la lista ligada
