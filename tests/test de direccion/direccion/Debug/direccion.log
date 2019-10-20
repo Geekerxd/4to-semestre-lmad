@@ -1,2 +1,6 @@
 ﻿  Pila_Ejemplo_01.cpp
+c:\users\dell 66895\desktop\repositorio ~estructuras\tests\test de direccion\direccion\pila_ejemplo_01.cpp(16): warning C4326: return type of 'main' should be 'int' instead of 'void'
+c:\users\dell 66895\desktop\repositorio ~estructuras\tests\test de direccion\direccion\pila_ejemplo_01.cpp(21): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\tests\test de direccion\direccion\pila_ejemplo_01.cpp(80): warning C4474: 'printf' : too many arguments passed for format string
+  c:\users\dell 66895\desktop\repositorio ~estructuras\tests\test de direccion\direccion\pila_ejemplo_01.cpp(80): note: placeholders and their parameters expect 0 variadic arguments, but 1 were provided
   direccion.vcxproj -> C:\Users\Dell 66895\Desktop\Repositorio ~estructuras\tests\test de direccion\Debug\direccion.exe

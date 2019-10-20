@@ -29,6 +29,9 @@
     <ClInclude Include="Files.h">
       <Filter>Archivos de origen</Filter>
     </ClInclude>
+    <ClInclude Include="CallBacks.h">
+      <Filter>Archivos de origen</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Plataforma para Coordinadores y Alumnos.rc">

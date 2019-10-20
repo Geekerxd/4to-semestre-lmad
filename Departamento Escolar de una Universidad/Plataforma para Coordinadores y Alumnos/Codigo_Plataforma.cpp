@@ -1,9 +1,10 @@
 #include <fstream>
 #include <Windows.h>
+
 #include "resource.h"
 #include "LLCooCarr.h"
 #include "Files.h"
-
+#include "CallBacks.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -52,8 +53,16 @@ void EscribirArchivo();
 
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, PSTR cmd, int show)
 {
-	
-	//GetCurrentDirectory(MAX_PATH,Folder);
+
+
+
+	GetCurrentDirectory(MAX_PATH, file0);
+	strcat(file0, "\\");
+
+	strcat(file0, file6);//¿? 
+
+
+
 
 	_hInst = hInst;
 	_show = show;
@@ -74,8 +83,13 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, PSTR cmd, int show)
 
 
 
+
 	return (int)msg.wParam;
-	
+
+
+
+
+
 }
 
 
@@ -93,8 +107,9 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	{
 	case WM_INITDIALOG:
 	{
+		LeeArchivo();                           //Leer
 
-		
+
 
 		icon(Dlg); //icono
 		PonImagen(Dlg, IDC_STATIC_iz, file, 75, 75); //logos de uanl
@@ -102,17 +117,10 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 		static HWND hCboUser = 0; //handle conbo box users
 		hCboUser = GetDlgItem(Dlg, IDC_COMBO1);
+
 		LlenarUsuario(hCboUser, CB_ADDSTRING, file3);
 
 
-		GetCurrentDirectory(MAX_PATH, file0);
-		strcat(file0, "\\");
-		
-		
-
-		strcat(file0, file6);//¿? 
-		
-		LeeArchivo();                           //Leer
 
 
 		return true;
@@ -134,8 +142,8 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 				if (strcmp(usu_aux, aux->CC_UserName) == 0 && strcmp(pass_aux, aux->CC_Pass) == 0) {
 					CooCarr = 0;
 					break;
-			}
-			aux = aux->sig;
+				}
+				aux = aux->sig;
 			}
 
 			if (strcmp(ti_aux, "Cordinador General") == 0 && strcmp(usu_CooGene, usu_aux) == 0 && strcmp(pass_CooGene, pass_aux) == 0) {
@@ -145,18 +153,24 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 				DialogBox(_hInst, MAKEINTRESOURCE(IDD_DIALOG_GENE), Dlg, VentaCooGee);
 
-				/*DestroyWindow(Dlg);
+				/*
+				DestroyWindow(Dlg);
 				ghDlg = CreateDialog(_hInst, MAKEINTRESOURCE(IDD_DIALOG1), 0, ProcDialog1);
 				ShowWindow(ghDlg, _show);*/
 
 			}
-			else if (strcmp(ti_aux, "Cordinador Carrera") == 0 &&CooCarr==0) {
+			else if (strcmp(ti_aux, "Cordinador Carrera") == 0 && CooCarr == 0) {
 
-				
-				
+
+
 				DialogBox(_hInst, MAKEINTRESOURCE(IDD_DIALOG_CooCarr), Dlg, CooCarrera);
 
 				
+				DestroyWindow(Dlg);
+				ghDlg = CreateDialog(_hInst, MAKEINTRESOURCE(IDD_DIALOG1), 0, ProcDialog1);
+				ShowWindow(ghDlg, _show);
+
+
 			}
 			else {
 
@@ -175,11 +189,20 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	/// fin de "case WM_COMMAND"
 	case WM_CLOSE:
 	{
-
-		EscribirArchivo();                       //Escribir
-
-
-		PostQuitMessage(0);
+		if (MessageBox(Dlg, "¿Quieres guardadr los cambios?",
+			"Alto",
+			MB_YESNO |
+			MB_ICONASTERISK | MB_DEFBUTTON1) == IDYES)
+		{
+			//MessageBox(Dlg, "Se guardó", "informacion", MB_OK | MB_ICONINFORMATION);
+			EscribirArchivo();
+			
+			PostQuitMessage(0);
+		}
+		else {
+			//MessageBox(Dlg, "No se guardó", "informacion", MB_OK | MB_ICONEXCLAMATION);
+			PostQuitMessage(0);
+		}
 
 		return true; }
 	}

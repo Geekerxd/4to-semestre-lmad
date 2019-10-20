@@ -9,10 +9,10 @@ class Carr                    // Para Lista Ligada Carreras
 {
 public:
 
-	char	D_DegreeName[30];    // Carrera
+	char	D_DegreeName[60];    // Carrera
 	char	D_Clave[10];
 	char	D_Silgas[10];
-	char	D_Descrip[50];
+	char	D_Descrip[200];
 
 };
 
@@ -20,7 +20,7 @@ class CooCarr :public Carr                    // Para Lista Ligada de Cordinador
 {
 public:
 
-	char	CC_Name[30];         // Nombre del coordinador carrera
+	char	CC_Name[60];         // Nombre del coordinador carrera
 	char	CC_UserName[30];     // 
 	char	CC_Pass[30];         // password
 	char    foto[_MAX_PATH];
