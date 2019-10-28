@@ -9,6 +9,7 @@
 #define IDD_DIALOG_RegiMate             109
 #define IDR_MENU1                       111
 #define IDD_DIALOG_CooCarr              112
+#define IDD_VerCooCarrWindow            114
 #define IDC_STATIC_01                   1001
 #define IDC_COMBO1                      1002
 #define IDC_EDIT1                       1003
@@ -43,19 +44,27 @@
 #define IDC_STATIC_photo                1029
 #define IDC_STATIC_pass_cc              1029
 #define IDC_CooCar_Photo                1030
-#define IDC_STATIC_name_cc4             1030
 #define IDC_STATIC_carr_cc              1030
+#define IDC_Clave                       1032
+#define IDC_Siglas                      1033
+#define IDC_Descripcion                 1034
+#define IDC_Nombre                      1035
+#define IDC_Usuario                     1036
+#define IDC_Password                    1037
+#define IDC_CooCar_Photo_2              1038
+#define IDC_COMBO_aux                   1039
 #define ID_OPCIONES_ATRAS               40001
 #define ID_OPCIONES_Regresar            40002
 #define ID_OPCIONES_SALIRYGUARDAR       40003
+#define ID_VER_VERTODOSLOSCOORDINADORESREGISTRADOS 40004
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        114
-#define _APS_NEXT_COMMAND_VALUE         40004
-#define _APS_NEXT_CONTROL_VALUE         1031
+#define _APS_NEXT_RESOURCE_VALUE        116
+#define _APS_NEXT_COMMAND_VALUE         40005
+#define _APS_NEXT_CONTROL_VALUE         1040
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

@@ -1,5 +1,5 @@
 
-#pragma once
+
 #ifndef files
 #define files
 

@@ -118,12 +118,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Codigo_Plataforma.cpp" />
+    <ClCompile Include="LLCooCarr.cpp" />
+    <ClCompile Include="Sem.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CallBacks.h" />
     <ClInclude Include="Files.h" />
     <ClInclude Include="LLCooCarr.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Sem.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Plataforma para Coordinadores y Alumnos.rc" />

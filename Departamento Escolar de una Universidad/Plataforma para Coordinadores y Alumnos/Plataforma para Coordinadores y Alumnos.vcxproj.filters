@@ -18,6 +18,12 @@
     <ClCompile Include="Codigo_Plataforma.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="LLCooCarr.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Sem.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -29,8 +35,8 @@
     <ClInclude Include="Files.h">
       <Filter>Archivos de origen</Filter>
     </ClInclude>
-    <ClInclude Include="CallBacks.h">
-      <Filter>Archivos de origen</Filter>
+    <ClInclude Include="Sem.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
