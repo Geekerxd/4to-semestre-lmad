@@ -2,6 +2,9 @@
 #include <Windows.h>
 
 
+
+
+
 class CooCarr        // Para Lista Ligada de Cordinador de Carrera   
 {
 public:
@@ -23,10 +26,10 @@ public:
 
 	bool validar(HWND Dlg); //validar los datos del nodo
 
-	
+	bool encontrado=false;
 
-	CooCarr	*sig;
-	CooCarr	*ante;
+	CooCarr	*dere;
+	CooCarr	*izqu;
 };
 
 

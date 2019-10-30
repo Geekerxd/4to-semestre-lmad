@@ -1,7 +1,6 @@
 
 
-#ifndef files
-#define files
+#pragma once
 
 char CC_Archi[] = "CordiCarrLista.txt";
 char szFileName[MAX_PATH] = "";
@@ -16,6 +15,4 @@ char file5[_MAX_PATH]; //auxiliar
 char file6[]="CordiNamesSave.txt"; //
 
 
-
-
-#endif // !files
+int a = 0;

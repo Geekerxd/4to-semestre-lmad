@@ -117,13 +117,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="alumnos.cpp" />
     <ClCompile Include="Codigo_Plataforma.cpp" />
+    <ClCompile Include="funciones.cpp" />
     <ClCompile Include="LLCooCarr.cpp" />
+    <ClCompile Include="materias.cpp" />
     <ClCompile Include="Sem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="alumnos.h" />
     <ClInclude Include="Files.h" />
+    <ClInclude Include="funciones.h" />
     <ClInclude Include="LLCooCarr.h" />
+    <ClInclude Include="materias.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Sem.h" />
   </ItemGroup>

@@ -1,4 +1,4 @@
-#include <fstream>//archivos
+//#include <fstream>//archivos
 #include <Windows.h>
 #include <stdio.h>
 #include <string.h>
@@ -12,21 +12,23 @@
 #include "resource.h"
 #include "LLCooCarr.h"//lista ligada de coordinador de carrera y carrera
 #include "Files.h"
+#include "funciones.h"
 
 using namespace std;
-
 OPENFILENAME ofn;
-CooCarr *inicio = 0, *last = 0, *nuevo = 0;
 
-
+CooCarr *Root = 0, *nuevo = 0;
 CooCarr*aux;
-
-
-
 
 HWND ghDlg = 0;
 HINSTANCE _hInst;
 int _show = 0;
+
+void AgregaDatosNodo(HWND Dlg);
+void openfilename();
+void LlenarUsuario(HWND objeto, UINT mensa, char *file); // rellenar un combo box
+void LeeArchivo();                                         //Lista con coordi
+void EscribirArchivo();
 
 BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK VentaCooGee(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
@@ -34,20 +36,7 @@ BOOL CALLBACK RegiCarre(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK CreaSem(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK RegiMate(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK VerCooCarr(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
-
 BOOL CALLBACK CooCarrera(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
-
-void PonImagen(HWND dialog, WPARAM IDC, char *imagen, int m, int n);// cambios
-void LlenarUsuario(HWND objeto, UINT mensa, char *file); // rellenar un combo box
-void icon(HWND Dlg); //agrega un icono
-
-void openfilename();
-
-void AgregaDatosNodo(HWND Dlg);
-void LeeArchivo();                                         //Lista con coordi
-void EscribirArchivo();
-
-
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, PSTR cmd, int show)
 {
 
@@ -89,25 +78,17 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, PSTR cmd, int show)
 
 }
 
-
-
 BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 {
-	char usu_CooGene[20] = { "a" };
-	char pass_CooGene[20] = { "a" };
-
-	char ti_aux[20];
-	char usu_aux[20];
-	char pass_aux[20];
-
-	char usutete[20];
+	char ti_aux[30];
+	char usu_aux[30];
+	char pass_aux[30];
+	bool encontrado = false;
 	switch (Mensaje)
 	{
 	case WM_INITDIALOG:
 	{
 		LeeArchivo();                           //Leer
-
-
 
 		icon(Dlg); //icono
 		PonImagen(Dlg, IDC_STATIC_iz, file, 75, 75); //logos de uanl
@@ -115,32 +96,12 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 		static HWND hCboUser = 0; //handle conbo box users
 		hCboUser = GetDlgItem(Dlg, IDC_COMBO1);
-
 		LlenarUsuario(hCboUser, CB_ADDSTRING, file3);
-
-		// CB_GETLBTEXT
-
 
 		return true;
 	}
 	case WM_COMMAND:
 	{
-
-		/*switch (HIWORD(wParam))
-		{
-		case CBN_SELCHANGE:
-		
-
-			GetWindowText(GetDlgItem(Dlg, IDC_COMBO1), usutete, 256);
-
-
-
-
-			SendDlgItemMessage(Dlg, IDC_STATIC_aux, WM_SETTEXT, 50, (LPARAM)usutete);
-			
-			break;
-		}
-*/
 		switch (LOWORD(wParam))
 		{
 
@@ -150,46 +111,37 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			SendDlgItemMessage(Dlg, IDC_EDIT1, WM_GETTEXT, (WPARAM)80, (LPARAM)usu_aux);
 			SendDlgItemMessage(Dlg, IDC_EDIT2, WM_GETTEXT, (WPARAM)80, (LPARAM)pass_aux);
 			//        busqueda de coordinadores de carrera  
-			aux = inicio;
-			bool CooCarr = 1;
-			while (aux != NULL) {
-				if (strcmp(usu_aux, aux->CC_UserName) == 0 && strcmp(pass_aux, aux->CC_Pass) == 0) {
-					CooCarr = 0;
-					break;
-				}
-				aux = aux->sig;
-			}
+			//bool CooCarr = false;
+			aux = NULL;
+			nuevo = Root;
+			BuscaNodoChar(usu_aux, nuevo);//busca el User Name
+
+			if (aux != NULL) { encontrado = aux->encontrado; }
+
+			
+		
+
 			// ****
-			if (strcmp(ti_aux, "Cordinador General") == 0 && strcmp(usu_CooGene, usu_aux) == 0 && strcmp(pass_CooGene, pass_aux) == 0) {
+			if (strcmp(ti_aux, "Cordinador General") == 0 && strcmp("a", usu_aux) == 0 && strcmp("a", pass_aux) == 0) {
 
 				SendDlgItemMessage(Dlg, IDC_EDIT1, WM_SETTEXT, 50, (LPARAM)0);//lo limpio
 				SendDlgItemMessage(Dlg, IDC_EDIT2, WM_SETTEXT, 50, (LPARAM)0);//lo limpio
 
 				DialogBox(_hInst, MAKEINTRESOURCE(IDD_DIALOG_GENE), Dlg, VentaCooGee);
 
-				/*
-				DestroyWindow(Dlg);
-				ghDlg = CreateDialog(_hInst, MAKEINTRESOURCE(IDD_DIALOG1), 0, ProcDialog1);
-				ShowWindow(ghDlg, _show);*/
 
 			}
-			else if (strcmp(ti_aux, "Cordinador Carrera") == 0 && CooCarr == 0) {
-
-
-
+			else if (strcmp(ti_aux, "Cordinador Carrera") == 0 /*&&encontrado*/	) {
+				//&& strcmp(usu_aux, aux->CC_UserName) == 0 && strcmp(pass_aux, aux->CC_Pass) == 0
+				//limpiar pantalla
 				DialogBox(_hInst, MAKEINTRESOURCE(IDD_DIALOG_CooCarr), Dlg, CooCarrera);
-
 				
-				/*DestroyWindow(Dlg);
-				ghDlg = CreateDialog(_hInst, MAKEINTRESOURCE(IDD_DIALOG1), 0, ProcDialog1);
-				ShowWindow(ghDlg, _show);*/
-
-
+				//MessageBox(Dlg, aux->CC_UserName, aux->CC_Pass, MB_OK);
+				encontrado = false;
+				aux->encontrado = false;
 			}
 			else {
-
-
-				MessageBox(Dlg, "informacion incorrecta", "informacion", MB_ICONERROR);
+				MessageBox(Dlg, "informacion Incorrecta o no Existente", "informacion", MB_ICONERROR);
 			}
 
 			return true;
@@ -209,7 +161,7 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			MB_ICONASTERISK | MB_DEFBUTTON1) == IDYES)
 		{
 			//MessageBox(Dlg, "Se guardó", "informacion", MB_OK | MB_ICONINFORMATION);
-			EscribirArchivo();
+			//EscribirArchivo();
 			
 			PostQuitMessage(0);
 		}
@@ -226,7 +178,6 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 	return false;///el return false
 }
-
 BOOL CALLBACK VentaCooGee(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 {
 	char Name_General[30] = { "Rogelio Sánchez" };
@@ -388,11 +339,8 @@ BOOL CALLBACK CreaSem(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	{
 		icon(Dlg);
 
-		aux = inicio;
+		aux = Root;
 		
-		
-
-
 		return true;
 	}
 	case WM_COMMAND:
@@ -432,13 +380,16 @@ BOOL CALLBACK CreaSem(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 }
 BOOL CALLBACK RegiMate(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 {
-
+	
 	switch (Mensaje)
 	{
 	case WM_INITDIALOG:
 	{
 		icon(Dlg);
+		a = 0;
 
+		aux = Root;
+		PreOrdenLLenaCB(aux, GetDlgItem(Dlg, IDC_COMBO1));//llena el ComboBox en preorden;
 		return true;
 	}
 	case WM_COMMAND:
@@ -447,8 +398,16 @@ BOOL CALLBACK RegiMate(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		{
 
 		case IDC_BUTTON_Regi_Mate: {
-			MessageBox(Dlg, "Hello moto", "informacion", MB_OK | MB_ICONINFORMATION);
-
+			//MessageBox(Dlg, "Hello moto", "informacion", MB_OK | MB_ICONINFORMATION);
+			if (a % 2 == 0)
+			{
+				EnableWindow(GetDlgItem(Dlg, IDC_EDIT1), SW_HIDE);
+			}//SW_HIDE
+			else
+			{
+				EnableWindow(GetDlgItem(Dlg, IDC_EDIT1), SW_RESTORE);
+			}
+			a++;
 			return true;
 		}
 		case ID_OPCIONES_Regresar: {//Menú
@@ -484,42 +443,39 @@ BOOL CALLBACK VerCooCarr(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	{
 	case WM_INITDIALOG:
 	{
-		static HWND hVerComb = 0; //handle conbo box users
-		hVerComb = GetDlgItem(Dlg, IDC_COMBO_aux);
+		EnableWindow(GetDlgItem(Dlg, IDC_Clave), SW_HIDE);
+		EnableWindow(GetDlgItem(Dlg, IDC_Siglas), SW_HIDE);
+		EnableWindow(GetDlgItem(Dlg, IDC_Descripcion), SW_HIDE);
+		EnableWindow(GetDlgItem(Dlg, IDC_Nombre), SW_HIDE);
+		EnableWindow(GetDlgItem(Dlg, IDC_Usuario), SW_HIDE);
+		EnableWindow(GetDlgItem(Dlg, IDC_Password), SW_HIDE);
+		
+		a = 1;
+		
 		icon(Dlg);
 
-		aux = inicio;
-		while (aux!=NULL)
-		{
-			SendMessage(hVerComb, CB_ADDSTRING, 0, (LPARAM)aux->D_DegreeName);
-			aux = aux->sig;
-		}
-
+		aux = Root;
+		PreOrdenLLenaCB(aux, GetDlgItem(Dlg, IDC_COMBO_aux));//llena el ComboBox en preorden;
 		return true;
 	}
 	case WM_COMMAND:
 	{
-
-
 		switch (HIWORD(wParam))
 		{
 		case CBN_SELCHANGE:
-
-
 			GetWindowText(GetDlgItem(Dlg, IDC_COMBO_aux), aux_mate, 256);
 
-			if(inicio!=NULL){
-				aux = inicio;
-				while (aux != NULL){
-				if (strcmp(aux_mate, aux->D_DegreeName) == 0) {
-					encontrado = true;
-					break;
-				}
-				aux = aux->sig;
-			    }
-			}
-			
+			aux = NULL;
+			nuevo = Root;
+            BuscaNodoMateria(aux_mate, nuevo);
 
+			if (aux != NULL) { encontrado = aux->encontrado; }
+
+			if (encontrado == false) {
+				MessageBox(Dlg, aux->D_DegreeName, aux_mate, MB_OK);
+				break; }
+
+			
 			if(encontrado){
 				SendDlgItemMessage(Dlg, IDC_Clave, WM_SETTEXT, 50, (LPARAM)aux->D_Clave);
 				SendDlgItemMessage(Dlg, IDC_Siglas, WM_SETTEXT, 50, (LPARAM)aux->D_Silgas);
@@ -529,16 +485,44 @@ BOOL CALLBACK VerCooCarr(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 				SendDlgItemMessage(Dlg, IDC_Password, WM_SETTEXT, 50, (LPARAM)aux->CC_Pass);
 				PonImagen(Dlg, IDC_CooCar_Photo_2, aux->foto, 75, 97.65);
 
+				aux->encontrado = false;
 				encontrado = false;
 			}
-
+			
 			break;
 		}
 
 
 		switch (LOWORD(wParam))
 		{
-
+		case IDC_BU_Edi: {
+			if (a % 2 == 0)
+			{
+				
+				EnableWindow(GetDlgItem(Dlg, IDC_Clave), SW_HIDE);
+				EnableWindow(GetDlgItem(Dlg, IDC_Siglas), SW_HIDE);
+				EnableWindow(GetDlgItem(Dlg, IDC_Descripcion), SW_HIDE);
+				EnableWindow(GetDlgItem(Dlg, IDC_Nombre), SW_HIDE);
+				EnableWindow(GetDlgItem(Dlg, IDC_Usuario), SW_HIDE);
+				EnableWindow(GetDlgItem(Dlg, IDC_Password), SW_HIDE);
+				
+			}//SW_RESTORE
+			else
+			{
+				EnableWindow(GetDlgItem(Dlg, IDC_Clave), SW_RESTORE);
+				EnableWindow(GetDlgItem(Dlg, IDC_Siglas), SW_RESTORE);
+				EnableWindow(GetDlgItem(Dlg, IDC_Descripcion), SW_RESTORE);
+				EnableWindow(GetDlgItem(Dlg, IDC_Nombre), SW_RESTORE);
+				EnableWindow(GetDlgItem(Dlg, IDC_Usuario), SW_RESTORE);
+				EnableWindow(GetDlgItem(Dlg, IDC_Password), SW_RESTORE);
+			}
+			a++;
+			break;
+		}
+		case IDC_BU_Gu_Ca:{
+			MessageBox(Dlg, "aqui se guardarán los cambios", "", MB_OK);
+			break;
+		}
 
 		}
 		/// fin de "switch (LOWORD(wParam))"
@@ -565,13 +549,9 @@ BOOL CALLBACK CooCarrera(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	case WM_INITDIALOG:
 	{
 		icon(Dlg);
-
-
-		SendDlgItemMessage(Dlg, IDC_STATIC_name_cc, WM_SETTEXT, 50, (LPARAM)aux->CC_Name);
-		SendDlgItemMessage(Dlg, IDC_STATIC_user_cc, WM_SETTEXT, 50, (LPARAM)aux->CC_UserName);
-		SendDlgItemMessage(Dlg, IDC_STATIC_pass_cc, WM_SETTEXT, 50, (LPARAM)aux->CC_Pass);
-		SendDlgItemMessage(Dlg, IDC_STATIC_carr_cc, WM_SETTEXT, 50, (LPARAM)aux->D_DegreeName);
-		PonImagen(Dlg, IDC_Pho_CooCarr, aux->foto, 75, 97.65);
+		//SendDlgItemMessage(Dlg, IDC_STATIC_name_cc, WM_SETTEXT, 50, (LPARAM)aux->CC_Name);
+		//SendDlgItemMessage(Dlg, IDC_STATIC_carr_cc, WM_SETTEXT, 50, (LPARAM)aux->D_DegreeName);
+		//PonImagen(Dlg, IDC_Pho_CooCarr, aux->foto, 75, 97.65);
 
 
 		return true;
@@ -581,19 +561,6 @@ BOOL CALLBACK CooCarrera(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		switch (LOWORD(wParam))
 		{
 
-
-
-		//case IDC_BUTTON_Regi_Mate: {
-		//	MessageBox(Dlg, "Hello moto", "informacion", MB_OK | MB_ICONINFORMATION);
-
-		//	return true;
-		//}
-		//case ID_OPCIONES_Regresar: {//Menú
-
-		//	EndDialog(Dlg, 0);
-
-		//	return true;
-		//}
 
 		}
 		/// fin de "switch (LOWORD(wParam))"
@@ -614,73 +581,55 @@ BOOL CALLBACK CooCarrera(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	return false;///el return false
 }
 
-
-
 void AgregaDatosNodo(HWND Dlg) {
 
 	CooCarr *aux = 0;
 	aux = new CooCarr();
-	aux->sig = 0;
-	aux->ante = 0;
+	aux->dere = 0;
+	aux->izqu = 0;
+
 
 	//carrera
 	SendDlgItemMessage(Dlg, IDC_EDIT1, WM_GETTEXT, (WPARAM)80, (LPARAM)aux->D_DegreeName);
-    SendDlgItemMessage(Dlg, IDC_EDIT2, WM_GETTEXT, (WPARAM)80, (LPARAM)aux->D_Clave);
+	SendDlgItemMessage(Dlg, IDC_EDIT2, WM_GETTEXT, (WPARAM)80, (LPARAM)aux->D_Clave);
 	SendDlgItemMessage(Dlg, IDC_EDIT3, WM_GETTEXT, (WPARAM)80, (LPARAM)aux->D_Silgas);
 	SendDlgItemMessage(Dlg, IDC_EDIT4, WM_GETTEXT, (WPARAM)80, (LPARAM)aux->D_Descrip);
 	//coordinador carrera
 	SendDlgItemMessage(Dlg, IDC_EDIT5, WM_GETTEXT, (WPARAM)80, (LPARAM)aux->CC_Name);
 	SendDlgItemMessage(Dlg, IDC_EDIT6, WM_GETTEXT, (WPARAM)80, (LPARAM)aux->CC_UserName);
 	SendDlgItemMessage(Dlg, IDC_EDIT7, WM_GETTEXT, (WPARAM)80, (LPARAM)aux->CC_Pass);
-
 	strcpy(aux->foto, file5);
 
 	//validar un metodo de coocar
 
-	//while
 	if (aux->validar(Dlg) == true) {
+		//lo agrego al arbol
 
-		if (inicio == 0)
-		{
-			inicio = aux;
-			last = aux;
+		if (Root != NULL){
+			AgregarNodoArbol(Root, aux, Dlg);
 		}
 		else
 		{
-			last->sig = aux;
-			aux->ante = last;
-
-			last = aux;
+			Root = aux;
 		}
+
+
+
 		MessageBox(Dlg, "Se guardo", "informacion", MB_OK);
 		EndDialog(Dlg, 0);
-
-
-	}
-
-
+	}//fin IF
 }
-
-
-void PonImagen(HWND dialog, WPARAM IDC, char *imagen, int m, int n) {
-
-	static HBITMAP bmp1, bmp2;
-	//Al objeto bmp1, se le asigna sin imagen:
-	bmp1 = (HBITMAP)SendDlgItemMessage(dialog, IDC,
-		STM_GETIMAGE, IMAGE_BITMAP, 0);
-	//Al objeto bmp2, se le asigna una imagen local:
-	bmp2 = (HBITMAP)LoadImage(NULL, imagen,
-		IMAGE_BITMAP, m, n, LR_LOADFROMFILE);
-
-	SendDlgItemMessage(
-		dialog,
-		IDC,
-		STM_SETIMAGE,
-		IMAGE_BITMAP,
-		(LPARAM)bmp2);
-
+void openfilename() {
+	ZeroMemory(&ofn, sizeof(ofn));
+	ofn.lStructSize = sizeof(ofn);
+	ofn.lpstrFilter = "Todos\0*.*\0Archivos Texto\0*.TXT\0Archivos Word (97-2003)\0*.doc\0Archivos Word\0*.docx\0Imagenes jpg\0*.jpg\0";
+	ofn.lpstrFile = szFileName;
+	ofn.nMaxFile = MAX_PATH;
+	//ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY; 
+	ofn.Flags = OFN_EXPLORER | OFN_PATHMUSTEXIST |
+		OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT;
+	ofn.lpstrDefExt = "txt";
 }
-
 void LlenarUsuario(HWND objeto, UINT mensaje, char *file)
 {
 	// objeto  ===   hCboSpc
@@ -703,64 +652,36 @@ void LlenarUsuario(HWND objeto, UINT mensaje, char *file)
 	}
 
 }
-void icon(HWND Dlg) {
-	HICON newSmallIco, newBigIco, oldSmallIco, oldBigIco;
-	newSmallIco = reinterpret_cast<HICON>(LoadImage(nullptr, "Graphicloads.ico", IMAGE_ICON, 16, 16, LR_LOADFROMFILE));
-	newBigIco = reinterpret_cast<HICON>(LoadImage(nullptr, "Graphicloads.ico", IMAGE_ICON, 32, 32, LR_LOADFROMFILE));
-	oldSmallIco = reinterpret_cast<HICON>(SendMessage(Dlg, WM_SETICON, ICON_SMALL, reinterpret_cast<LPARAM>(newSmallIco)));
-	oldBigIco = reinterpret_cast<HICON>(SendMessage(Dlg, WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(newBigIco)));
-}
-
-void openfilename() {
-	ZeroMemory(&ofn, sizeof(ofn));
-	ofn.lStructSize = sizeof(ofn);
-	ofn.lpstrFilter = "Todos\0*.*\0Archivos Texto\0*.TXT\0Archivos Word (97-2003)\0*.doc\0Archivos Word\0*.docx\0Imagenes jpg\0*.jpg\0";
-	ofn.lpstrFile = szFileName;
-	ofn.nMaxFile = MAX_PATH;
-	//ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY; 
-	ofn.Flags = OFN_EXPLORER | OFN_PATHMUSTEXIST |
-		OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT;
-	ofn.lpstrDefExt = "txt";
-}
-
 void LeeArchivo()
 {
 	//node info;
 	CooCarr *pinfo = 0;
-
 	ifstream archivaldo;
-	
+
 	archivaldo.open(file0, ios::binary);  // | ios::trunc
 
 	if (archivaldo.is_open())
 	{
 		pinfo = new CooCarr;
 		archivaldo.read((char*)pinfo, sizeof(CooCarr));
-		pinfo->ante = 0;
-		pinfo->sig = 0;
+		pinfo->dere = 0;
+		pinfo->izqu = 0;
 
 		while (!archivaldo.eof()) {
-			if (inicio == 0)
-			{
-				inicio = pinfo;
-				last = pinfo;
+
+			if (Root != NULL) {
+				AgregarNodoArbol(Root, aux, ghDlg);
 			}
 			else
 			{
-				last->sig = pinfo;
-				pinfo->ante = last;
-
-				last = pinfo;
+				Root = aux;
 			}
-
 			pinfo = new CooCarr;
 			archivaldo.read((char*)pinfo, sizeof(CooCarr));
-			pinfo->ante = 0;
-			pinfo->sig = 0;
+			pinfo->dere = 0;
+			pinfo->izqu = 0;
 
 		}
-		//AgregaNodo(info);                                //aqui se acomoda el nodo en la lista ligada
-		//archivaldo.read((char*)&info, sizeof(node));
 
 		archivaldo.close();
 	}
@@ -769,25 +690,33 @@ void LeeArchivo()
 		printf("El archivo no se pudo abrir.");
 	}
 };
+
 void EscribirArchivo()
 {
 	CooCarr info;
-	CooCarr *aux=0 , *borrar;
+	CooCarr *aux = 0, *borrar;
 
 	ofstream archivaldo;
-	
+
 	archivaldo.open(file0, ios::binary | ios::trunc);
 	if (archivaldo.is_open())
 	{
+
 		// LEER la lista ligada
-		aux = inicio;
+		aux = Root;
 		while (aux != 0)
 		{
 			archivaldo.write((char*)aux, sizeof(CooCarr));
 			borrar = aux;
-			aux = aux->sig;
+
+
+			aux = aux->dere;
+
+
 			delete borrar;
 		}
+
+
 		archivaldo.close();
 	}
 	else
@@ -797,5 +726,54 @@ void EscribirArchivo()
 
 
 }
+
+void BuscaNodoMateria(char Materia[60], CooCarr*nodo) {//materia
+
+	if (nodo != NULL) {
+
+		if (strcmp(Materia, nodo->D_DegreeName) == 0) {
+			nodo->encontrado = true;
+			aux = nodo;
+
+		}
+
+		BuscaNodoMateria(Materia, nodo->izqu);
+
+		BuscaNodoMateria(Materia, nodo->dere);
+
+
+
+	}
+
+
+
+}
+
+void BuscaNodoChar(char UsuAux[60], CooCarr*nodo) {//usuario y contraseña
+	if (nodo == NULL);
+	//no se encuentra en el arbol
+	else {
+
+		if (strcmp(UsuAux, nodo->CC_UserName) < 0) {
+
+			BuscaNodoChar(UsuAux, nodo->izqu);
+		}
+		else {
+			if (strcmp(UsuAux, nodo->CC_UserName) > 0) {
+
+				BuscaNodoChar(UsuAux, nodo->dere);
+			}
+			else {
+				nodo->encontrado = true;
+				aux = nodo;
+			}
+
+
+		}
+
+	}
+
+}
+
 
 
