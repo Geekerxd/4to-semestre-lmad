@@ -53,17 +53,8 @@ void PreOrdenLLenaCB(CooCarr*nodo, HWND hVerComb) {
 		PreOrdenLLenaCB(nodo->dere, hVerComb);
 	}
 }
-void PreOrdenEscribeArchivo(CooCarr*nodo, HWND hVerComb) {
-	if (nodo != NULL) {
-		//EscribirNODO INFO
-		SendMessage(hVerComb, CB_ADDSTRING, 0, (LPARAM)nodo->D_DegreeName);
-		//llamada recursiva a PRE ORDEN con el sub árbol izquierdo
-		PreOrdenEscribeArchivo(nodo->izqu, hVerComb);
-		//llamada recursiva a PRE ORDEN con el sub árbol derecho
-		PreOrdenEscribeArchivo(nodo->dere, hVerComb);
-	}
 
-}
+
 
 
 void PonImagen(HWND dialog, WPARAM IDC, char *imagen, int m, int n) {

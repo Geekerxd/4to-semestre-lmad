@@ -29,6 +29,8 @@ void openfilename();
 void LlenarUsuario(HWND objeto, UINT mensa, char *file); // rellenar un combo box
 void LeeArchivo();                                         //Lista con coordi
 void EscribirArchivo();
+void PreOrdenEscribeArchivo(ofstream *archivaldo, CooCarr*nodo);
+
 
 BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK VentaCooGee(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
@@ -114,9 +116,12 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			//bool CooCarr = false;
 			aux = NULL;
 			nuevo = Root;
-			BuscaNodoChar(usu_aux, nuevo);//busca el User Name
+			BuscaNodoChar(nuevo,usu_aux);//busca el User Name
 
-			if (aux != NULL) { encontrado = aux->encontrado; }
+			if (aux != NULL &&
+				strcmp(usu_aux, aux->CC_UserName) == 0 &&
+				strcmp(pass_aux, aux->CC_Pass) == 0) 
+			{ encontrado = aux->encontrado; }
 
 			
 		
@@ -131,12 +136,11 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 
 			}
-			else if (strcmp(ti_aux, "Cordinador Carrera") == 0 /*&&encontrado*/	) {
-				//&& strcmp(usu_aux, aux->CC_UserName) == 0 && strcmp(pass_aux, aux->CC_Pass) == 0
+			else if (strcmp(ti_aux, "Cordinador Carrera") == 0 &&encontrado	) {
+				//
 				//limpiar pantalla
 				DialogBox(_hInst, MAKEINTRESOURCE(IDD_DIALOG_CooCarr), Dlg, CooCarrera);
 				
-				//MessageBox(Dlg, aux->CC_UserName, aux->CC_Pass, MB_OK);
 				encontrado = false;
 				aux->encontrado = false;
 			}
@@ -161,7 +165,7 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			MB_ICONASTERISK | MB_DEFBUTTON1) == IDYES)
 		{
 			//MessageBox(Dlg, "Se guardó", "informacion", MB_OK | MB_ICONINFORMATION);
-			//EscribirArchivo();
+			EscribirArchivo();
 			
 			PostQuitMessage(0);
 		}
@@ -549,9 +553,9 @@ BOOL CALLBACK CooCarrera(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	case WM_INITDIALOG:
 	{
 		icon(Dlg);
-		//SendDlgItemMessage(Dlg, IDC_STATIC_name_cc, WM_SETTEXT, 50, (LPARAM)aux->CC_Name);
-		//SendDlgItemMessage(Dlg, IDC_STATIC_carr_cc, WM_SETTEXT, 50, (LPARAM)aux->D_DegreeName);
-		//PonImagen(Dlg, IDC_Pho_CooCarr, aux->foto, 75, 97.65);
+		SendDlgItemMessage(Dlg, IDC_STATIC_name_cc, WM_SETTEXT, 50, (LPARAM)aux->CC_Name);
+		SendDlgItemMessage(Dlg, IDC_STATIC_carr_cc, WM_SETTEXT, 50, (LPARAM)aux->D_DegreeName);
+		PonImagen(Dlg, IDC_Pho_CooCarr, aux->foto, 75, 97.65);
 
 
 		return true;
@@ -670,11 +674,11 @@ void LeeArchivo()
 		while (!archivaldo.eof()) {
 
 			if (Root != NULL) {
-				AgregarNodoArbol(Root, aux, ghDlg);
+				AgregarNodoArbol(Root, pinfo, ghDlg);
 			}
 			else
 			{
-				Root = aux;
+				Root = pinfo;
 			}
 			pinfo = new CooCarr;
 			archivaldo.read((char*)pinfo, sizeof(CooCarr));
@@ -693,8 +697,8 @@ void LeeArchivo()
 
 void EscribirArchivo()
 {
-	CooCarr info;
-	CooCarr *aux = 0, *borrar;
+	
+	CooCarr *auxi = 0;
 
 	ofstream archivaldo;
 
@@ -703,20 +707,9 @@ void EscribirArchivo()
 	{
 
 		// LEER la lista ligada
-		aux = Root;
-		while (aux != 0)
-		{
-			archivaldo.write((char*)aux, sizeof(CooCarr));
-			borrar = aux;
-
-
-			aux = aux->dere;
-
-
-			delete borrar;
-		}
-
-
+		auxi = Root;
+		PreOrdenEscribeArchivo(&archivaldo,auxi);
+		
 		archivaldo.close();
 	}
 	else
@@ -726,6 +719,19 @@ void EscribirArchivo()
 
 
 }
+
+void PreOrdenEscribeArchivo(ofstream *archivaldo, CooCarr*nodo) {
+	if (nodo != NULL) {
+		
+		(*archivaldo).write((char*)nodo, sizeof(CooCarr));
+		
+		PreOrdenEscribeArchivo(archivaldo,nodo->izqu);
+		
+		PreOrdenEscribeArchivo(archivaldo,nodo->dere);
+	}
+
+}
+
 
 void BuscaNodoMateria(char Materia[60], CooCarr*nodo) {//materia
 
@@ -749,19 +755,19 @@ void BuscaNodoMateria(char Materia[60], CooCarr*nodo) {//materia
 
 }
 
-void BuscaNodoChar(char UsuAux[60], CooCarr*nodo) {//usuario y contraseña
+void BuscaNodoChar(CooCarr*nodo,char UsuAux[60]) {//usuario y contraseña
 	if (nodo == NULL);
 	//no se encuentra en el arbol
 	else {
 
-		if (strcmp(UsuAux, nodo->CC_UserName) < 0) {
+		if (strcmp(nodo->CC_UserName,UsuAux) < 0) {
 
-			BuscaNodoChar(UsuAux, nodo->izqu);
+			BuscaNodoChar(nodo->izqu,UsuAux);
 		}
 		else {
-			if (strcmp(UsuAux, nodo->CC_UserName) > 0) {
+			if (strcmp(nodo->CC_UserName, UsuAux) > 0) {
 
-				BuscaNodoChar(UsuAux, nodo->dere);
+				BuscaNodoChar(nodo->dere,UsuAux);
 			}
 			else {
 				nodo->encontrado = true;

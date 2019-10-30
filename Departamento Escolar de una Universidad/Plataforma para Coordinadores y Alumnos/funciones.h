@@ -19,14 +19,14 @@
 
 
 
-void BuscaNodoChar(char UsuAux[60], CooCarr*nodo);
+void BuscaNodoChar(CooCarr*nodo,char UsuAux[60]);
 
 void BuscaNodoMateria(char Materia[60], CooCarr*nodo);
 
 
 void AgregarNodoArbol(CooCarr*Root, CooCarr*nodo, HWND Dlg);
 void PreOrdenLLenaCB(CooCarr*nodo, HWND hVerComb);
-void PreOrdenEscribeArchivo(CooCarr*nodo, HWND hVerComb);
+//void PreOrdenEscribeArchivo(ofstream *archivaldo,CooCarr*nodo);
 
 
 void PonImagen(HWND dialog, WPARAM IDC, char *imagen, int m, int n);// cambios
