@@ -1,6 +1,18 @@
-﻿  Codigo_Plataforma.cpp
-c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(303): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(490): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(558): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(569): warning C4060: switch statement contains no 'case' or 'default' labels
+﻿  Calif.cpp
+  Codigo_Plataforma.cpp
+c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(310): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(497): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(671): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(682): warning C4060: switch statement contains no 'case' or 'default' labels
+  LLCooCarr.cpp
+c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\llcoocarr.cpp(25): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\llcoocarr.cpp(41): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\llcoocarr.cpp(57): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\llcoocarr.cpp(72): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\llcoocarr.cpp(88): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\llcoocarr.cpp(104): warning C4018: '<': signed/unsigned mismatch
+c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\llcoocarr.cpp(120): warning C4018: '<': signed/unsigned mismatch
+  Sem.cpp
+  funciones.cpp
+  Generating Code...
   Plataforma para Coordinadores y Alumnos.vcxproj -> C:\Users\Dell 66895\Desktop\Repositorio ~estructuras\Departamento Escolar de una Universidad\Debug\Plataforma para Coordinadores y Alumnos.exe

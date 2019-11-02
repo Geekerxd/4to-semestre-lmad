@@ -8,7 +8,7 @@
 class CooCarr        // Para Lista Ligada de Cordinador de Carrera   
 {
 public:
-
+	//int ID_Carrera;
 	char	D_DegreeName[60];    // Carrera
 	char	D_Clave[10];
 	char	D_Silgas[10];

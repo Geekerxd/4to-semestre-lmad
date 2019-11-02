@@ -118,6 +118,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="alumnos.cpp" />
+    <ClCompile Include="Calif.cpp" />
     <ClCompile Include="Codigo_Plataforma.cpp" />
     <ClCompile Include="funciones.cpp" />
     <ClCompile Include="LLCooCarr.cpp" />
@@ -126,6 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="alumnos.h" />
+    <ClInclude Include="Calif.h" />
     <ClInclude Include="Files.h" />
     <ClInclude Include="funciones.h" />
     <ClInclude Include="LLCooCarr.h" />

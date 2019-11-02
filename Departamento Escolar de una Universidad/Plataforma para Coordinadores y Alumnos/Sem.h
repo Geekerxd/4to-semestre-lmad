@@ -1,7 +1,7 @@
 #pragma once
 class Sem //lista ligada para semestre
 {
-
+	int ID_Carrera;
 	char MesMes[50];
 	int year;
 public:

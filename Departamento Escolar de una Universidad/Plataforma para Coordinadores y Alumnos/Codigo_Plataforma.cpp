@@ -38,6 +38,7 @@ BOOL CALLBACK RegiCarre(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK CreaSem(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK RegiMate(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK VerCooCarr(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
+BOOL CALLBACK VerMate(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK CooCarrera(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, PSTR cmd, int show)
 {
@@ -249,6 +250,12 @@ BOOL CALLBACK VentaCooGee(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		case ID_VER_VERTODOSLOSCOORDINADORESREGISTRADOS: {//Menú
 
 			DialogBox(_hInst, MAKEINTRESOURCE(IDD_VerCooCarrWindow), Dlg, VerCooCarr);
+
+			return true;
+		}
+		case ID_VER_TODASLASMATERIASREGISTRADAS: {//Menú
+
+			DialogBox(_hInst, MAKEINTRESOURCE(IDD_Consulta_Materias), Dlg, VerMate);
 
 			return true;
 		}
@@ -544,6 +551,113 @@ BOOL CALLBACK VerCooCarr(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 	return false;///el return false
 }
+BOOL CALLBACK VerMate(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
+{
+	//me quede aqui
+	char aux_mate[60];
+	bool encontrado = false;
+	switch (Mensaje)
+	{
+	case WM_INITDIALOG:
+	{
+		EnableWindow(GetDlgItem(Dlg, IDC_EDIT1), SW_HIDE);
+		EnableWindow(GetDlgItem(Dlg, IDC_EDIT2), SW_HIDE);
+		EnableWindow(GetDlgItem(Dlg, IDC_EDIT3), SW_HIDE);
+		EnableWindow(GetDlgItem(Dlg, IDC_EDIT4), SW_HIDE);
+		EnableWindow(GetDlgItem(Dlg, IDC_EDIT5), SW_HIDE);
+		
+		a = 1;
+
+		icon(Dlg);
+
+		aux = Root;
+		PreOrdenLLenaCB(aux, GetDlgItem(Dlg, IDC_COMBO1));//llena el ComboBox en preorden;
+		return true;
+	}
+	case WM_COMMAND:
+	{
+		switch (HIWORD(wParam))
+		{
+		case CBN_SELCHANGE:
+			GetWindowText(GetDlgItem(Dlg, IDC_COMBO1), aux_mate, 256);
+
+			aux = NULL;
+			nuevo = Root;
+			BuscaNodoMateria(aux_mate, nuevo);
+
+			if (aux != NULL) { encontrado = aux->encontrado; }
+
+			if (encontrado == false) {
+				MessageBox(Dlg, aux->D_DegreeName, aux_mate, MB_OK);
+				break;
+			}
+
+
+			if (encontrado) {
+				SendDlgItemMessage(Dlg, IDC_STATIC101, WM_SETTEXT, 50, (LPARAM)aux->D_DegreeName);
+				//manda a llamar una funcion para que busque la materias que de esta carrera 
+/*
+				SendDlgItemMessage(Dlg, IDC_EDIT1, WM_SETTEXT, 50, (LPARAM)aux->D_Clave);
+				SendDlgItemMessage(Dlg, IDC_EDIT2, WM_SETTEXT, 50, (LPARAM)aux->D_Silgas);
+				SendDlgItemMessage(Dlg, IDC_EDIT3, WM_SETTEXT, 300, (LPARAM)aux->D_Descrip);
+				SendDlgItemMessage(Dlg, IDC_EDIT4, WM_SETTEXT, 50, (LPARAM)aux->CC_Name);
+				SendDlgItemMessage(Dlg, IDC_EDIT5, WM_SETTEXT, 50, (LPARAM)aux->CC_UserName);
+*/
+				aux->encontrado = false;
+				encontrado = false;
+			}
+
+			break;
+		}
+
+
+		switch (LOWORD(wParam))
+		{
+		case IDC_BU_Edi: {
+			if (a % 2 == 0)
+			{
+
+				EnableWindow(GetDlgItem(Dlg, IDC_EDIT1), SW_HIDE);
+				EnableWindow(GetDlgItem(Dlg, IDC_EDIT2), SW_HIDE);
+				EnableWindow(GetDlgItem(Dlg, IDC_EDIT3), SW_HIDE);
+				EnableWindow(GetDlgItem(Dlg, IDC_EDIT4), SW_HIDE);
+				EnableWindow(GetDlgItem(Dlg, IDC_EDIT5), SW_HIDE);
+				
+
+			}//SW_RESTORE
+			else
+			{
+				EnableWindow(GetDlgItem(Dlg, IDC_EDIT1), SW_RESTORE);
+				EnableWindow(GetDlgItem(Dlg, IDC_EDIT2), SW_RESTORE);
+				EnableWindow(GetDlgItem(Dlg, IDC_EDIT3), SW_RESTORE);
+				EnableWindow(GetDlgItem(Dlg, IDC_EDIT4), SW_RESTORE);
+				EnableWindow(GetDlgItem(Dlg, IDC_EDIT5), SW_RESTORE);
+			}
+			a++;
+			break;
+		}
+		case IDC_BU_Gu_Ca: {
+			MessageBox(Dlg, "aqui se guardarán los cambios", "", MB_OK);
+			break;
+		}
+
+		}
+		/// fin de "switch (LOWORD(wParam))"
+		return true;
+	}
+	/// fin de "case WM_COMMAND"
+	case WM_CLOSE:
+	{
+
+
+		EndDialog(Dlg, 0);
+		return true; }
+	}
+	///fin de "switch (Mensaje)"
+
+	return false;///el return false
+}
+
 
 BOOL CALLBACK CooCarrera(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 {

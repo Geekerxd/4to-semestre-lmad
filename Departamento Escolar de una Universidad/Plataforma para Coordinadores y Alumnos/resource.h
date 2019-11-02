@@ -12,6 +12,7 @@
 #define IDD_VerCooCarrWindow            114
 #define IDR_MENU2                       116
 #define IDD_DIALOG2                     117
+#define IDD_Consulta_Materias           117
 #define IDC_STATIC_01                   1001
 #define IDC_COMBO1                      1002
 #define IDC_EDIT1                       1003
@@ -60,20 +61,23 @@
 #define IDC_BU_Edi                      1044
 #define IDC_BUTTON2                     1045
 #define IDC_BU_Gu_Ca                    1045
+#define IDC_STATIC101                   1046
 #define ID_OPCIONES_ATRAS               40001
 #define ID_OPCIONES_Regresar            40002
 #define ID_OPCIONES_SALIRYGUARDAR       40003
 #define ID_VER_VERTODOSLOSCOORDINADORESREGISTRADOS 40004
 #define ID_ALUMNOS_VERTODOS             40005
 #define ID_VER_TODASLASMATERIASREGISTRADAS 40006
+#define ID_OPCIONES                     40007
+#define ID_MATERIAS                     40008
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        119
-#define _APS_NEXT_COMMAND_VALUE         40007
-#define _APS_NEXT_CONTROL_VALUE         1045
+#define _APS_NEXT_COMMAND_VALUE         40009
+#define _APS_NEXT_CONTROL_VALUE         1047
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
