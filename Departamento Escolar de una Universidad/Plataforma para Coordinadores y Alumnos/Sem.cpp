@@ -8,11 +8,20 @@ Sem::Sem()
 
 Sem::Sem(char MesMes[50], int year)
 {
-	strcpy(this->MesMes, MesMes);
-	this->year = year;
+	
 }
 
 
 Sem::~Sem()
 {
+}
+
+void Sem::Set(int id)
+{
+	ID_Semestre = id;
+}
+
+int Sem::Get()
+{
+	return ID_Semestre;
 }

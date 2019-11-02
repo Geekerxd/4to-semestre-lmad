@@ -139,6 +139,28 @@ bool CooCarr::validar(HWND Dlg) {
 
 }
 
+void CooCarr::PonerTexto(HWND Dlg, UINT Clave, UINT Siglas, UINT Descripcion, UINT Nombre, UINT Usuario, UINT Password)
+{
+	SendDlgItemMessage(Dlg, Clave, WM_SETTEXT, 50, (LPARAM)D_Clave);
+	SendDlgItemMessage(Dlg, Siglas, WM_SETTEXT, 50, (LPARAM)D_Silgas);
+	SendDlgItemMessage(Dlg, Descripcion, WM_SETTEXT, 300, (LPARAM)D_Descrip);
+	SendDlgItemMessage(Dlg, Nombre, WM_SETTEXT, 50, (LPARAM)CC_Name);
+	SendDlgItemMessage(Dlg, Usuario, WM_SETTEXT, 50, (LPARAM)CC_UserName);
+	SendDlgItemMessage(Dlg, Password, WM_SETTEXT, 50, (LPARAM)CC_Pass);
+
+
+}
+
+void CooCarr::ObtenerTexto(HWND Dlg, UINT Clave, UINT Siglas, UINT Descripcion, UINT Nombre, UINT Usuario, UINT Password)
+{
+	SendDlgItemMessage(Dlg, Clave, WM_GETTEXT, 50, (LPARAM)D_Clave);
+	SendDlgItemMessage(Dlg, Siglas, WM_GETTEXT, 50, (LPARAM)D_Silgas);
+	SendDlgItemMessage(Dlg, Descripcion, WM_GETTEXT, 300, (LPARAM)D_Descrip);
+	SendDlgItemMessage(Dlg, Nombre, WM_GETTEXT, 50, (LPARAM)CC_Name);
+	SendDlgItemMessage(Dlg, Usuario, WM_GETTEXT, 50, (LPARAM)CC_UserName);
+	SendDlgItemMessage(Dlg, Password, WM_GETTEXT, 50, (LPARAM)CC_Pass);
+}
+
 
 
 

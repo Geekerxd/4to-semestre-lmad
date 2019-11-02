@@ -10,15 +10,21 @@
 #include <string>
 
 #include "resource.h"
-#include "LLCooCarr.h"//lista ligada de coordinador de carrera y carrera
 #include "Files.h"
 #include "funciones.h"
+
+#include "LLCooCarr.h"//lista ligada de coordinador de carrera y carrera
+#include "Sem.h"
+#include "Calif.h"
+#include "alumnos.h"
 
 using namespace std;
 OPENFILENAME ofn;
 
 CooCarr *Root = 0, *nuevo = 0;
-CooCarr*aux;
+CooCarr*aux, *coor;
+
+Sem *Sfirst=NULL, *Saux;
 
 HWND ghDlg = 0;
 HINSTANCE _hInst;
@@ -34,12 +40,12 @@ void PreOrdenEscribeArchivo(ofstream *archivaldo, CooCarr*nodo);
 
 BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK VentaCooGee(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
-BOOL CALLBACK RegiCarre(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
-BOOL CALLBACK CreaSem(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
-BOOL CALLBACK RegiMate(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
-BOOL CALLBACK VerCooCarr(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
-BOOL CALLBACK VerMate(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
-BOOL CALLBACK CooCarrera(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
+BOOL CALLBACK RegiCarre  (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
+BOOL CALLBACK CreaSem    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
+BOOL CALLBACK RegiMate   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
+BOOL CALLBACK VerCooCarr (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
+BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
+BOOL CALLBACK CooCarrera (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, PSTR cmd, int show)
 {
 
@@ -116,13 +122,16 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			//        busqueda de coordinadores de carrera  
 			//bool CooCarr = false;
 			aux = NULL;
+			coor = NULL;
 			nuevo = Root;
 			BuscaNodoChar(nuevo,usu_aux);//busca el User Name
 
 			if (aux != NULL &&
 				strcmp(usu_aux, aux->CC_UserName) == 0 &&
-				strcmp(pass_aux, aux->CC_Pass) == 0) 
-			{ encontrado = aux->encontrado; }
+				strcmp(pass_aux, aux->CC_Pass) == 0)
+			{ encontrado = aux->encontrado; 
+			coor = aux;
+			}
 
 			
 		
@@ -138,12 +147,12 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 			}
 			else if (strcmp(ti_aux, "Cordinador Carrera") == 0 &&encontrado	) {
-				//
-				//limpiar pantalla
+				SendDlgItemMessage(Dlg, IDC_EDIT1, WM_SETTEXT, 50, (LPARAM)0);//lo limpio
+				SendDlgItemMessage(Dlg, IDC_EDIT2, WM_SETTEXT, 50, (LPARAM)0);//lo limpio
 				DialogBox(_hInst, MAKEINTRESOURCE(IDD_DIALOG_CooCarr), Dlg, CooCarrera);
 				
 				encontrado = false;
-				aux->encontrado = false;
+				coor->encontrado = false;
 			}
 			else {
 				MessageBox(Dlg, "informacion Incorrecta o no Existente", "informacion", MB_ICONERROR);
@@ -158,6 +167,7 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		return true;
 	}
 	/// fin de "case WM_COMMAND"
+	
 	case WM_CLOSE:
 	{
 		if (MessageBox(Dlg, "¿Quieres guardadr los cambios?",
@@ -178,9 +188,6 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		return true; }
 	}
 	///fin de "switch (Mensaje)"
-
-
-
 	return false;///el return false
 }
 BOOL CALLBACK VentaCooGee(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
@@ -211,7 +218,13 @@ BOOL CALLBACK VentaCooGee(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		case IDC_B_Crear_Semestre: {
 
 			DialogBox(_hInst, MAKEINTRESOURCE(IDD_DIALOG_Crear_SEM), Dlg, CreaSem);
+			Saux = Sfirst;
+			while (Saux->sig != NULL) {
 
+				Saux = Saux->sig;
+			}
+			SendDlgItemMessage(Dlg, IDC_STATIC4, WM_SETTEXT, (WPARAM)80, (LPARAM)Saux->year);
+			SendDlgItemMessage(Dlg, IDC_STATIC5, WM_SETTEXT, (WPARAM)80, (LPARAM)Saux->MesMes);
 			return true;
 		}
 		case IDC_B_Registro_de_Materia: {
@@ -265,6 +278,7 @@ BOOL CALLBACK VentaCooGee(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		return true;
 	}
 	/// fin de "case WM_COMMAND"
+	
 	case WM_CLOSE:
 	{
 
@@ -278,9 +292,8 @@ BOOL CALLBACK VentaCooGee(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 	return false;///el return false
 }
-BOOL CALLBACK RegiCarre(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
+BOOL CALLBACK RegiCarre  (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 {
-	
 	switch (Mensaje)
 	{
 	case WM_INITDIALOG:
@@ -292,9 +305,7 @@ BOOL CALLBACK RegiCarre(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	{
 		switch (LOWORD(wParam))
 		{
-
 		case IDC_BUTTON_Guardar_Informacion: {
-
 			AgregaDatosNodo(Dlg);
 
 			return true;
@@ -315,12 +326,8 @@ BOOL CALLBACK RegiCarre(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 			return true;
 		}
-
-
 		case ID_OPCIONES_Regresar: {//Menú
-
 			EndDialog(Dlg, 0);
-
 			return true;
 		}
 		}
@@ -330,8 +337,6 @@ BOOL CALLBACK RegiCarre(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	/// fin de "case WM_COMMAND"
 	case WM_CLOSE:
 	{
-
-
 		EndDialog(Dlg, 0);
 		return true; }
 	}
@@ -341,17 +346,14 @@ BOOL CALLBACK RegiCarre(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 	return false;///el return false
 }
-BOOL CALLBACK CreaSem(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
+BOOL CALLBACK CreaSem    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 {
-
 	switch (Mensaje)
 	{
 	case WM_INITDIALOG:
 	{
 		icon(Dlg);
 
-		aux = Root;
-		
 		return true;
 	}
 	case WM_COMMAND:
@@ -360,8 +362,39 @@ BOOL CALLBACK CreaSem(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		{
 
 		case IDC_Buttor_confirmation_SEM: {
-			MessageBox(Dlg, "Hello moto", "informacion", MB_OK | MB_ICONINFORMATION);
+			Sem *newo = 0;
+			newo = new Sem;
+			newo->sig = NULL;
+			newo->ant = NULL;
+			if (SendDlgItemMessage(Dlg, IDC_RADIO1, BM_GETCHECK, 0, 0) == BST_CHECKED) {
+				strcpy(newo->MesMes,"Agosto-Diciembre");
+			}
+			else if (SendDlgItemMessage(Dlg, IDC_RADIO2, BM_GETCHECK, 0, 0) == BST_CHECKED) {
+				strcpy(newo->MesMes, "Enero-Agosto");
+			}
+			else
+			{
+				MessageBox(Dlg, "No tiene Seleccionado nada", "", MB_OK | MB_ICONERROR); goto sfin;
+			}
+			SendDlgItemMessage(Dlg, IDC_EDIT1, WM_GETTEXT, (WPARAM)80, (LPARAM)newo->year);
 
+			if (Sfirst == NULL)
+			{
+				Sfirst = newo;
+			}
+			else
+			{
+				Sem *Saux2 = Sfirst;
+				while (Saux2->sig != NULL) {
+
+					Saux2 = Saux2->sig;
+				}
+				Saux2->sig = newo;
+				newo->ant = Saux2;
+				//delete Saux2;
+			}
+			MessageBox(Dlg, "Se Guardó", "", MB_OK | MB_ICONINFORMATION);
+			sfin:
 			return true;
 		}
 		case ID_OPCIONES_Regresar: {//Menú
@@ -389,7 +422,7 @@ BOOL CALLBACK CreaSem(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 	return false;///el return false
 }
-BOOL CALLBACK RegiMate(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
+BOOL CALLBACK RegiMate   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 {
 	
 	switch (Mensaje)
@@ -446,10 +479,9 @@ BOOL CALLBACK RegiMate(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 	return false;///el return false
 }
-BOOL CALLBACK VerCooCarr(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
+BOOL CALLBACK VerCooCarr (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 {
 	char aux_mate[60];
-	bool encontrado = false;
 	switch (Mensaje)
 	{
 	case WM_INITDIALOG:
@@ -476,28 +508,27 @@ BOOL CALLBACK VerCooCarr(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		case CBN_SELCHANGE:
 			GetWindowText(GetDlgItem(Dlg, IDC_COMBO_aux), aux_mate, 256);
 
+			if (aux != NULL) {
+				aux->encontrado = false;
+			}
+
 			aux = NULL;
 			nuevo = Root;
             BuscaNodoMateria(aux_mate, nuevo);
 
-			if (aux != NULL) { encontrado = aux->encontrado; }
-
-			if (encontrado == false) {
+			
+			if (aux==NULL) {
 				MessageBox(Dlg, aux->D_DegreeName, aux_mate, MB_OK);
 				break; }
 
 			
-			if(encontrado){
-				SendDlgItemMessage(Dlg, IDC_Clave, WM_SETTEXT, 50, (LPARAM)aux->D_Clave);
-				SendDlgItemMessage(Dlg, IDC_Siglas, WM_SETTEXT, 50, (LPARAM)aux->D_Silgas);
-				SendDlgItemMessage(Dlg, IDC_Descripcion, WM_SETTEXT, 300, (LPARAM)aux->D_Descrip);
-				SendDlgItemMessage(Dlg, IDC_Nombre, WM_SETTEXT, 50, (LPARAM)aux->CC_Name);
-				SendDlgItemMessage(Dlg, IDC_Usuario, WM_SETTEXT, 50, (LPARAM)aux->CC_UserName);
-				SendDlgItemMessage(Dlg, IDC_Password, WM_SETTEXT, 50, (LPARAM)aux->CC_Pass);
-				PonImagen(Dlg, IDC_CooCar_Photo_2, aux->foto, 75, 97.65);
-
-				aux->encontrado = false;
-				encontrado = false;
+			if(aux != NULL){
+				if (aux->encontrado)
+				{
+					aux->PonerTexto(Dlg, IDC_Clave, IDC_Siglas, IDC_Descripcion, IDC_Nombre, IDC_Usuario, IDC_Password);
+					PonImagen(Dlg, IDC_CooCar_Photo_2,aux->foto, 75, 97.65);
+				}
+				
 			}
 			
 			break;
@@ -529,11 +560,24 @@ BOOL CALLBACK VerCooCarr(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			}
 			a++;
 			break;
-		}
+		}//
 		case IDC_BU_Gu_Ca:{
-			MessageBox(Dlg, "aqui se guardarán los cambios", "", MB_OK);
+			if (aux != NULL) {
+				if(aux->encontrado){
+					aux->ObtenerTexto(Dlg, IDC_Clave, IDC_Siglas, IDC_Descripcion, IDC_Nombre, IDC_Usuario, IDC_Password);
+					MessageBox(Dlg, "se Guardó", "", MB_OK);
+				}
+				
+			}else
+				MessageBox(Dlg, "No se Guardó", "", MB_OK| MB_ICONERROR);
+			
 			break;
 		}
+		case IDC_BU_Borrar: {
+			MessageBox(Dlg, "se Borró", "", MB_OK);
+			break;
+		}//
+
 
 		}
 		/// fin de "switch (LOWORD(wParam))"
@@ -551,7 +595,7 @@ BOOL CALLBACK VerCooCarr(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 	return false;///el return false
 }
-BOOL CALLBACK VerMate(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
+BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 {
 	//me quede aqui
 	char aux_mate[60];
@@ -659,7 +703,7 @@ BOOL CALLBACK VerMate(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 }
 
 
-BOOL CALLBACK CooCarrera(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
+BOOL CALLBACK CooCarrera (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 {
 
 	switch (Mensaje)

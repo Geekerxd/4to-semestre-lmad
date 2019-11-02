@@ -3,7 +3,7 @@ class Calif
 {
 	int ID_Matricula, ID_Carrera, ID_Alumno;
 
-	short CalFinal;
+	char CalFinal[10];
 
 public:
 	Calif();

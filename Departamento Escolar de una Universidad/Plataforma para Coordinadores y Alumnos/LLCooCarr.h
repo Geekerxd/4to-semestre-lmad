@@ -7,8 +7,9 @@
 
 class CooCarr        // Para Lista Ligada de Cordinador de Carrera   
 {
+	int ID_Carrera, ID_Semestre;
 public:
-	//int ID_Carrera;
+	 
 	char	D_DegreeName[60];    // Carrera
 	char	D_Clave[10];
 	char	D_Silgas[10];
@@ -27,6 +28,8 @@ public:
 	bool validar(HWND Dlg); //validar los datos del nodo
 
 	bool encontrado=false;
+	void PonerTexto(HWND Dlg, UINT Clave, UINT Siglas, UINT Descripcion, UINT Nombre, UINT Usuario, UINT Password);
+	void ObtenerTexto(HWND Dlg, UINT Clave, UINT Siglas, UINT Descripcion, UINT Nombre, UINT Usuario, UINT Password);
 
 	CooCarr	*dere;
 	CooCarr	*izqu;

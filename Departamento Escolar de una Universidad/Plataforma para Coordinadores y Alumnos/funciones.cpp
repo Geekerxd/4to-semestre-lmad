@@ -54,9 +54,6 @@ void PreOrdenLLenaCB(CooCarr*nodo, HWND hVerComb) {
 	}
 }
 
-
-
-
 void PonImagen(HWND dialog, WPARAM IDC, char *imagen, int m, int n) {
 
 	static HBITMAP bmp1, bmp2;
