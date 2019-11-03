@@ -16,12 +16,45 @@ Sem::~Sem()
 {
 }
 
-void Sem::Set(int id)
+void Sem::SetID(int id, int num)
 {
-	ID_Semestre = id;
+	switch (num)
+	{
+	case Sem::EID_materia:
+		//ID_Materia = id;
+		break;
+	case Sem::EID_carrera:
+		//ID_Carrera = id;
+		break;
+	case Sem::EID_alumno:
+		//ID_Alumno = id;
+		break;
+	case Sem::EID_semestre:
+		ID_Semestre = id;
+		break;
+	default:
+		break;
+	}
+}
+int Sem::GetID(int num)
+{
+	switch (num)
+	{
+	case Sem::EID_materia:
+		//return ID_Materia;
+		break;
+	case Sem::EID_carrera:
+		//return ID_Carrera;
+		break;
+	case Sem::EID_alumno:
+		//return ID_Alumno;
+		break;
+	case Sem::EID_semestre:
+		return ID_Semestre;
+		break;
+	default:
+		break;
+	}
 }
 
-int Sem::Get()
-{
-	return ID_Semestre;
-}
+

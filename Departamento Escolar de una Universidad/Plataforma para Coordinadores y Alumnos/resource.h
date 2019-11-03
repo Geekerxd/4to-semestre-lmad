@@ -58,11 +58,11 @@
 #define IDC_Alta                        1041
 #define IDC_InscAlumn                   1042
 #define IDC_LIST1                       1043
+#define IDC_LIST_unic                   1043
 #define IDC_BU_Edi                      1044
 #define IDC_BUTTON2                     1045
 #define IDC_BU_Gu_Ca                    1045
 #define IDC_STATIC101                   1046
-#define IDC_BU_Edi2                     1046
 #define IDC_BU_Borrar                   1046
 #define IDC_STATIC4                     1047
 #define IDC_STATIC5                     1048

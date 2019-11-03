@@ -355,6 +355,7 @@ BOOL CALLBACK RegiCarre  (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	/// fin de "case WM_COMMAND"
 	case WM_CLOSE:
 	{
+
 		EndDialog(Dlg, 0);
 		return true; }
 	}
@@ -395,8 +396,13 @@ BOOL CALLBACK CreaSem    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 				MessageBox(Dlg, "No tiene Seleccionado nada", "", MB_OK | MB_ICONERROR); goto sfin;
 			}
 			SendDlgItemMessage(Dlg, IDC_EDIT1, WM_GETTEXT, (WPARAM)80, (LPARAM)newo->year);
-
-			AgregaDatosNodo<Sem>(&S_Inicio,&S_Last, newo); // Agrega el nodo a la lista
+			/*
+	EID_matricula = 0
+	EID_carrera   = 1
+	EID_alumno    = 2
+	EID_semestre  = 3
+	*/
+			AgregaDatosNodo<Sem>(&S_Inicio,&S_Last, newo,3); // Agrega el nodo a la lista
 			MessageBox(Dlg, "Se Guardó", "", MB_OK | MB_ICONINFORMATION);
 
 		sfin:
@@ -429,7 +435,6 @@ BOOL CALLBACK RegiMate   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	case WM_INITDIALOG:
 	{
 		icon(Dlg);
-		a = 0;
 
 		if (Root != NULL) {
 			aux = Root;
@@ -447,24 +452,35 @@ BOOL CALLBACK RegiMate   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		{
 
 		case IDC_BUTTON_Regi_Mate: {
-			//MessageBox(Dlg, "Hello moto", "informacion", MB_OK | MB_ICONINFORMATION);
-			if (a % 2 == 0)
-			{
-				EnableWindow(GetDlgItem(Dlg, IDC_EDIT1), SW_HIDE);
-			}//SW_HIDE
-			else
-			{
-				EnableWindow(GetDlgItem(Dlg, IDC_EDIT1), SW_RESTORE);
-			}
-			a++;
+			char creditos[10];
+			char horas[10];
+			materias *newo = 0;
+			newo = new materias;
+			newo->sig = NULL;
+			newo->ant = NULL;
+
+			SendDlgItemMessage(Dlg, IDC_EDIT1, WM_GETTEXT, (WPARAM)100, (LPARAM)newo->NombreMate);
+			SendDlgItemMessage(Dlg, IDC_EDIT2, WM_GETTEXT, (WPARAM)80, (LPARAM)newo->Clave);
+			GetWindowText(GetDlgItem(Dlg, IDC_COMBO1), newo->NombreDegree, 256);//tiene que haber un char a fuerzas
+			// Aqui pondre un funcion para buscar esta carrera
+			// y asignare su (id de carrera) a la (id de carrera) esta materia
+			SendDlgItemMessage(Dlg, IDC_EDIT4, WM_GETTEXT, (WPARAM)300, (LPARAM)newo->Descrip);
+			SendDlgItemMessage(Dlg, IDC_EDIT8, WM_GETTEXT, (WPARAM)15, (LPARAM)creditos);
+			*newo->creditos = atoi(creditos);
+			SendDlgItemMessage(Dlg, IDC_EDIT9, WM_GETTEXT, (WPARAM)15, (LPARAM)horas);
+			*newo->HrByWeek= atoi(horas);
+			/*
+	EID_materia = 0
+	EID_carrera   = 1
+	EID_alumno    = 2
+	EID_semestre  = 3
+	*/
+			AgregaDatosNodo<materias>(&M_Inicio, &M_Last, newo, 0); // Agrega el nodo a la lista
+			MessageBox(Dlg, "Se Guardó", "", MB_OK | MB_ICONINFORMATION);
+			
 			return true;
 		}
-		case ID_OPCIONES_Regresar: {//Menú
-
-			EndDialog(Dlg, 0);
-
-			return true;
-		}
+		
 
 		}
 		/// fin de "switch (LOWORD(wParam))"
@@ -627,7 +643,10 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 {
 	//me quede aqui
 	char aux_mate[60];
+	char aux_datos[60];
 	bool encontrado = false;
+	//static 
+
 	switch (Mensaje)
 	{
 	case WM_INITDIALOG:
@@ -641,6 +660,7 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		a = 1;
 
 		icon(Dlg);
+		
 
 		if (Root != NULL) {
 			aux = Root;
@@ -656,7 +676,8 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	{
 		switch (HIWORD(wParam))
 		{
-		case CBN_SELCHANGE:
+		case CBN_SELCHANGE:{
+			HWND hlist = GetDlgItem(Dlg, IDC_LIST_unic);
 			GetWindowText(GetDlgItem(Dlg, IDC_COMBO1), aux_mate, 256);
 
 			aux = NULL;
@@ -665,6 +686,7 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 			if (aux != NULL) { encontrado = aux->encontrado; }
 
+			
 			if (encontrado == false) {
 				MessageBox(Dlg, aux->D_DegreeName, aux_mate, MB_OK);
 				break;
@@ -674,18 +696,32 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			if (encontrado) {
 				SendDlgItemMessage(Dlg, IDC_STATIC101, WM_SETTEXT, 50, (LPARAM)aux->D_DegreeName);
 				//manda a llamar una funcion para que busque la materias que de esta carrera 
-/*
-				SendDlgItemMessage(Dlg, IDC_EDIT1, WM_SETTEXT, 50, (LPARAM)aux->D_Clave);
-				SendDlgItemMessage(Dlg, IDC_EDIT2, WM_SETTEXT, 50, (LPARAM)aux->D_Silgas);
-				SendDlgItemMessage(Dlg, IDC_EDIT3, WM_SETTEXT, 300, (LPARAM)aux->D_Descrip);
-				SendDlgItemMessage(Dlg, IDC_EDIT4, WM_SETTEXT, 50, (LPARAM)aux->CC_Name);
-				SendDlgItemMessage(Dlg, IDC_EDIT5, WM_SETTEXT, 50, (LPARAM)aux->CC_UserName);
-*/
+
+				if (M_Inicio != 0) {
+					materias *Maux = M_Inicio;
+					while (Maux->sig != NULL) {
+						if (strcmp(aux->D_DegreeName, Maux->NombreDegree) == 0) {
+							SendMessage(hlist, LB_ADDSTRING, 0, (LPARAM)Maux->NombreMate);
+						}
+						Maux = Maux->sig;
+					}
+
+
+				}
+
+
 				aux->encontrado = false;
 				encontrado = false;
 			}
 
 			break;
+		}
+		/*case CBN_KILLFOCUS:
+			MessageBox(Dlg, "perdio el foco", "", MB_OK);
+			break;*/
+		/*case CBN_CLOSEUP:
+			MessageBox(Dlg, "cerro la ventana", "", MB_OK);
+			break;*/
 		}
 
 
@@ -1069,15 +1105,17 @@ void EscribirArchivo(claseY *inicio, char *file)
 }
 
 template<class claseZ>
-void AgregaDatosNodo(claseZ ** inicio, claseZ **last, claseZ * nuevo)
+void AgregaDatosNodo(claseZ ** inicio, claseZ **last, claseZ * nuevo,int num)
 {
 	if ((*inicio) == NULL)
 	{
 		(*inicio) = nuevo;
+		(*inicio)->SetID(0, num);
 		(*last) = nuevo;
 	}
 	else
 	{
+		nuevo->SetID(  (*last)->GetID(num)+1  , num);
 		(*last)->sig = nuevo;
 		nuevo->ant = (*last);
 		(*last) = nuevo;

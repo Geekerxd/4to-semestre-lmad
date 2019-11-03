@@ -24,3 +24,4 @@ char file8[] = "ListaSemestres.txt";
 char file9[] = "ListaMaterias.txt";
 char file10[] = "ListaCalif.txt";
 int a = 0;
+bool edit = false;

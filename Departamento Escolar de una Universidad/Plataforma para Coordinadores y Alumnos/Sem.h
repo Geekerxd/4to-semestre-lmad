@@ -10,8 +10,11 @@ public:
 	Sem();
 	Sem(char MesMes[50], int year);
 	~Sem();
-	void Set(int id);
-	int Get();
+	enum ID { EID_materia, EID_carrera, EID_alumno, EID_semestre };
+
+	void SetID(int id, int num);
+	int GetID(int num);
+
 	Sem*ant;
 	Sem*sig;
 };
