@@ -1,6 +1,1 @@
-﻿  Codigo_Plataforma.cpp
-c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(324): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(543): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(754): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(765): warning C4060: switch statement contains no 'case' or 'default' labels
-  Plataforma para Coordinadores y Alumnos.vcxproj -> C:\Users\Dell 66895\Desktop\Repositorio ~estructuras\Departamento Escolar de una Universidad\Debug\Plataforma para Coordinadores y Alumnos.exe
+﻿  Plataforma para Coordinadores y Alumnos.vcxproj -> C:\Users\Dell 66895\Desktop\Repositorio ~estructuras\Departamento Escolar de una Universidad\Debug\Plataforma para Coordinadores y Alumnos.exe

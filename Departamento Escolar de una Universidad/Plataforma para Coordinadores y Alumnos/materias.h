@@ -15,7 +15,7 @@ public:
 	~materias();
 	void Set(int id);
 	int Get();
+	materias *ant;
 	materias *sig;
-	materias *ante;
 };
 

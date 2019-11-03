@@ -17,6 +17,7 @@
 #include "Sem.h"
 #include "Calif.h"
 #include "alumnos.h"
+#include "materias.h"
 
 using namespace std;
 OPENFILENAME ofn;
@@ -24,7 +25,10 @@ OPENFILENAME ofn;
 CooCarr *Root = 0, *nuevo = 0;
 CooCarr*aux, *coor;
 
-Sem *Sfirst=NULL, *Saux;
+alumnos  *A_Inicio = 0, *A_Last = 0;
+materias *M_Inicio = 0, *M_Last = 0;
+Sem      *S_Inicio =0, *S_Last=0;
+Calif    *C_Inicio = 0, *C_Last = 0;
 
 HWND ghDlg = 0;
 HINSTANCE _hInst;
@@ -48,16 +52,19 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK CooCarrera (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, PSTR cmd, int show)
 {
-
-
-
 	GetCurrentDirectory(MAX_PATH, file0);
 	strcat(file0, "\\");
 
-	strcat(file0, file6);//¿? 
+	strcpy(a_file7, file0);
+	strcpy(a_file8, file0);
+	strcpy(a_file9, file0);
+	strcpy(a_file10, file0);
 
-
-
+	strcat(file0, file6);//coocare
+	strcat(a_file7, file7);//alumnos
+	strcat(a_file8, file8);//semestres
+	strcat(a_file9, file9);//materias
+	strcat(a_file10, file10);//calif
 
 	_hInst = hInst;
 	_show = show;
@@ -98,6 +105,10 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	case WM_INITDIALOG:
 	{
 		LeeArchivo();                           //Leer
+		LeeArchivo(&M_Inicio,&M_Last, a_file9);//materias
+		LeeArchivo(&A_Inicio,&A_Last, a_file7);//alumnos
+		LeeArchivo(&S_Inicio,&S_Last, a_file8);//semestre
+		LeeArchivo(&C_Inicio,&C_Last, a_file10);//calif
 
 		icon(Dlg); //icono
 		PonImagen(Dlg, IDC_STATIC_iz, file, 75, 75); //logos de uanl
@@ -177,7 +188,10 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		{
 			//MessageBox(Dlg, "Se guardó", "informacion", MB_OK | MB_ICONINFORMATION);
 			EscribirArchivo();
-			
+			EscribirArchivo(M_Inicio, a_file9);//materias
+			EscribirArchivo(A_Inicio, a_file7);//alumnos
+			EscribirArchivo(S_Inicio, a_file8);//semestre
+			EscribirArchivo(C_Inicio, a_file10);//calif
 			PostQuitMessage(0);
 		}
 		else {
@@ -201,6 +215,11 @@ BOOL CALLBACK VentaCooGee(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		icon(Dlg);
 		SendDlgItemMessage(Dlg, IDC_NAME_GENE, WM_SETTEXT, 50, (LPARAM)Name_General);
 		PonImagen(Dlg, IDC_FOTO_GENE, file4, 75, 75);
+		if (S_Inicio != NULL) {
+
+			SendDlgItemMessage(Dlg, IDC_STATIC4, WM_SETTEXT, (WPARAM)80, (LPARAM)S_Last->year);
+			SendDlgItemMessage(Dlg, IDC_STATIC5, WM_SETTEXT, (WPARAM)80, (LPARAM)S_Last->MesMes);
+		}
 
 		return true;
 	}
@@ -218,14 +237,10 @@ BOOL CALLBACK VentaCooGee(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		case IDC_B_Crear_Semestre: {
 
 			DialogBox(_hInst, MAKEINTRESOURCE(IDD_DIALOG_Crear_SEM), Dlg, CreaSem);
-			if(Sfirst!=NULL){
-				Saux = Sfirst;
-				while (Saux->sig != NULL) {
-
-					Saux = Saux->sig;
-				}
-				SendDlgItemMessage(Dlg, IDC_STATIC4, WM_SETTEXT, (WPARAM)80, (LPARAM)Saux->year);
-				SendDlgItemMessage(Dlg, IDC_STATIC5, WM_SETTEXT, (WPARAM)80, (LPARAM)Saux->MesMes);
+			if(S_Inicio!=NULL){
+				
+				SendDlgItemMessage(Dlg, IDC_STATIC4, WM_SETTEXT, (WPARAM)80, (LPARAM)S_Last->year);
+				SendDlgItemMessage(Dlg, IDC_STATIC5, WM_SETTEXT, (WPARAM)80, (LPARAM)S_Last->MesMes);
 			}
 			
 			return true;
@@ -370,7 +385,7 @@ BOOL CALLBACK CreaSem    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			newo->sig = NULL;
 			newo->ant = NULL;
 			if (SendDlgItemMessage(Dlg, IDC_RADIO1, BM_GETCHECK, 0, 0) == BST_CHECKED) {
-				strcpy(newo->MesMes,"Agosto-Diciembre");
+				strcpy(newo->MesMes, "Agosto-Diciembre");
 			}
 			else if (SendDlgItemMessage(Dlg, IDC_RADIO2, BM_GETCHECK, 0, 0) == BST_CHECKED) {
 				strcpy(newo->MesMes, "Enero-Agosto");
@@ -381,34 +396,14 @@ BOOL CALLBACK CreaSem    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			}
 			SendDlgItemMessage(Dlg, IDC_EDIT1, WM_GETTEXT, (WPARAM)80, (LPARAM)newo->year);
 
-			if (Sfirst == NULL)
-			{
-				Sfirst = newo;
-			}
-			else
-			{
-				Sem *Saux2 = Sfirst;
-				while (Saux2->sig != NULL) {
-
-					Saux2 = Saux2->sig;
-				}
-				Saux2->sig = newo;
-				newo->ant = Saux2;
-				//delete Saux2;
-			}
+			AgregaDatosNodo<Sem>(&S_Inicio,&S_Last, newo); // Agrega el nodo a la lista
 			MessageBox(Dlg, "Se Guardó", "", MB_OK | MB_ICONINFORMATION);
-			sfin:
-			return true;
-		}
-		case ID_OPCIONES_Regresar: {//Menú
 
-			EndDialog(Dlg, 0);
-
+		sfin:
 			return true;
 		}
 
-		}
-		/// fin de "switch (LOWORD(wParam))"
+		}/// fin de "switch (LOWORD(wParam))"
 		return true;
 	}
 	/// fin de "case WM_COMMAND"
@@ -417,7 +412,8 @@ BOOL CALLBACK CreaSem    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 
 		EndDialog(Dlg, 0);
-		return true; }
+		return true; 
+	}
 	}
 	///fin de "switch (Mensaje)"
 
@@ -853,6 +849,7 @@ void LlenarUsuario(HWND objeto, UINT mensaje, char *file)
 	}
 
 }
+//arbol
 void LeeArchivo()
 {
 	//node info;
@@ -891,7 +888,6 @@ void LeeArchivo()
 		printf("El archivo no se pudo abrir.");
 	}
 };
-
 void EscribirArchivo()
 {
 	
@@ -916,7 +912,6 @@ void EscribirArchivo()
 
 
 }
-
 void PreOrdenEscribeArchivo(ofstream *archivaldo, CooCarr*nodo) {
 	if (nodo != NULL) {
 		
@@ -928,8 +923,6 @@ void PreOrdenEscribeArchivo(ofstream *archivaldo, CooCarr*nodo) {
 	}
 
 }
-
-
 void BuscaNodoMateria(char Materia[60], CooCarr*nodo) {//materia
 
 	if (nodo != NULL) {
@@ -951,7 +944,6 @@ void BuscaNodoMateria(char Materia[60], CooCarr*nodo) {//materia
 
 
 }
-
 void BuscaNodoChar(CooCarr*nodo,char UsuAux[60]) {//usuario y contraseña
 	if (nodo == NULL);
 	//no se encuentra en el arbol
@@ -977,7 +969,6 @@ void BuscaNodoChar(CooCarr*nodo,char UsuAux[60]) {//usuario y contraseña
 	}
 
 }
-
 void reemplazar(CooCarr *arbol, CooCarr *nuevoNodo) {
 	if (arbol->padre) {
 		//arbol->padre hay que asignarle su nuevo hijo
@@ -1003,5 +994,94 @@ void reemplazar(CooCarr *arbol, CooCarr *nuevoNodo) {
 	if (arbol->padre == NULL && nuevoNodo == NULL) {
 		Root = NULL;
 	}
+}
+//nodo
+template <class claseX>
+void LeeArchivo(claseX **inicio, claseX **last, char *file)
+{
+	//node info;
+	claseX *pinfo = 0;
+
+	ifstream archivaldo;
+	archivaldo.open(file, ios::binary);  // | ios::trunc
+	if (archivaldo.is_open())
+	{
+		pinfo = new claseX;
+		archivaldo.read((char*)pinfo, sizeof(claseX));
+		pinfo->ant = 0;
+		pinfo->sig = 0;
+
+		while (!archivaldo.eof()) {
+			if ((*inicio) == 0)
+			{
+				(*inicio) = pinfo;
+				(*last) = pinfo;
+			}
+			else
+			{
+				(*last)->sig = pinfo;
+				pinfo->ant = (*last);
+
+				(*last) = pinfo;
+			}
+
+			pinfo = new claseX;
+			archivaldo.read((char*)pinfo, sizeof(claseX));
+			pinfo->ant = 0;
+			pinfo->sig = 0;
+
+		}
+
+		archivaldo.close();
+	}
+	else
+	{
+		printf("El archivo no se pudo abrir.");
+	}
+};
+template <class claseY>
+void EscribirArchivo(claseY *inicio, char *file)
+{
+	claseY info;
+	claseY *aux = 0, *borrar;
+
+	ofstream archivaldo;
+	archivaldo.open(file, ios::binary | ios::trunc);
+	if (archivaldo.is_open())
+	{
+		// LEER la lista ligada
+		aux = inicio;
+		while (aux != 0)
+		{
+			archivaldo.write((char*)aux, sizeof(claseY));
+			borrar = aux;
+			aux = aux->sig;
+			delete borrar;
+		}
+		archivaldo.close();
+	}
+	else
+	{
+		printf("El archivo no se pudo abrir.");
+	}
+
+
+}
+
+template<class claseZ>
+void AgregaDatosNodo(claseZ ** inicio, claseZ **last, claseZ * nuevo)
+{
+	if ((*inicio) == NULL)
+	{
+		(*inicio) = nuevo;
+		(*last) = nuevo;
+	}
+	else
+	{
+		(*last)->sig = nuevo;
+		nuevo->ant = (*last);
+		(*last) = nuevo;
+	}
+
 }
 

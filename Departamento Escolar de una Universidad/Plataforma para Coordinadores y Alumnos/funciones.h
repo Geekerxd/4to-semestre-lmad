@@ -35,4 +35,7 @@ void icon(HWND Dlg); //agrega un icono
 void eliminarNodo(CooCarr *nodoEliminar);
 CooCarr *minimo(CooCarr *arbol);
 void reemplazar(CooCarr *arbol, CooCarr *nuevoNodo);
+template <class claseX> void LeeArchivo(claseX **inicio, claseX **last, char *file);
+template <class claseY> void EscribirArchivo(claseY *inicio, char *file);
 
+template <class claseZ> void AgregaDatosNodo(claseZ ** inicio, claseZ **last, claseZ * nuevo);

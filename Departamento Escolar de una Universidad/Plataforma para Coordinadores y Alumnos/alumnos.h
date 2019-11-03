@@ -12,5 +12,7 @@ public:
 
 	alumnos();
 	~alumnos();
+	alumnos *ant;
+	alumnos *sig;
 };
 
