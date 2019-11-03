@@ -33,6 +33,7 @@ public:
 
 	CooCarr	*dere;
 	CooCarr	*izqu;
+	CooCarr	*padre;
 };
 
 

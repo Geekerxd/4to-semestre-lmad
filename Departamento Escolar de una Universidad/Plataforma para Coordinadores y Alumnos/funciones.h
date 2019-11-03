@@ -32,3 +32,7 @@ void PreOrdenLLenaCB(CooCarr*nodo, HWND hVerComb);
 void PonImagen(HWND dialog, WPARAM IDC, char *imagen, int m, int n);// cambios
 void icon(HWND Dlg); //agrega un icono
 
+void eliminarNodo(CooCarr *nodoEliminar);
+CooCarr *minimo(CooCarr *arbol);
+void reemplazar(CooCarr *arbol, CooCarr *nuevoNodo);
+

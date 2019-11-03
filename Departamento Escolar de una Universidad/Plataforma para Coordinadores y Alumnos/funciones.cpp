@@ -8,28 +8,30 @@ int direccion = 0;
 //1 izquierda
 //2 derecha
 
-void AgregarNodoArbol(CooCarr*padre, CooCarr*nodo, HWND Dlg) {
+void AgregarNodoArbol(CooCarr*cabeza, CooCarr*nodo, HWND Dlg) {
 
 	//nodo es el dato nuevo.
-	//padre es el padre, al principio verdaderamente va a ser la raiz, 
+	//cabeza es el cabeza, al principio verdaderamente va a ser la raiz, 
 	// pero despues solo se usara su puesto.
 
-	if (padre != NULL)
+	if (cabeza != NULL)
 	{
-		if (strcmp(padre->CC_UserName, nodo->CC_UserName) < 0)
+		if (strcmp(cabeza->CC_UserName, nodo->CC_UserName) < 0)
 		{
-			if (padre->izqu == NULL) {
-				padre->izqu = nodo;
+			if (cabeza->izqu == NULL) {
+				cabeza->izqu = nodo;
+				nodo->padre = cabeza;
 			}//si es hoja
 
-			AgregarNodoArbol(padre->izqu, nodo, Dlg);
+			AgregarNodoArbol(cabeza->izqu, nodo, Dlg);
 		}
 		else {
-			if (strcmp(padre->CC_UserName, nodo->CC_UserName) > 0) {
-				if (padre->dere == NULL) {
-					padre->dere = nodo;
+			if (strcmp(cabeza->CC_UserName, nodo->CC_UserName) > 0) {
+				if (cabeza->dere == NULL) {
+					cabeza->dere = nodo;
+					nodo->padre = cabeza;
 				}//si es hoja 
-				AgregarNodoArbol(padre->dere, nodo, Dlg);
+				AgregarNodoArbol(cabeza->dere, nodo, Dlg);
 			}
 			/*else {
 				MessageBox(Dlg, "el Nodo ya se encuentra en el arbol binario", "informacion", MB_OK);
@@ -38,7 +40,7 @@ void AgregarNodoArbol(CooCarr*padre, CooCarr*nodo, HWND Dlg) {
 	}
 	else {
 
-		padre = nodo;
+		cabeza = nodo;
 	}
 
 }//fin funcion
@@ -48,9 +50,9 @@ void PreOrdenLLenaCB(CooCarr*nodo, HWND hVerComb) {
 		//EscribirNODO INFO
 		SendMessage(hVerComb, CB_ADDSTRING, 0, (LPARAM)nodo->D_DegreeName);
 		//llamada recursiva a PRE ORDEN con el sub árbol izquierdo
-		PreOrdenLLenaCB(nodo->izqu, hVerComb);
+			PreOrdenLLenaCB(nodo->izqu, hVerComb);
 		//llamada recursiva a PRE ORDEN con el sub árbol derecho
-		PreOrdenLLenaCB(nodo->dere, hVerComb);
+			PreOrdenLLenaCB(nodo->dere, hVerComb);
 	}
 }
 
@@ -81,5 +83,46 @@ void icon(HWND Dlg) {
 	oldBigIco = reinterpret_cast<HICON>(SendMessage(Dlg, WM_SETICON, ICON_BIG, reinterpret_cast<LPARAM>(newBigIco)));
 }
 
+void eliminarNodo(CooCarr *nodoEliminar) {
+	if (nodoEliminar->izqu && nodoEliminar->dere) {
+		CooCarr*menor = minimo(nodoEliminar->dere);
+		//copiar todos los datos
+		
+		strcpy(nodoEliminar->D_DegreeName, menor->D_DegreeName);
+		strcpy(nodoEliminar->D_Clave     , menor->D_Clave);
+		strcpy(nodoEliminar->D_Descrip   , menor->D_Descrip);
+		strcpy(nodoEliminar->D_Silgas    , menor->D_Silgas);
+		strcpy(nodoEliminar->CC_Name     , menor->CC_Name);
+		strcpy(nodoEliminar->CC_UserName , menor->CC_UserName);
+		strcpy(nodoEliminar->CC_Pass     , menor->CC_Pass);
+		strcpy(nodoEliminar->foto        , menor->foto);
+
+			eliminarNodo(menor);
+	}
+	else if (nodoEliminar->izqu) {//si tiene hijo izqu
+		reemplazar(nodoEliminar, nodoEliminar->izqu);
+		delete nodoEliminar;
+	}
+	else if (nodoEliminar->dere) {//si tiene hijo izqu
+		reemplazar(nodoEliminar, nodoEliminar->dere);
+		delete nodoEliminar;
+	}
+	else {
+		reemplazar(nodoEliminar, NULL);
+		delete nodoEliminar;
+	}
+}
+//Funcion para determinar el nodo mas izq posible
+CooCarr *minimo(CooCarr *arbol) {
+	if (arbol == NULL) {//si el arbol esta vacio
+		return NULL;//retornamos nulo
+	}
+	if (arbol->izqu) {//si tiene hijo izqu
+		return minimo(arbol->izqu);//buscamos la parte mas izqu posible
+	}
+	else {//si no tiene hijo izqu
+		return arbol;
+	}
+}
 
 

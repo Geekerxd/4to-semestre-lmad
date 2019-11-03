@@ -218,13 +218,16 @@ BOOL CALLBACK VentaCooGee(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		case IDC_B_Crear_Semestre: {
 
 			DialogBox(_hInst, MAKEINTRESOURCE(IDD_DIALOG_Crear_SEM), Dlg, CreaSem);
-			Saux = Sfirst;
-			while (Saux->sig != NULL) {
+			if(Sfirst!=NULL){
+				Saux = Sfirst;
+				while (Saux->sig != NULL) {
 
-				Saux = Saux->sig;
+					Saux = Saux->sig;
+				}
+				SendDlgItemMessage(Dlg, IDC_STATIC4, WM_SETTEXT, (WPARAM)80, (LPARAM)Saux->year);
+				SendDlgItemMessage(Dlg, IDC_STATIC5, WM_SETTEXT, (WPARAM)80, (LPARAM)Saux->MesMes);
 			}
-			SendDlgItemMessage(Dlg, IDC_STATIC4, WM_SETTEXT, (WPARAM)80, (LPARAM)Saux->year);
-			SendDlgItemMessage(Dlg, IDC_STATIC5, WM_SETTEXT, (WPARAM)80, (LPARAM)Saux->MesMes);
+			
 			return true;
 		}
 		case IDC_B_Registro_de_Materia: {
@@ -432,8 +435,14 @@ BOOL CALLBACK RegiMate   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		icon(Dlg);
 		a = 0;
 
-		aux = Root;
-		PreOrdenLLenaCB(aux, GetDlgItem(Dlg, IDC_COMBO1));//llena el ComboBox en preorden;
+		if (Root != NULL) {
+			aux = Root;
+			PreOrdenLLenaCB(aux, GetDlgItem(Dlg, IDC_COMBO1));//llena el ComboBox en preorden;
+		}
+		else {
+			MessageBox(Dlg, "No ha registrado nunguna Carrera ni Coordinador", "", MB_OK | MB_ICONERROR);
+		}
+
 		return true;
 	}
 	case WM_COMMAND:
@@ -492,13 +501,18 @@ BOOL CALLBACK VerCooCarr (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		EnableWindow(GetDlgItem(Dlg, IDC_Nombre), SW_HIDE);
 		EnableWindow(GetDlgItem(Dlg, IDC_Usuario), SW_HIDE);
 		EnableWindow(GetDlgItem(Dlg, IDC_Password), SW_HIDE);
-		
+
 		a = 1;
-		
+
 		icon(Dlg);
 
-		aux = Root;
-		PreOrdenLLenaCB(aux, GetDlgItem(Dlg, IDC_COMBO_aux));//llena el ComboBox en preorden;
+		if (Root != NULL) {
+			aux = Root;
+			PreOrdenLLenaCB(aux, GetDlgItem(Dlg, IDC_COMBO_aux));//llena el ComboBox en preorden;
+		}
+		else {
+		MessageBox(Dlg, "No ha registrado nunguna Carrera ni Coordinador", "", MB_OK | MB_ICONERROR); }
+		
 		return true;
 	}
 	case WM_COMMAND:
@@ -574,7 +588,25 @@ BOOL CALLBACK VerCooCarr (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			break;
 		}
 		case IDC_BU_Borrar: {
-			MessageBox(Dlg, "se Borró", "", MB_OK);
+			if (aux != NULL) {
+				if (aux->encontrado) {
+					//borrar funcion
+
+					/*if (aux == Root) {
+						MessageBox(Dlg, "es la raiz", "", MB_OK);
+					}*/
+
+						eliminarNodo(aux);
+					
+					
+					MessageBox(Dlg, "se Borró", "", MB_OK);
+					EndDialog(Dlg, 0);
+
+				}
+
+			}
+			else
+				MessageBox(Dlg, "No se Borró", "", MB_OK | MB_ICONERROR);
 			break;
 		}//
 
@@ -614,8 +646,14 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 		icon(Dlg);
 
-		aux = Root;
-		PreOrdenLLenaCB(aux, GetDlgItem(Dlg, IDC_COMBO1));//llena el ComboBox en preorden;
+		if (Root != NULL) {
+			aux = Root;
+			PreOrdenLLenaCB(aux, GetDlgItem(Dlg, IDC_COMBO1));//llena el ComboBox en preorden;
+		}
+		else {
+			MessageBox(Dlg, "No ha registrado nunguna Carrera ni Coordinador", "", MB_OK | MB_ICONERROR);
+		}
+
 		return true;
 	}
 	case WM_COMMAND:
@@ -749,6 +787,7 @@ void AgregaDatosNodo(HWND Dlg) {
 	aux = new CooCarr();
 	aux->dere = 0;
 	aux->izqu = 0;
+	aux->padre= 0;
 
 
 	//carrera
@@ -939,5 +978,30 @@ void BuscaNodoChar(CooCarr*nodo,char UsuAux[60]) {//usuario y contraseña
 
 }
 
+void reemplazar(CooCarr *arbol, CooCarr *nuevoNodo) {
+	if (arbol->padre) {
+		//arbol->padre hay que asignarle su nuevo hijo
+		if (arbol->CC_UserName == arbol->padre->izqu->CC_UserName) {
+			//si arbol es el hijo izquiero
+			arbol->padre->izqu = nuevoNodo;
+		}
+		else if (arbol->CC_UserName == arbol->padre->dere->CC_UserName) {
+			//si arbol es el hijo derecho
+			arbol->padre->dere = nuevoNodo;
+		}
+	}
+	if (nuevoNodo) {
+		//Procedemos a asignarle su nuevo padre
+		if (arbol->padre == NULL) {
+			nuevoNodo->padre = NULL;
+			
+				Root = nuevoNodo;
+		}
+		else { nuevoNodo->padre = arbol->padre; }
 
+	}
+	if (arbol->padre == NULL && nuevoNodo == NULL) {
+		Root = NULL;
+	}
+}
 
