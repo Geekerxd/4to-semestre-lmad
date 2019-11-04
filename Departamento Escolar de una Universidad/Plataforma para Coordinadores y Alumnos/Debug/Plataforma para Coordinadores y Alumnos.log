@@ -1,5 +1,6 @@
 ﻿  Codigo_Plataforma.cpp
-c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(342): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(558): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(836): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(334): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(549): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(843): warning C4102: 'finmate': unreferenced label
+c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(864): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
   Plataforma para Coordinadores y Alumnos.vcxproj -> C:\Users\Dell 66895\Desktop\Repositorio ~estructuras\Departamento Escolar de una Universidad\Debug\Plataforma para Coordinadores y Alumnos.exe

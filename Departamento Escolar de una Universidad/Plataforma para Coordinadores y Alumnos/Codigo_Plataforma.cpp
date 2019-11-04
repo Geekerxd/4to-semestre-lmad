@@ -26,7 +26,7 @@ using namespace std;
 OPENFILENAME ofn;
 
 CooCarr *Root = 0, *nuevo = 0;
-CooCarr*aux, *coor;
+CooCarr*aux, *coor; // Coordinador de Carrera Actual.
 
 alumnos  *A_Inicio = 0, *A_Last = 0;
 materias *M_Inicio = 0, *M_Last = 0;
@@ -36,14 +36,6 @@ Calif    *C_Inicio = 0, *C_Last = 0;
 HWND ghDlg = 0;
 HINSTANCE _hInst;
 int _show = 0;
-
-void AgregaDatosNodo(HWND Dlg);
-void openfilename();
-void LlenarUsuario(HWND objeto, UINT mensa, char *file); // rellenar un combo box
-void LeeArchivo();                                         //Lista con coordi
-void EscribirArchivo();
-void PreOrdenEscribeArchivo(ofstream *archivaldo, CooCarr*nodo);
-
 
 BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK VentaCooGee(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
@@ -290,9 +282,9 @@ BOOL CALLBACK VentaCooGee(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			return true;
 		}
 		case ID_VER_TODASLASMATERIASREGISTRADAS: {//Menú
-
-			DialogBox(_hInst, MAKEINTRESOURCE(IDD_Consulta_Materias), Dlg, VerMate);
-
+			
+				DialogBox(_hInst, MAKEINTRESOURCE(IDD_Consulta_Materias), Dlg, VerMate);
+			
 			return true;
 		}
 
@@ -407,7 +399,7 @@ BOOL CALLBACK CreaSem    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	*/
 			AgregaDatosNodo<Sem>(&S_Inicio,&S_Last, newo,3); // Agrega el nodo a la lista
 			MessageBox(Dlg, "Se Guardó", "", MB_OK | MB_ICONINFORMATION);
-
+			goto finsem;
 		sfin:
 			return true;
 		}
@@ -418,8 +410,7 @@ BOOL CALLBACK CreaSem    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	/// fin de "case WM_COMMAND"
 	case WM_CLOSE:
 	{
-
-
+		finsem:
 		EndDialog(Dlg, 0);
 		return true; 
 	}
@@ -682,81 +673,83 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		switch (HIWORD(wParam))
 		{
 		case CBN_SELCHANGE:{
-
-			HWND hlist = GetDlgItem(Dlg, IDC_LIST_unic);
-			//***************
-			_ASSERTE(hlist != NULL);
-			// Get current selection index in listbox
-			int itemIndex = (int)SendMessage(hlist, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-			if (itemIndex == LB_ERR)
-			{
-				goto llena;
-			}
-
-			// Get actual text in buffer
-			SendMessage(hlist, LB_GETTEXT, (WPARAM)itemIndex, (LPARAM)aux_datos);
-			//aqui busco la materia
-
-			if (M_Inicio != 0) {
-				materias *Maux2 = M_Inicio;
-				while (Maux2!= NULL) {
-					if (strcmp(aux_datos, Maux2->NombreMate) == 0) {
-						M_encontrado = Maux2;
-						break;
-					}
-					Maux2 = Maux2->sig;
+			
+				HWND hlist = GetDlgItem(Dlg, IDC_LIST_unic);
+				//***************
+				_ASSERTE(hlist != NULL);
+				// Get current selection index in listbox
+				int itemIndex = (int)SendMessage(hlist, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+				if (itemIndex == LB_ERR)
+				{
+					goto llena;
 				}
 
-
-			}
-			//**
-			if (M_encontrado) {
-				_itoa(*M_encontrado->creditos, cre, 10);
-				_itoa(*M_encontrado->HrByWeek, hrs, 10);
-				SendDlgItemMessage(Dlg, IDC_EDIT1, WM_SETTEXT, 80, (LPARAM)M_encontrado->NombreMate);
-				SendDlgItemMessage(Dlg, IDC_EDIT2, WM_SETTEXT, 80, (LPARAM)M_encontrado->Clave);
-				SendDlgItemMessage(Dlg, IDC_EDIT3, WM_SETTEXT, 80, (LPARAM)M_encontrado->Descrip);
-				SendDlgItemMessage(Dlg, IDC_EDIT4, WM_SETTEXT, 80, (LPARAM)cre);
-				SendDlgItemMessage(Dlg, IDC_EDIT5, WM_SETTEXT, 80, (LPARAM)hrs);
-			}
-			//********
-			llena:
-			SendMessage(hlist, LB_RESETCONTENT, 0, 0);
-
-			GetWindowText(GetDlgItem(Dlg, IDC_COMBO1), aux_mate, 256);
-
-			aux = NULL;
-			nuevo = Root;
-			BuscaNodoMateria(aux_mate, nuevo);
-
-			if (aux != NULL) { encontrado = aux->encontrado; }
-
-			
-			if (encontrado == false) {
-				MessageBox(Dlg, aux->D_DegreeName, aux_mate, MB_OK);
-				break;
-			}
-
-
-			if (encontrado) {
-				SendDlgItemMessage(Dlg, IDC_STATIC101, WM_SETTEXT, 50, (LPARAM)aux->D_DegreeName);
-				//manda a llamar una funcion para que busque la materias que de esta carrera 
+				// Get actual text in buffer
+				SendMessage(hlist, LB_GETTEXT, (WPARAM)itemIndex, (LPARAM)aux_datos);
+				//aqui busco la materia
 
 				if (M_Inicio != 0) {
-					materias *Maux = M_Inicio;
-					while (Maux != NULL) {
-						if (strcmp(aux->D_DegreeName, Maux->NombreDegree) == 0) {
-							SendMessage(hlist, LB_ADDSTRING, 0, (LPARAM)Maux->NombreMate);
+					materias *Maux2 = M_Inicio;
+					while (Maux2 != NULL) {
+						if (strcmp(aux_datos, Maux2->NombreMate) == 0) {
+							M_encontrado = Maux2;
+							break;
 						}
-						Maux = Maux->sig;
+						Maux2 = Maux2->sig;
 					}
 
 
 				}
+				//**
+				if (M_encontrado) {
+					_itoa(*M_encontrado->creditos, cre, 10);
+					_itoa(*M_encontrado->HrByWeek, hrs, 10);
+					SendDlgItemMessage(Dlg, IDC_EDIT1, WM_SETTEXT, 80, (LPARAM)M_encontrado->NombreMate);
+					SendDlgItemMessage(Dlg, IDC_EDIT2, WM_SETTEXT, 80, (LPARAM)M_encontrado->Clave);
+					SendDlgItemMessage(Dlg, IDC_EDIT3, WM_SETTEXT, 80, (LPARAM)M_encontrado->Descrip);
+					SendDlgItemMessage(Dlg, IDC_EDIT4, WM_SETTEXT, 80, (LPARAM)cre);
+					SendDlgItemMessage(Dlg, IDC_EDIT5, WM_SETTEXT, 80, (LPARAM)hrs);
+				}
+				//********
+			llena:
+				SendMessage(hlist, LB_RESETCONTENT, 0, 0);
 
-				aux->encontrado = false;
-				encontrado = false;
-			}
+				GetWindowText(GetDlgItem(Dlg, IDC_COMBO1), aux_mate, 256);
+
+				aux = NULL;
+				nuevo = Root;
+				BuscaNodoMateria(aux_mate, nuevo);
+
+				if (aux != NULL) { encontrado = aux->encontrado; }
+
+
+				if (encontrado == false) {
+					MessageBox(Dlg, aux->D_DegreeName, aux_mate, MB_OK);
+					break;
+				}
+
+
+				if (encontrado) {
+					SendDlgItemMessage(Dlg, IDC_STATIC101, WM_SETTEXT, 50, (LPARAM)aux->D_DegreeName);
+					//manda a llamar una funcion para que busque la materias que de esta carrera 
+
+					if (M_Inicio != 0) {
+						materias *Maux = M_Inicio;
+						while (Maux != NULL) {
+							if (strcmp(aux->D_DegreeName, Maux->NombreDegree) == 0) {
+								SendMessage(hlist, LB_ADDSTRING, 0, (LPARAM)Maux->NombreMate);
+							}
+							Maux = Maux->sig;
+						}
+
+
+					}
+
+					aux->encontrado = false;
+					encontrado = false;
+				}
+			
+			
 
 			break;
 		}
@@ -772,7 +765,7 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 				EnableWindow(GetDlgItem(Dlg, IDC_EDIT3), SW_HIDE);
 				EnableWindow(GetDlgItem(Dlg, IDC_EDIT4), SW_HIDE);
 				EnableWindow(GetDlgItem(Dlg, IDC_EDIT5), SW_HIDE);
-				
+
 
 			}//SW_RESTORE
 			else
@@ -787,9 +780,9 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			break;
 		}
 		case IDC_BU_Gu_Ca: {
-			
+
 			if (M_encontrado) {
-				
+
 				SendDlgItemMessage(Dlg, IDC_EDIT1, WM_GETTEXT, 80, (LPARAM)M_encontrado->NombreMate);
 				SendDlgItemMessage(Dlg, IDC_EDIT2, WM_GETTEXT, 80, (LPARAM)M_encontrado->Clave);
 				SendDlgItemMessage(Dlg, IDC_EDIT3, WM_GETTEXT, 80, (LPARAM)M_encontrado->Descrip);
@@ -803,6 +796,42 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			}
 			break;
 		}
+		case IDC_BU_Borrar_M:{
+			if (M_encontrado) {
+
+				if (M_encontrado == M_Inicio) {//si es el primer nodo
+					
+					if (M_Inicio->sig) {
+						M_Inicio->sig->ant = NULL;
+						M_Inicio = M_Inicio->sig;
+					}
+					else
+						M_Inicio = NULL;
+					delete M_encontrado;//?
+				}
+				else {
+
+					if (M_encontrado == M_Last) {//si es el ultimo nodo
+						M_Last->ant->sig = NULL;
+						M_Last= M_Last->ant;
+						delete M_encontrado;//?
+					}
+					else {
+						M_encontrado->ant->sig = M_encontrado->sig;
+						M_encontrado->sig->ant = M_encontrado->ant;
+						delete M_encontrado;
+					}
+
+				}
+
+
+				MessageBox(Dlg, "Se Borro", "", MB_OK);// goto finmate;
+			}
+
+
+
+			break;
+		}
 
 		}
 		/// fin de "switch (LOWORD(wParam))"
@@ -811,7 +840,7 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	/// fin de "case WM_COMMAND"
 	case WM_CLOSE:
 	{
-
+		finmate:
 		M_encontrado = NULL;
 		aux = NULL;
 		EndDialog(Dlg, 0);
@@ -821,7 +850,6 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 	return false;///el return false
 }
-
 
 BOOL CALLBACK CooCarrera (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 {
@@ -1111,8 +1139,6 @@ void reemplazar(CooCarr *arbol, CooCarr *nuevoNodo) {
 	}
 }
 //nodo
-
-
 template<class claseZ>
 void AgregaDatosNodo(claseZ ** inicio, claseZ **last, claseZ * nuevo,int num)
 {

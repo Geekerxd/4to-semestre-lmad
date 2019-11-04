@@ -17,6 +17,18 @@
 
 #include "LLCooCarr.h"
 
+using namespace std;
+
+
+
+
+void AgregaDatosNodo(HWND Dlg);
+void openfilename();
+void LlenarUsuario(HWND objeto, UINT mensa, char *file); // rellenar un combo box
+void LeeArchivo();                                         //Lista con coordi
+void EscribirArchivo();
+void PreOrdenEscribeArchivo(ofstream *archivaldo, CooCarr*nodo);
+
 
 
 void BuscaNodoChar(CooCarr*nodo,char UsuAux[60]);

@@ -65,6 +65,8 @@
 #define IDC_STATIC101                   1046
 #define IDC_BU_Borrar                   1046
 #define IDC_STATIC4                     1047
+#define IDC_BU_Gu_Ca2                   1047
+#define IDC_BU_Borrar_M                 1047
 #define IDC_STATIC5                     1048
 #define IDC_STATIC6                     1049
 #define IDC_STATIC7                     1050
