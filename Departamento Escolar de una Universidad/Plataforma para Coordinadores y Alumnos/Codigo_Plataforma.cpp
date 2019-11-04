@@ -9,6 +9,9 @@
 #include <string.h>
 #include <string>
 
+#include <tchar.h>              // Support TCHAR's
+#include <crtdbg.h> 
+
 #include "resource.h"
 #include "Files.h"
 #include "funciones.h"
@@ -641,9 +644,11 @@ BOOL CALLBACK VerCooCarr (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 }
 BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 {
-	//me quede aqui
-	char aux_mate[60];
-	char aux_datos[60];
+	static materias *M_encontrado = NULL;
+	static char aux_mate[60];
+	static char aux_datos[60];
+	static char cre[10];
+	static char hrs[10];
 	bool encontrado = false;
 	//static 
 
@@ -676,8 +681,50 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	{
 		switch (HIWORD(wParam))
 		{
+		
 		case CBN_SELCHANGE:{
+
 			HWND hlist = GetDlgItem(Dlg, IDC_LIST_unic);
+			//***************
+			_ASSERTE(hlist != NULL);
+			// Get current selection index in listbox
+			int itemIndex = (int)SendMessage(hlist, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+			if (itemIndex == LB_ERR)
+			{
+				goto llena;
+			}
+
+			// Get actual text in buffer
+			SendMessage(hlist, LB_GETTEXT, (WPARAM)itemIndex, (LPARAM)aux_datos);
+			//aqui busco la materia
+
+			if (M_Inicio != 0) {
+				materias *Maux2 = M_Inicio;
+				while (Maux2->sig != NULL) {
+					if (strcmp(aux_datos, Maux2->NombreMate) == 0) {
+						M_encontrado = Maux2;
+						break;
+					}
+					Maux2 = Maux2->sig;
+				}
+
+
+			}
+			//**
+			if (M_encontrado) {
+				_itoa(*M_encontrado->creditos, cre, 10);
+				_itoa(*M_encontrado->HrByWeek, hrs, 10);
+				SendDlgItemMessage(Dlg, IDC_EDIT1, WM_SETTEXT, 80, (LPARAM)M_encontrado->NombreMate);
+				SendDlgItemMessage(Dlg, IDC_EDIT2, WM_SETTEXT, 80, (LPARAM)M_encontrado->Clave);
+				SendDlgItemMessage(Dlg, IDC_EDIT3, WM_SETTEXT, 80, (LPARAM)M_encontrado->Descrip);
+				SendDlgItemMessage(Dlg, IDC_EDIT4, WM_SETTEXT, 80, (LPARAM)cre);
+				SendDlgItemMessage(Dlg, IDC_EDIT5, WM_SETTEXT, 80, (LPARAM)hrs);
+				//M_encontrado=NULL
+			}
+			//********
+			llena:
+			SendMessage(hlist, LB_RESETCONTENT, 0, 0);
+
 			GetWindowText(GetDlgItem(Dlg, IDC_COMBO1), aux_mate, 256);
 
 			aux = NULL;
@@ -709,19 +756,14 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 				}
 
-
 				aux->encontrado = false;
 				encontrado = false;
 			}
 
 			break;
 		}
-		/*case CBN_KILLFOCUS:
-			MessageBox(Dlg, "perdio el foco", "", MB_OK);
-			break;*/
-		/*case CBN_CLOSEUP:
-			MessageBox(Dlg, "cerro la ventana", "", MB_OK);
-			break;*/
+		
+		
 		}
 
 
@@ -751,7 +793,9 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			break;
 		}
 		case IDC_BU_Gu_Ca: {
-			MessageBox(Dlg, "aqui se guardarán los cambios", "", MB_OK);
+			HWND hlist = GetDlgItem(Dlg, IDC_LIST_unic);
+			
+			MessageBox(Dlg, aux_datos, "recibe focus", MB_OK);
 			break;
 		}
 
@@ -763,7 +807,8 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	case WM_CLOSE:
 	{
 
-
+		M_encontrado = NULL;
+		aux = NULL;
 		EndDialog(Dlg, 0);
 		return true; }
 	}
