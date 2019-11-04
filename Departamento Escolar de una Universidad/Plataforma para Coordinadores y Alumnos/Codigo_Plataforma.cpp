@@ -267,20 +267,22 @@ BOOL CALLBACK VentaCooGee(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 				MB_YESNO |
 				MB_ICONASTERISK | MB_DEFBUTTON1) == IDYES)
 			{
-
-
-				//EscribirArchivo();
-				//EscribirDatos();  //contador eimagenes
-				//EscribirDoc();
-
-				//PostQuitMessage(0);
+				//MessageBox(Dlg, "Se guardó", "informacion", MB_OK | MB_ICONINFORMATION);
+				EscribirArchivo();
+				EscribirArchivo(M_Inicio, a_file9);//materias
+				EscribirArchivo(A_Inicio, a_file7);//alumnos
+				EscribirArchivo(S_Inicio, a_file8);//semestre
+				EscribirArchivo(C_Inicio, a_file10);//calif
+				PostQuitMessage(0);
 			}
 			else {
 				//MessageBox(Dlg, "No se guardó", "informacion", MB_OK | MB_ICONEXCLAMATION);
 				PostQuitMessage(0);
 			}
+
 			return true;
 		}
+
 		case ID_VER_VERTODOSLOSCOORDINADORESREGISTRADOS: {//Menú
 
 			DialogBox(_hInst, MAKEINTRESOURCE(IDD_VerCooCarrWindow), Dlg, VerCooCarr);
@@ -302,8 +304,6 @@ BOOL CALLBACK VentaCooGee(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	
 	case WM_CLOSE:
 	{
-
-
 		EndDialog(Dlg, 0);
 		return true; }
 	}
@@ -681,7 +681,6 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	{
 		switch (HIWORD(wParam))
 		{
-		
 		case CBN_SELCHANGE:{
 
 			HWND hlist = GetDlgItem(Dlg, IDC_LIST_unic);
@@ -700,7 +699,7 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 			if (M_Inicio != 0) {
 				materias *Maux2 = M_Inicio;
-				while (Maux2->sig != NULL) {
+				while (Maux2!= NULL) {
 					if (strcmp(aux_datos, Maux2->NombreMate) == 0) {
 						M_encontrado = Maux2;
 						break;
@@ -719,7 +718,6 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 				SendDlgItemMessage(Dlg, IDC_EDIT3, WM_SETTEXT, 80, (LPARAM)M_encontrado->Descrip);
 				SendDlgItemMessage(Dlg, IDC_EDIT4, WM_SETTEXT, 80, (LPARAM)cre);
 				SendDlgItemMessage(Dlg, IDC_EDIT5, WM_SETTEXT, 80, (LPARAM)hrs);
-				//M_encontrado=NULL
 			}
 			//********
 			llena:
@@ -746,7 +744,7 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 				if (M_Inicio != 0) {
 					materias *Maux = M_Inicio;
-					while (Maux->sig != NULL) {
+					while (Maux != NULL) {
 						if (strcmp(aux->D_DegreeName, Maux->NombreDegree) == 0) {
 							SendMessage(hlist, LB_ADDSTRING, 0, (LPARAM)Maux->NombreMate);
 						}
@@ -762,11 +760,7 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 			break;
 		}
-		
-		
 		}
-
-
 		switch (LOWORD(wParam))
 		{
 		case IDC_BU_Edi: {
@@ -793,9 +787,20 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			break;
 		}
 		case IDC_BU_Gu_Ca: {
-			HWND hlist = GetDlgItem(Dlg, IDC_LIST_unic);
 			
-			MessageBox(Dlg, aux_datos, "recibe focus", MB_OK);
+			if (M_encontrado) {
+				
+				SendDlgItemMessage(Dlg, IDC_EDIT1, WM_GETTEXT, 80, (LPARAM)M_encontrado->NombreMate);
+				SendDlgItemMessage(Dlg, IDC_EDIT2, WM_GETTEXT, 80, (LPARAM)M_encontrado->Clave);
+				SendDlgItemMessage(Dlg, IDC_EDIT3, WM_GETTEXT, 80, (LPARAM)M_encontrado->Descrip);
+				SendDlgItemMessage(Dlg, IDC_EDIT4, WM_GETTEXT, 80, (LPARAM)cre);
+				SendDlgItemMessage(Dlg, IDC_EDIT5, WM_GETTEXT, 80, (LPARAM)hrs);
+				*M_encontrado->creditos = atoi(cre);
+				*M_encontrado->HrByWeek = atoi(hrs);
+
+
+				MessageBox(Dlg, M_encontrado->NombreMate, "Se Actualizó", MB_OK);
+			}
 			break;
 		}
 
@@ -837,7 +842,38 @@ BOOL CALLBACK CooCarrera (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	{
 		switch (LOWORD(wParam))
 		{
+			/*
+			______________________
+			_______  AQUI  _______
+			_______  AQUI  _______
+			______________________
+			*/
 
+
+		case ID_OPCIONES_REGRESAR:{
+			EndDialog(Dlg, 0);
+			return true;
+		}
+		case ID_OPCIONES_GUARDARYSALIR:{
+			if (MessageBox(Dlg, "¿Quieres guardadr los cambios?",
+				"Alto",
+				MB_YESNO |
+				MB_ICONASTERISK | MB_DEFBUTTON1) == IDYES)
+			{
+				//MessageBox(Dlg, "Se guardó", "informacion", MB_OK | MB_ICONINFORMATION);
+				EscribirArchivo();
+				EscribirArchivo(M_Inicio, a_file9);//materias
+				EscribirArchivo(A_Inicio, a_file7);//alumnos
+				EscribirArchivo(S_Inicio, a_file8);//semestre
+				EscribirArchivo(C_Inicio, a_file10);//calif
+				PostQuitMessage(0);
+			}
+			else {
+				//MessageBox(Dlg, "No se guardó", "informacion", MB_OK | MB_ICONEXCLAMATION);
+				PostQuitMessage(0);
+			}
+			return true;
+		}
 
 		}
 		/// fin de "switch (LOWORD(wParam))"
@@ -846,8 +882,6 @@ BOOL CALLBACK CooCarrera (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	/// fin de "case WM_COMMAND"
 	case WM_CLOSE:
 	{
-
-
 		EndDialog(Dlg, 0);
 		return true; }
 	}
@@ -1077,6 +1111,27 @@ void reemplazar(CooCarr *arbol, CooCarr *nuevoNodo) {
 	}
 }
 //nodo
+
+
+template<class claseZ>
+void AgregaDatosNodo(claseZ ** inicio, claseZ **last, claseZ * nuevo,int num)
+{
+	if ((*inicio) == NULL)
+	{
+		(*inicio) = nuevo;
+		(*inicio)->SetID(0, num);
+		(*last) = nuevo;
+	}
+	else
+	{
+		nuevo->SetID(  (*last)->GetID(num)+1  , num);
+		(*last)->sig = nuevo;
+		nuevo->ant = (*last);
+		(*last) = nuevo;
+	}
+
+}
+
 template <class claseX>
 void LeeArchivo(claseX **inicio, claseX **last, char *file)
 {
@@ -1146,25 +1201,6 @@ void EscribirArchivo(claseY *inicio, char *file)
 		printf("El archivo no se pudo abrir.");
 	}
 
-
-}
-
-template<class claseZ>
-void AgregaDatosNodo(claseZ ** inicio, claseZ **last, claseZ * nuevo,int num)
-{
-	if ((*inicio) == NULL)
-	{
-		(*inicio) = nuevo;
-		(*inicio)->SetID(0, num);
-		(*last) = nuevo;
-	}
-	else
-	{
-		nuevo->SetID(  (*last)->GetID(num)+1  , num);
-		(*last)->sig = nuevo;
-		nuevo->ant = (*last);
-		(*last) = nuevo;
-	}
 
 }
 
