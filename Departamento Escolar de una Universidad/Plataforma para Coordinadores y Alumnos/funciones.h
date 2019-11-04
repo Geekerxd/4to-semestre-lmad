@@ -41,7 +41,7 @@ void PreOrdenLLenaCB(CooCarr*nodo, HWND hVerComb);
 //void PreOrdenEscribeArchivo(ofstream *archivaldo,CooCarr*nodo);
 
 
-void PonImagen(HWND dialog, WPARAM IDC, char *imagen, int m, int n);// cambios
+void PonImagen(HWND dialog, WPARAM IDC, char *imagen, float m, float n);// cambios
 void icon(HWND Dlg); //agrega un icono
 
 void eliminarNodo(CooCarr *nodoEliminar);

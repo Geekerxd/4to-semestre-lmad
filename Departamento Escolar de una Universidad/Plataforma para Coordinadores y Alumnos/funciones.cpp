@@ -56,7 +56,7 @@ void PreOrdenLLenaCB(CooCarr*nodo, HWND hVerComb) {
 	}
 }
 
-void PonImagen(HWND dialog, WPARAM IDC, char *imagen, int m, int n) {
+void PonImagen(HWND dialog, WPARAM IDC, char *imagen, float m, float n) {
 
 	static HBITMAP bmp1, bmp2;
 	//Al objeto bmp1, se le asigna sin imagen:

@@ -45,6 +45,10 @@ BOOL CALLBACK RegiMate   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK VerCooCarr (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK CooCarrera (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
+BOOL CALLBACK RegiAlum(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
+BOOL CALLBACK AsiMasiv(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
+BOOL CALLBACK CapCalif(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
+
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, PSTR cmd, int show)
 {
 	GetCurrentDirectory(MAX_PATH, file0);
@@ -853,7 +857,6 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 BOOL CALLBACK CooCarrera (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 {
-
 	switch (Mensaje)
 	{
 	case WM_INITDIALOG:
@@ -862,20 +865,21 @@ BOOL CALLBACK CooCarrera (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		SendDlgItemMessage(Dlg, IDC_STATIC_name_cc, WM_SETTEXT, 50, (LPARAM)aux->CC_Name);
 		SendDlgItemMessage(Dlg, IDC_STATIC_carr_cc, WM_SETTEXT, 50, (LPARAM)aux->D_DegreeName);
 		PonImagen(Dlg, IDC_Pho_CooCarr, aux->foto, 75, 97.65);
-
-
-		return true;
+        return true;
 	}
 	case WM_COMMAND:
 	{
 		switch (LOWORD(wParam))
 		{
-			/*
-			______________________
-			_______  AQUI  _______
-			_______  AQUI  _______
-			______________________
-			*/
+		case IDC_Alta: {
+			DialogBox(_hInst, MAKEINTRESOURCE(IDD_D_Regi_Alum), Dlg, RegiAlum);
+			break; }
+		case IDC_InscAlumn: {
+			DialogBox(_hInst, MAKEINTRESOURCE(IDD_D_Asig_Masiva), Dlg, AsiMasiv);
+			break; }
+		case IDC_Captura_Calif: {
+			DialogBox(_hInst, MAKEINTRESOURCE(IDD_Calif), Dlg, CapCalif);
+			break; }
 
 
 		case ID_OPCIONES_REGRESAR:{
@@ -917,6 +921,131 @@ BOOL CALLBACK CooCarrera (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 
 
+	return false;///el return false
+}
+BOOL CALLBACK RegiAlum(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
+{
+
+	switch (Mensaje)
+	{
+	case WM_INITDIALOG:
+	{
+		icon(Dlg);
+		//IDC_STATIC_Carrera
+			SendDlgItemMessage(Dlg, IDC_STATIC_Carrera, WM_SETTEXT, (WPARAM)100, (LPARAM)coor->D_DegreeName);
+	
+
+		return true;
+	}
+	case WM_COMMAND:
+	{
+		switch (LOWORD(wParam))
+		{
+
+		case IDC_B_Registrar_Alumno: {
+			char matricula[30];
+			alumnos *newo = 0;
+			newo = new alumnos;
+			newo->sig = NULL;
+			newo->ant = NULL;
+
+			SendDlgItemMessage(Dlg, IDC_EDIT1, WM_GETTEXT, (WPARAM)100, (LPARAM)newo->Nombres);
+			SendDlgItemMessage(Dlg, IDC_EDIT2, WM_GETTEXT, (WPARAM)100, (LPARAM)newo->Apellidos);
+			
+				strcpy(newo->carrera, coor->D_DegreeName);
+			SendDlgItemMessage(Dlg, IDC_EDIT8, WM_GETTEXT, (WPARAM)30, (LPARAM)matricula);
+			*newo->matricula= atoi(matricula);
+			/*
+	EID_materia = 0
+	EID_carrera   = 1 ( pero si es arobl .-. )
+	EID_alumno    = 2
+	EID_semestre  = 3
+	*/
+			AgregaDatosNodo<alumnos>(&A_Inicio, &A_Last, newo, 2); // Agrega el nodo a la lista
+			MessageBox(Dlg, "Se Guardó", "", MB_OK | MB_ICONINFORMATION);
+
+			return true;
+		}
+
+
+		}
+		/// fin de "switch (LOWORD(wParam))"
+		return true;
+	}
+	/// fin de "case WM_COMMAND"
+	case WM_CLOSE:
+	{
+		EndDialog(Dlg, 0);
+		return true; }
+	}
+	///fin de "switch (Mensaje)"
+
+
+
+	return false;///el return false
+}
+
+BOOL CALLBACK AsiMasiv(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
+{
+
+	switch (Mensaje)
+	{
+	case WM_INITDIALOG: {
+		PonImagen(Dlg, IDC_Alum_A_Mate, file11, 350, 107.5);
+		PonImagen(Dlg, IDC_Mate_A_Alum, file12, 350, 107.5);
+		return true;
+	}
+	case WM_COMMAND:
+	{
+		switch (LOWORD(wParam))
+		{
+		case IDC_BUTTON_Alum_A_Mate:{
+			MessageBox(Dlg, "Alum_A_Mate", "", MB_OK); 
+		    break;
+		}
+			
+		case IDC_BUTTON_Mate_A_Alum:{
+			MessageBox(Dlg, "Mate_A_Alum", "", MB_OK);
+		    break; 
+		}
+			
+		}
+		/// fin de "switch (LOWORD(wParam))"
+		return true;
+	}
+	/// fin de "case WM_COMMAND"
+	case WM_CLOSE:{EndDialog(Dlg, 0);return true; }
+	}
+	///fin de "switch (Mensaje)"
+	return false;///el return false
+}
+BOOL CALLBACK CapCalif(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
+{
+
+	switch (Mensaje)
+	{
+	case WM_INITDIALOG: {
+		
+		return true;
+	}
+	case WM_COMMAND:
+	{
+		switch (LOWORD(wParam))
+		{
+		/*
+		______________________________________
+		_________Aqui_________________________
+		______________________________________
+		*/
+
+		}
+		/// fin de "switch (LOWORD(wParam))"
+		return true;
+	}
+	/// fin de "case WM_COMMAND"
+	case WM_CLOSE: {EndDialog(Dlg, 0); return true; }
+	}
+	///fin de "switch (Mensaje)"
 	return false;///el return false
 }
 
