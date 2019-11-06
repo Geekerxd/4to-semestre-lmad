@@ -16,9 +16,13 @@
 #define IDD_D_Regi_Alum                 119
 #define IDD_D_Asig_Masiva               121
 #define IDD_Calif                       123
+#define IDD_ALUM_MATE                   125
+#define IDD_MATE_ALUM                   127
 #define IDC_STATIC_01                   1001
 #define IDC_COMBO1                      1002
+#define IDC_STATIC_3                    1002
 #define IDC_EDIT1                       1003
+#define IDC_STATIC_4                    1003
 #define IDC_EDIT2                       1004
 #define IDC_EDIT8                       1005
 #define IDC_STATIC_iz                   1006
@@ -62,7 +66,9 @@
 #define IDC_InscAlumn                   1042
 #define IDC_LIST1                       1043
 #define IDC_LIST_unic                   1043
+#define IDC_LIST_ALUMN                  1043
 #define IDC_BU_Edi                      1044
+#define IDC_LIST_ALUMN_SELECCION        1044
 #define IDC_BUTTON2                     1045
 #define IDC_BU_Gu_Ca                    1045
 #define IDC_STATIC101                   1046
@@ -80,9 +86,13 @@
 #define IDC_Mate_A_Alum                 1054
 #define IDC_EDIT10                      1055
 #define IDC_EDIT11                      1056
-#define IDC_EDIT12                      1057
-#define IDC_EDIT13                      1058
 #define IDC_EDIT19                      1058
+#define IDC_LIST_unic2                  1059
+#define IDC_COMBO2                      1060
+#define IDC_BUTTON1                     1061
+#define IDC_LIST_MATE                   1062
+#define IDC_LIST_MATE_SELECCION         1063
+#define IDC_B_INSCRI                    1064
 #define ID_OPCIONES_ATRAS               40001
 #define ID_OPCIONES_Regresar            40002
 #define ID_OPCIONES_SALIRYGUARDAR       40003
@@ -98,9 +108,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        125
+#define _APS_NEXT_RESOURCE_VALUE        129
 #define _APS_NEXT_COMMAND_VALUE         40011
-#define _APS_NEXT_CONTROL_VALUE         1059
+#define _APS_NEXT_CONTROL_VALUE         1065
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

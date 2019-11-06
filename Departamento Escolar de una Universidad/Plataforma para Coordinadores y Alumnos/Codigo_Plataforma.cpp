@@ -45,9 +45,11 @@ BOOL CALLBACK RegiMate   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK VerCooCarr (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK CooCarrera (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
-BOOL CALLBACK RegiAlum(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
-BOOL CALLBACK AsiMasiv(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
-BOOL CALLBACK CapCalif(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
+BOOL CALLBACK RegiAlum   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
+BOOL CALLBACK AsiMasiv   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
+BOOL CALLBACK AsiMasiv1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
+BOOL CALLBACK AsiMasiv2(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
+BOOL CALLBACK CapCalif   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, PSTR cmd, int show)
 {
@@ -459,9 +461,7 @@ BOOL CALLBACK RegiMate   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 			SendDlgItemMessage(Dlg, IDC_EDIT1, WM_GETTEXT, (WPARAM)100, (LPARAM)newo->NombreMate);
 			SendDlgItemMessage(Dlg, IDC_EDIT2, WM_GETTEXT, (WPARAM)80, (LPARAM)newo->Clave);
-			GetWindowText(GetDlgItem(Dlg, IDC_COMBO1), newo->NombreDegree, 256);//tiene que haber un char a fuerzas
-			// Aqui pondre un funcion para buscar esta carrera
-			// y asignare su (id de carrera) a la (id de carrera) esta materia
+			GetWindowText(GetDlgItem(Dlg, IDC_COMBO1), newo->NombreDegree, 256);
 			SendDlgItemMessage(Dlg, IDC_EDIT4, WM_GETTEXT, (WPARAM)300, (LPARAM)newo->Descrip);
 			SendDlgItemMessage(Dlg, IDC_EDIT8, WM_GETTEXT, (WPARAM)15, (LPARAM)creditos);
 			*newo->creditos = atoi(creditos);
@@ -476,6 +476,11 @@ BOOL CALLBACK RegiMate   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			AgregaDatosNodo<materias>(&M_Inicio, &M_Last, newo, 0); // Agrega el nodo a la lista
 			MessageBox(Dlg, "Se Guardó", "", MB_OK | MB_ICONINFORMATION);
 			
+			SendDlgItemMessage(Dlg, IDC_EDIT1, WM_SETTEXT, (WPARAM)100, (LPARAM)0);
+			SendDlgItemMessage(Dlg, IDC_EDIT2, WM_SETTEXT, (WPARAM)80,  (LPARAM)0);
+			SendDlgItemMessage(Dlg, IDC_EDIT4, WM_SETTEXT, (WPARAM)300, (LPARAM)0);
+			SendDlgItemMessage(Dlg, IDC_EDIT8, WM_SETTEXT, (WPARAM)15,  (LPARAM)0);
+			SendDlgItemMessage(Dlg, IDC_EDIT9, WM_SETTEXT, (WPARAM)15,  (LPARAM)0);
 			return true;
 		}
 		
@@ -758,6 +763,7 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			break;
 		}
 		}
+
 		switch (LOWORD(wParam))
 		{
 		case IDC_BU_Edi: {
@@ -865,6 +871,9 @@ BOOL CALLBACK CooCarrera (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		SendDlgItemMessage(Dlg, IDC_STATIC_name_cc, WM_SETTEXT, 50, (LPARAM)aux->CC_Name);
 		SendDlgItemMessage(Dlg, IDC_STATIC_carr_cc, WM_SETTEXT, 50, (LPARAM)aux->D_DegreeName);
 		PonImagen(Dlg, IDC_Pho_CooCarr, aux->foto, 75, 97.65);
+
+		SendDlgItemMessage(Dlg, IDC_STATIC_3, WM_SETTEXT, 50, (LPARAM)S_Last->MesMes);//IDC_STATIC_4
+		SendDlgItemMessage(Dlg, IDC_STATIC_4, WM_SETTEXT, 50, (LPARAM)S_Last->year);  //
         return true;
 	}
 	case WM_COMMAND:
@@ -923,7 +932,7 @@ BOOL CALLBACK CooCarrera (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 	return false;///el return false
 }
-BOOL CALLBACK RegiAlum(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
+BOOL CALLBACK RegiAlum   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 {
 
 	switch (Mensaje)
@@ -934,7 +943,6 @@ BOOL CALLBACK RegiAlum(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		//IDC_STATIC_Carrera
 			SendDlgItemMessage(Dlg, IDC_STATIC_Carrera, WM_SETTEXT, (WPARAM)100, (LPARAM)coor->D_DegreeName);
 	
-
 		return true;
 	}
 	case WM_COMMAND:
@@ -963,6 +971,9 @@ BOOL CALLBACK RegiAlum(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	*/
 			AgregaDatosNodo<alumnos>(&A_Inicio, &A_Last, newo, 2); // Agrega el nodo a la lista
 			MessageBox(Dlg, "Se Guardó", "", MB_OK | MB_ICONINFORMATION);
+			SendDlgItemMessage(Dlg, IDC_EDIT1, WM_SETTEXT, (WPARAM)0, (LPARAM)"");//limpio pantalla
+			SendDlgItemMessage(Dlg, IDC_EDIT2, WM_SETTEXT, (WPARAM)0, (LPARAM)"");
+			SendDlgItemMessage(Dlg, IDC_EDIT8, WM_SETTEXT, (WPARAM)0, (LPARAM)"" );
 
 			return true;
 		}
@@ -984,8 +995,8 @@ BOOL CALLBACK RegiAlum(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 	return false;///el return false
 }
-
-BOOL CALLBACK AsiMasiv(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
+					     
+BOOL CALLBACK AsiMasiv   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 {
 
 	switch (Mensaje)
@@ -1000,12 +1011,12 @@ BOOL CALLBACK AsiMasiv(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		switch (LOWORD(wParam))
 		{
 		case IDC_BUTTON_Alum_A_Mate:{
-			MessageBox(Dlg, "Alum_A_Mate", "", MB_OK); 
+			DialogBox(_hInst, MAKEINTRESOURCE(IDD_ALUM_MATE), Dlg, AsiMasiv1);
 		    break;
 		}
 			
 		case IDC_BUTTON_Mate_A_Alum:{
-			MessageBox(Dlg, "Mate_A_Alum", "", MB_OK);
+			DialogBox(_hInst, MAKEINTRESOURCE(IDD_MATE_ALUM), Dlg, AsiMasiv2);
 		    break; 
 		}
 			
@@ -1019,25 +1030,384 @@ BOOL CALLBACK AsiMasiv(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	///fin de "switch (Mensaje)"
 	return false;///el return false
 }
-BOOL CALLBACK CapCalif(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
+BOOL CALLBACK AsiMasiv1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)//alumno a mate
+{
+	static HWND hVerComb2=0;
+	static HWND hlist1 = 0;
+	static HWND hlist2 = 0;
+	static materias *Maux3;
+	static alumnos *Aaux1;
+	static char lista1info[50];
+	static char lista1info2[50];
+	static char aux_mate[50];
+	static alumnos *A_encontrado = NULL;
+	static alumnos *A_encontrado2 = NULL;
+	switch (Mensaje)
+	{
+	case WM_INITDIALOG: {
+		hVerComb2 = GetDlgItem(Dlg, IDC_COMBO1);
+		hlist1= GetDlgItem(Dlg, IDC_LIST_ALUMN);
+		icon(Dlg);
+		
+		Maux3 = M_Inicio;//llena el cobo de las materias
+		while (Maux3 != NULL) {
+
+			if (strcmp(Maux3->NombreDegree, coor->D_DegreeName) == 0) {
+				SendMessage(hVerComb2, CB_ADDSTRING, 0, (LPARAM)Maux3->NombreMate);
+			}
+
+
+			Maux3 = Maux3->sig;
+		}
+		//llena la lista de alumnos
+		Aaux1 = A_Inicio;
+		while (Aaux1 != NULL) {
+
+			if (strcmp(Aaux1->carrera, coor->D_DegreeName) == 0) {
+				SendMessage(hlist1, LB_ADDSTRING, 0, (LPARAM)Aaux1->Nombres);
+			}
+
+
+			Aaux1 = Aaux1->sig;
+		}
+
+		return true;
+	}
+	case WM_COMMAND:
+	{
+		switch (HIWORD(wParam))
+		{
+		case LBN_SELCHANGE: {
+			/*A_encontrado = NULL;
+			A_encontrado2 = NULL;*/
+			//hVerComb2 = GetDlgItem(Dlg, IDC_COMBO1);
+			hlist1 = GetDlgItem(Dlg, IDC_LIST_ALUMN);
+			hlist2 = GetDlgItem(Dlg, IDC_LIST_ALUMN_SELECCION);
+			
+			_ASSERTE(hlist1 != NULL);
+			
+			// Get current selection index in listbox
+			int itemIndex = (int)SendMessage(hlist1, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+			if (itemIndex == LB_ERR)
+			{
+				goto llenaA01;
+			}
+			
+			
+
+			// Get actual text in buffer
+			SendMessage(hlist1, LB_GETTEXT, (WPARAM)itemIndex, (LPARAM)lista1info);
+			
+			
+
+			//**
+			if (lista1info!=NULL) {
+				//LB_DELETESTRING
+				SendMessage(hlist1, LB_DELETESTRING, (WPARAM)itemIndex, 0);
+				SendMessage(hlist2, LB_ADDSTRING, 0, (LPARAM)lista1info);
+
+
+				strcpy(lista1info,"");
+			}
+			
+
+		llenaA01:
+			_ASSERTE(hlist2 != NULL);
+			int itemIndex2 = (int)SendMessage(hlist2, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+			if (itemIndex2 == LB_ERR)
+			{
+
+
+				goto llenaA02;
+			}
+			SendMessage(hlist2, LB_GETTEXT, (WPARAM)itemIndex2, (LPARAM)lista1info2);
+
+			if (lista1info2!=NULL) {
+
+				SendMessage(hlist2, LB_DELETESTRING, (WPARAM)itemIndex2, 0);
+				SendMessage(hlist1, LB_ADDSTRING, 0, (LPARAM)lista1info2);
+				strcpy(lista1info2, "");
+			}
+
+		llenaA02:
+
+
+			break;
+		}//fin hihgword
+		}//fin switch
+
+		switch (LOWORD(wParam))
+		{
+
+		case IDC_B_INSCRI:{
+			hlist2 = GetDlgItem(Dlg, IDC_LIST_ALUMN_SELECCION);
+			hVerComb2 = GetDlgItem(Dlg, IDC_COMBO1);
+			GetWindowText(hVerComb2, aux_mate, 256);
+			materias *Mauxi = M_Inicio;
+			while (Mauxi!=NULL)
+			{
+				if (strcmp(Mauxi->NombreMate,aux_mate)==0)
+				{
+
+					break;
+				}
+
+				Mauxi = Mauxi->sig;
+			}
+
+			if (Mauxi!=NULL)
+			{
+				int sizeLBX = (int)SendMessage(hlist2, LB_GETCOUNT, (WPARAM)0, (LPARAM)0);
+				for (int i = 0; i < sizeLBX; i++) {
+					SendMessage(hlist2, LB_GETTEXT, (WPARAM)i, (LPARAM)lista1info2);
+					Aaux1 = A_Inicio;
+					while (Aaux1 != NULL) {
+
+						if (strcmp(lista1info2, Aaux1->Nombres) == 0) {
+							
+							Aaux1->Sus_Materias[Aaux1->count] = Mauxi->GetID(0);
+							Aaux1->count++;
+							break;
+						}
+
+
+						Aaux1 = Aaux1->sig;
+					}
+
+				}
+				MessageBox(Dlg, "Se Inscribieron", "", MB_OK);
+				strcpy(lista1info2, "");
+			}
+			
+
+			
+			break;
+		}
+
+		}
+		/// fin de "switch (LOWORD(wParam))"
+		return true;
+	}
+	/// fin de "case WM_COMMAND"
+	case WM_CLOSE: {EndDialog(Dlg, 0); return true; }
+	}
+	///fin de "switch (Mensaje)"
+	return false;///el return false
+}
+BOOL CALLBACK AsiMasiv2(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)//Mate a Alumn
 {
 
 	switch (Mensaje)
 	{
 	case WM_INITDIALOG: {
-		
+		//
 		return true;
 	}
 	case WM_COMMAND:
 	{
 		switch (LOWORD(wParam))
 		{
-		/*
-		______________________________________
-		_________Aqui_________________________
-		______________________________________
-		*/
 
+		}
+		/// fin de "switch (LOWORD(wParam))"
+		return true;
+	}
+	/// fin de "case WM_COMMAND"
+	case WM_CLOSE: {EndDialog(Dlg, 0); return true; }
+	}
+	///fin de "switch (Mensaje)"
+	return false;///el return false
+}
+BOOL CALLBACK CapCalif   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
+{
+	
+	static alumnos *A_encontrado = NULL;
+	static alumnos *A_Aux = NULL;
+	//GetDlgItem(Dlg, IDC_COMBO1)
+	
+	static char InfList[100];
+	static char InfCmbx[100];
+	static int ID_MATE;
+	static bool encontrado2 = false;
+	static materias *Maux3;
+	switch (Mensaje)
+	{
+	case WM_INITDIALOG: {
+		 HWND hVerComb2 = GetDlgItem(Dlg, IDC_COMBO2);
+		icon(Dlg);
+		
+		Maux3 = M_Inicio;
+		while (Maux3 !=NULL) {
+
+			if (strcmp(Maux3->NombreDegree, coor->D_DegreeName)==0) {
+				SendMessage(hVerComb2, CB_ADDSTRING, 0, (LPARAM)Maux3->NombreMate);
+			}
+			
+
+			Maux3 = Maux3->sig;
+		}
+
+		SendDlgItemMessage(Dlg, IDC_STATIC_3, WM_SETTEXT, 50, (LPARAM)S_Last->MesMes);//IDC_STATIC_4
+		SendDlgItemMessage(Dlg, IDC_STATIC_4, WM_SETTEXT, 50, (LPARAM)S_Last->year);  //
+		return true;
+	}
+	case WM_COMMAND:
+	{
+		
+		switch (HIWORD(wParam))
+		{
+		case CBN_SELCHANGE: {
+			 HWND hlist2 = GetDlgItem(Dlg, IDC_LIST_unic2);
+			 HWND hVerComb2 = GetDlgItem(Dlg, IDC_COMBO2);
+			
+			//***************
+			_ASSERTE(hlist2 != NULL);
+
+			// Get current selection index in listbox
+			int itemIndex = (int)SendMessage(hlist2, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+			if (itemIndex == LB_ERR)
+			{
+				goto llena2;
+			}
+			// Get actual text in buffer
+			SendMessage(hlist2, LB_GETTEXT, (WPARAM)itemIndex, (LPARAM)InfList);
+			
+			//aqui busco la materia
+			//encontrado el nombre ahora buscara su calificacion *********************************************
+			if (M_Inicio != 0) {
+				alumnos *Aaux2 = A_Inicio;
+				while (Aaux2 != NULL) {
+					if (strcmp(InfList, Aaux2->Nombres) == 0) {
+						A_encontrado = Aaux2;
+						break;
+					}
+					Aaux2 = Aaux2->sig;
+				}
+
+			}
+
+
+			//**
+			if (A_encontrado) {
+				
+				SendDlgItemMessage(Dlg, IDC_EDIT10, WM_SETTEXT, 80, (LPARAM)A_encontrado->Nombres);
+				SendDlgItemMessage(Dlg, IDC_EDIT11, WM_SETTEXT, 80, (LPARAM)A_encontrado->carrera);
+			}
+			//********
+		llena2:
+			SendMessage(hlist2, LB_RESETCONTENT, 0, 0);
+
+			GetWindowText(hVerComb2, InfCmbx, 256);
+
+			
+			//**
+			Maux3 = M_Inicio;
+			while (Maux3 != NULL) {
+
+				if (strcmp(InfCmbx, Maux3->NombreMate) == 0) { 
+					/*ID_MATE = Maux3->GetID(0);*/
+					break; }
+
+				Maux3 = Maux3->sig;
+			}
+			//**
+			if (Maux3 != NULL) { encontrado2 = true; }
+
+
+			if (encontrado2 == false) {
+				//MessageBox(Dlg, "No se encontro la materia", InfCmbx, MB_OK);
+				//break;
+			}
+
+
+			if (encontrado2) {
+				SendDlgItemMessage(Dlg, IDC_STATIC_01, WM_SETTEXT, 50, (LPARAM)Maux3->NombreMate);
+				//manda a llamar una funcion para que busque los alumno de esta materia.
+
+				if (A_Inicio != 0) {
+					A_Aux = A_Inicio;
+					while (A_Aux != NULL) {
+						int j = sizeof(A_Aux->Sus_Materias) / 4;
+						for (int i = 0 ; i <j;i++) {
+							if (A_Aux->Sus_Materias[i] == Maux3->GetID(0)) {
+								SendMessage(hlist2, LB_ADDSTRING, 0, (LPARAM)A_Aux->Nombres);
+								
+							}
+						}
+						
+
+						A_Aux = A_Aux->sig;
+					}
+
+
+				}
+
+				
+				encontrado2 = false;
+			}//fin if
+
+
+
+			break;
+		}
+		}
+		switch (LOWORD(wParam))
+		{
+		case IDC_BU_Gu_Ca:
+			char mate[100];
+			char nombre[100];
+			char carre[100];
+			char calif[10];
+
+
+			Calif *newo = 0;
+			newo = new Calif;
+			newo->sig = NULL;
+			newo->ant = NULL;
+
+			SendDlgItemMessage(Dlg, IDC_STATIC_01, WM_GETTEXT, (WPARAM)100, (LPARAM)mate);
+			SendDlgItemMessage(Dlg, IDC_EDIT10, WM_GETTEXT, (WPARAM)100, (LPARAM)nombre);
+			SendDlgItemMessage(Dlg, IDC_EDIT11, WM_GETTEXT, (WPARAM)100, (LPARAM)carre);
+			SendDlgItemMessage(Dlg, IDC_EDIT19, WM_GETTEXT, (WPARAM)100, (LPARAM)calif);
+			materias *Maux5 = M_Inicio;
+			while (Maux5 !=NULL)
+			{
+				if (strcmp(Maux5->NombreMate, mate)==0)
+				{
+					newo->SetID(Maux5->GetID(0), 0);
+					break;
+				}
+				Maux5 = Maux5->sig;
+			}
+			alumnos *Aaux = A_Inicio;
+			while (Aaux != NULL)
+			{
+				if (strcmp(Aaux->Nombres , nombre)==0)
+				{
+					newo->SetID(Aaux->GetID(2), 2);
+					break;
+				}
+				Aaux = Aaux->sig;
+			}
+			strcpy(newo->carrera,coor->D_DegreeName);
+			strcpy(newo->CalFinal, calif);
+
+			newo->SetID(S_Last->GetID(3), 3);//obtiene la ID del semestre actual y lo guarda en la calificacion
+			/*
+	EID_materia = 0
+	EID_calificacion   = 1
+	EID_alumno    = 2
+	EID_semestre  = 3
+	*/
+			AgregaDatosNodo<Calif>(&C_Inicio, &C_Last, newo, 1); // Agrega el nodo a la lista
+			MessageBox(Dlg, "Se Capturó la Calificacion", "", MB_OK | MB_ICONINFORMATION);
+			SendDlgItemMessage(Dlg, IDC_STATIC_01, WM_SETTEXT, (WPARAM)0, (LPARAM)"");//limpio pantalla
+			SendDlgItemMessage(Dlg, IDC_EDIT10, WM_SETTEXT, (WPARAM)0, (LPARAM)"");//limpio pantalla
+			SendDlgItemMessage(Dlg, IDC_EDIT11, WM_SETTEXT, (WPARAM)0, (LPARAM)"");
+			SendDlgItemMessage(Dlg, IDC_EDIT19, WM_SETTEXT, (WPARAM)0, (LPARAM)"");
+
+
+			break;
 		}
 		/// fin de "switch (LOWORD(wParam))"
 		return true;

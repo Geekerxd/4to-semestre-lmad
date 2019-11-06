@@ -125,4 +125,13 @@ CooCarr *minimo(CooCarr *arbol) {
 	}
 }
 
+void llena_combo_de_LL() {//fucion template
+	/*while () {
+	
+	
+	
+	}*/
+
+}
+
 

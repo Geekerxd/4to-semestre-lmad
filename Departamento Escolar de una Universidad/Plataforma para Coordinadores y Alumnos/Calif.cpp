@@ -18,11 +18,11 @@ void Calif::SetID(int id,int num)
 	case Calif::EID_materia:
 		ID_Materia = id;
 		break;
-	case Calif::EID_carrera:
-		ID_Carrera = id;
+	case Calif::EID_calificacion:
+		ID_CAlif = id;
 		break;
 	case Calif::EID_alumno:
-		ID_Carrera = id;
+		ID_Alumno = id;
 		break;
 	case Calif::EID_semestre:
 		ID_Semestre = id;
@@ -40,8 +40,8 @@ int Calif::GetID(int num)
 	case Calif::EID_materia:
 		return ID_Materia;
 		break;
-	case Calif::EID_carrera:
-		return ID_Carrera ;
+	case Calif::EID_calificacion:
+		return ID_CAlif;
 		break;
 	case Calif::EID_alumno:
 		return ID_Alumno;
