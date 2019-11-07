@@ -47,9 +47,10 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK CooCarrera (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK RegiAlum   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK AsiMasiv   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
-BOOL CALLBACK AsiMasiv1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
-BOOL CALLBACK AsiMasiv2(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
+BOOL CALLBACK AsiMasiv1  (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
+BOOL CALLBACK AsiMasiv2  (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK CapCalif   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
+BOOL CALLBACK Kardex     (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, PSTR cmd, int show)
 {
@@ -889,7 +890,9 @@ BOOL CALLBACK CooCarrera (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		case IDC_Captura_Calif: {
 			DialogBox(_hInst, MAKEINTRESOURCE(IDD_Calif), Dlg, CapCalif);
 			break; }
-
+		case ID_ALUMNOS_VERTODOS:{
+			DialogBox(_hInst, MAKEINTRESOURCE(IDD_Kardex), Dlg, Kardex);
+			break; }
 
 		case ID_OPCIONES_REGRESAR:{
 			EndDialog(Dlg, 0);
@@ -962,7 +965,7 @@ BOOL CALLBACK RegiAlum   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			
 				strcpy(newo->carrera, coor->D_DegreeName);
 			SendDlgItemMessage(Dlg, IDC_EDIT8, WM_GETTEXT, (WPARAM)30, (LPARAM)matricula);
-			*newo->matricula= atoi(matricula);
+			newo->matricula= atoi(matricula);
 			/*
 	EID_materia = 0
 	EID_carrera   = 1 ( pero si es arobl .-. )
@@ -1012,12 +1015,14 @@ BOOL CALLBACK AsiMasiv   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		{
 		case IDC_BUTTON_Alum_A_Mate:{
 			DialogBox(_hInst, MAKEINTRESOURCE(IDD_ALUM_MATE), Dlg, AsiMasiv1);
-		    break;
+			EndDialog(Dlg, 0);
+			return true;
 		}
 			
 		case IDC_BUTTON_Mate_A_Alum:{
 			DialogBox(_hInst, MAKEINTRESOURCE(IDD_MATE_ALUM), Dlg, AsiMasiv2);
-		    break; 
+			EndDialog(Dlg, 0);
+			return true;
 		}
 			
 		}
@@ -1030,7 +1035,7 @@ BOOL CALLBACK AsiMasiv   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	///fin de "switch (Mensaje)"
 	return false;///el return false
 }
-BOOL CALLBACK AsiMasiv1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)//alumno a mate
+BOOL CALLBACK AsiMasiv1  (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)//alumno a mate
 {
 	static HWND hVerComb2=0;
 	static HWND hlist1 = 0;
@@ -1194,7 +1199,7 @@ BOOL CALLBACK AsiMasiv1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)//a
 	///fin de "switch (Mensaje)"
 	return false;///el return false
 }
-BOOL CALLBACK AsiMasiv2(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)//Mate a Alumn
+BOOL CALLBACK AsiMasiv2  (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)//Mate a Alumn
 {
 
 	switch (Mensaje)
@@ -1327,7 +1332,7 @@ BOOL CALLBACK CapCalif   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 				if (A_Inicio != 0) {
 					A_Aux = A_Inicio;
 					while (A_Aux != NULL) {
-						int j = sizeof(A_Aux->Sus_Materias) / 4;
+						int j = A_Aux->count;
 						for (int i = 0 ; i <j;i++) {
 							if (A_Aux->Sus_Materias[i] == Maux3->GetID(0)) {
 								SendMessage(hlist2, LB_ADDSTRING, 0, (LPARAM)A_Aux->Nombres);
@@ -1416,6 +1421,118 @@ BOOL CALLBACK CapCalif   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	case WM_CLOSE: {EndDialog(Dlg, 0); return true; }
 	}
 	///fin de "switch (Mensaje)"
+	return false;///el return false
+}
+BOOL CALLBACK Kardex     (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam){
+	static char matri[30];
+	static HWND hListaKardex = 0;
+	static alumnos *Aaux5=0;
+	static materias *Maux5 = 0;
+	static Calif *Caux5 = 0;
+	static Sem *Saux5 = 0;
+	static int Num1;
+	static char newoo[150];
+	static char sem[15];
+	switch (Mensaje)
+	{
+	case WM_INITDIALOG: {
+		icon(Dlg);
+
+		return true;
+	}
+	case WM_COMMAND:
+	{
+		switch (LOWORD(wParam))
+		{
+		case IDC_Boton_Busca:{
+			hListaKardex=GetDlgItem(Dlg, IDC_LIST_KARDEX);
+			SendMessage(hListaKardex, LB_RESETCONTENT, 0, 0);
+			SendDlgItemMessage(Dlg, IDC_EDIT_MATRICUAL, WM_GETTEXT, (WPARAM)30, (LPARAM)matri);
+			Num1 = atoi(matri);
+			//Aqui busqueda binaria.
+			Aaux5 = A_Inicio;
+			while (Aaux5!=NULL)
+			{
+				if (Num1==Aaux5->matricula){break;}
+				Aaux5 = Aaux5->sig;
+			}
+			if (Aaux5 != NULL)//encontro al alumno
+			{
+				SendDlgItemMessage(Dlg, IDC_STATIC_NAME, WM_SETTEXT, (WPARAM)100, (LPARAM)Aaux5->Nombres);
+				int j = Aaux5->count;
+				for (int i = 0; i < j; i++)
+				{
+					Maux5 = M_Inicio;
+					while (Maux5!=NULL)
+					{
+						if (Aaux5->Sus_Materias[i]== Maux5->GetID(0))
+						{
+							Caux5 = C_Inicio;
+							while (Caux5 != NULL)
+							{
+								if (Aaux5->Sus_Materias[i] == Caux5->GetID(0)
+									&& Aaux5->GetID(2)== Caux5->GetID(2))
+								{
+									break;
+								}
+								Caux5 = Caux5->sig;
+							}
+							if (Caux5!=NULL)
+							{
+								Saux5 = S_Inicio;
+								while (Saux5 != NULL)
+								{
+									if (Caux5->GetID(3) == Saux5->GetID(3))
+									{
+										strcat(newoo, Saux5->MesMes);
+										int y= strlen(newoo);
+										if(y<16)
+											strcat(newoo, "        ");
+										strcat(newoo, " ");
+										strcat(newoo, Saux5->year);
+										break;
+									}
+									Saux5 = Saux5->sig;
+								}
+								if (Saux5!=NULL)
+								{
+
+									strcat(newoo, "      ");
+									strcat(newoo, Maux5->Clave);
+									strcat(newoo, "       ");
+									strcat(newoo, Maux5->NombreMate);
+									int z = strlen(newoo);
+									/*if (y < 16)
+										strcat(newoo, "    ");*/
+									strcat(newoo, "                     ");
+									strcat(newoo, Caux5->CalFinal);
+									SendMessage(hListaKardex, LB_ADDSTRING, 0, (LPARAM)newoo);
+									strcpy(newoo, "");
+
+								}
+
+
+
+
+							}
+							
+						}
+						Maux5 = Maux5->sig;
+					}
+					
+
+				}
+
+			}
+
+			break;
+		}
+
+		}/// fin de "switch (LOWORD(wParam))"
+		return true;
+	}/// fin de "case WM_COMMAND"
+	case WM_CLOSE: {EndDialog(Dlg, 0); return true;}
+	}///fin de "switch (Mensaje)"
 	return false;///el return false
 }
 

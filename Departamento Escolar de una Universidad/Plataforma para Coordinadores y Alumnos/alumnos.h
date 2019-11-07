@@ -5,7 +5,7 @@ class alumnos
 public:
 	char Nombres[100];
 	char Apellidos[100];
-	char matricula[30];
+	int matricula;
 	char carrera[60];
 	int Sus_Materias[100]; // Son las llaves para acceder a las materias que tiene inscrito el alumno.
 	int count = 0;
