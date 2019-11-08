@@ -17,8 +17,12 @@
 
 #include "LLCooCarr.h"
 
-using namespace std;
+#include "Sem.h"
+#include "Calif.h"
+#include "alumnos.h"
+#include "materias.h"
 
+using namespace std;
 
 
 
@@ -51,4 +55,7 @@ template <class claseX> void LeeArchivo(claseX **inicio, claseX **last, char *fi
 template <class claseY> void EscribirArchivo(claseY *inicio, char *file);
 
 template <class claseZ> void AgregaDatosNodo(claseZ ** inicio, claseZ **last, claseZ * nuevo,int num);
-void llena_combo_de_LL();
+
+bool NodoOrdenar(alumnos *nuevo);
+alumnos* binarySearch(alumnos *head, int value);
+alumnos* middle(alumnos* start, alumnos* last);

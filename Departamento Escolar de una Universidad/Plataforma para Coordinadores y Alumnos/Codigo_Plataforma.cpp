@@ -966,14 +966,25 @@ BOOL CALLBACK RegiAlum   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 				strcpy(newo->carrera, coor->D_DegreeName);
 			SendDlgItemMessage(Dlg, IDC_EDIT8, WM_GETTEXT, (WPARAM)30, (LPARAM)matricula);
 			newo->matricula= atoi(matricula);
-			/*
-	EID_materia = 0
-	EID_carrera   = 1 ( pero si es arobl .-. )
-	EID_alumno    = 2
-	EID_semestre  = 3
-	*/
-			AgregaDatosNodo<alumnos>(&A_Inicio, &A_Last, newo, 2); // Agrega el nodo a la lista
-			MessageBox(Dlg, "Se Guardó", "", MB_OK | MB_ICONINFORMATION);
+			
+			//agrega el nodo a la lista Ordenada por matricula. Acendente.
+			if (A_Inicio==NULL)
+			{
+				A_Inicio = newo;
+				A_Last = newo;
+				
+				MessageBox(Dlg, "Se Guardó", "", MB_OK | MB_ICONINFORMATION);
+			}
+			else
+			{
+				
+				if (NodoOrdenar(newo)){
+					
+					MessageBox(Dlg, "Se Guardó", "", MB_OK | MB_ICONINFORMATION);
+			}
+			}
+			
+			
 			SendDlgItemMessage(Dlg, IDC_EDIT1, WM_SETTEXT, (WPARAM)0, (LPARAM)"");//limpio pantalla
 			SendDlgItemMessage(Dlg, IDC_EDIT2, WM_SETTEXT, (WPARAM)0, (LPARAM)"");
 			SendDlgItemMessage(Dlg, IDC_EDIT8, WM_SETTEXT, (WPARAM)0, (LPARAM)"" );
@@ -1450,12 +1461,8 @@ BOOL CALLBACK Kardex     (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam){
 			SendDlgItemMessage(Dlg, IDC_EDIT_MATRICUAL, WM_GETTEXT, (WPARAM)30, (LPARAM)matri);
 			Num1 = atoi(matri);
 			//Aqui busqueda binaria.
-			Aaux5 = A_Inicio;
-			while (Aaux5!=NULL)
-			{
-				if (Num1==Aaux5->matricula){break;}
-				Aaux5 = Aaux5->sig;
-			}
+			Aaux5 = binarySearch(A_Inicio, Num1);//busco la matricula. Busqueda Binaria.
+
 			if (Aaux5 != NULL)//encontro al alumno
 			{
 				SendDlgItemMessage(Dlg, IDC_STATIC_NAME, WM_SETTEXT, (WPARAM)100, (LPARAM)Aaux5->Nombres);
@@ -1499,11 +1506,14 @@ BOOL CALLBACK Kardex     (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam){
 
 									strcat(newoo, "      ");
 									strcat(newoo, Maux5->Clave);
+									int y = strlen(newoo);
+									if (y < 31)
+										strcat(newoo, "    ");
 									strcat(newoo, "       ");
 									strcat(newoo, Maux5->NombreMate);
 									int z = strlen(newoo);
-									/*if (y < 16)
-										strcat(newoo, "    ");*/
+									if (z < 68)
+										strcat(newoo, "                                       ");
 									strcat(newoo, "                     ");
 									strcat(newoo, Caux5->CalFinal);
 									SendMessage(hListaKardex, LB_ADDSTRING, 0, (LPARAM)newoo);
@@ -1524,6 +1534,7 @@ BOOL CALLBACK Kardex     (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam){
 				}
 
 			}
+			else MessageBox(Dlg, "No se encontro Alumnos Registrados con esta materia", "", MB_ICONERROR);
 
 			break;
 		}
@@ -1844,5 +1855,44 @@ void EscribirArchivo(claseY *inicio, char *file)
 	}
 
 
+}
+
+bool NodoOrdenar(alumnos *nuevo) {
+	alumnos *Aaux = A_Inicio;
+	while (Aaux!=NULL) {
+		if (Aaux->matricula>nuevo->matricula)
+		{
+			if (Aaux==A_Inicio)
+			{
+				Aaux->ant = nuevo;
+				nuevo->sig = Aaux;
+				A_Inicio = nuevo;
+				break;
+			}
+			else
+			{
+				Aaux->ant->sig = nuevo;
+				nuevo->ant = Aaux->ant;
+				nuevo->sig = Aaux;
+				Aaux->ant = nuevo;
+				break;
+			}
+
+		}
+		else if (Aaux->matricula == nuevo->matricula) { 
+			MessageBox(ghDlg, "Esta Matricula ya existe. Escriba una distinta", "", MB_OK); 
+			return false;
+				break; }
+		else if (Aaux==A_Last)
+		{
+			A_Last->sig = nuevo;
+			nuevo->ant = A_Last;
+			A_Last = nuevo;
+			break;
+		}
+
+		Aaux = Aaux->sig;
+	}
+	return true;
 }
 

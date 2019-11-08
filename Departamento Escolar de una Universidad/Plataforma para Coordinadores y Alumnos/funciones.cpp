@@ -125,13 +125,38 @@ CooCarr *minimo(CooCarr *arbol) {
 	}
 }
 
-void llena_combo_de_LL() {//fucion template
-	/*while () {
-	
-	
-	
-	}*/
 
+alumnos* binarySearch(alumnos *head, int value) {
+	alumnos* start = head;
+	alumnos* last = NULL;
+	do {
+		alumnos* mid = middle(start, last); // Find middle
+		if (mid == NULL) // If middle is empty
+			return NULL;
+		if (mid->matricula == value) // If value is present at middle
+			return mid;
+		else if (mid->matricula < value) // If value is more than mid
+			start = mid->sig;
+		else // If the value is less than mid.
+			last = mid;
+	} while (last == NULL || last != start);
+	return NULL; // value not present 
+}
+// function to find out middle element
+alumnos* middle(alumnos* start, alumnos* last) {
+	if (start == NULL)
+		return NULL;
+	alumnos* slow = start;
+	alumnos* fast = start->sig;
+	while (fast != last)
+	{
+		fast = fast->sig;
+		if (fast != last) {
+			slow = slow->sig;
+			fast = fast->sig;
+		}
+	}
+	return slow;
 }
 
 
