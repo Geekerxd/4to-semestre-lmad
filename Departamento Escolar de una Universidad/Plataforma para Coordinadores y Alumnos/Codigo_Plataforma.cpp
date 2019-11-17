@@ -1,4 +1,4 @@
-//#include <fstream>//archivos
+#include <fstream>//archivos
 #include <Windows.h>
 #include <stdio.h>
 #include <string.h>
@@ -30,7 +30,7 @@ CooCarr*aux, *coor; // Coordinador de Carrera Actual.
 
 alumnos  *A_Inicio = 0, *A_Last = 0;
 materias *M_Inicio = 0, *M_Last = 0;
-Sem      *S_Inicio =0, *S_Last=0;
+Sem      *S_Inicio = 0, *S_Last= 0;
 Calif    *C_Inicio = 0, *C_Last = 0;
 
 HWND ghDlg = 0;
@@ -51,6 +51,7 @@ BOOL CALLBACK AsiMasiv1  (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK AsiMasiv2  (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK CapCalif   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 BOOL CALLBACK Kardex     (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
+BOOL CALLBACK Clases     (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam);
 
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, PSTR cmd, int show)
 {
@@ -893,6 +894,9 @@ BOOL CALLBACK CooCarrera (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		case ID_ALUMNOS_VERTODOS:{
 			DialogBox(_hInst, MAKEINTRESOURCE(IDD_Kardex), Dlg, Kardex);
 			break; }
+		case ID_CONSULTAS_LISTASDECLASE: {
+			DialogBox(_hInst, MAKEINTRESOURCE(IDD_Listas_Clases), Dlg, Clases);
+			break; }
 
 		case ID_OPCIONES_REGRESAR:{
 			EndDialog(Dlg, 0);
@@ -1150,7 +1154,7 @@ BOOL CALLBACK AsiMasiv1  (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)/
 
 			break;
 		}//fin hihgword
-		}//fin switch
+		}//fin switch HIWORD
 
 		switch (LOWORD(wParam))
 		{
@@ -1448,7 +1452,8 @@ BOOL CALLBACK Kardex     (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam){
 	{
 	case WM_INITDIALOG: {
 		icon(Dlg);
-
+		hListaKardex = GetDlgItem(Dlg, IDC_LIST_KARDEX);
+		
 		return true;
 	}
 	case WM_COMMAND:
@@ -1543,6 +1548,58 @@ BOOL CALLBACK Kardex     (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam){
 		return true;
 	}/// fin de "case WM_COMMAND"
 	case WM_CLOSE: {EndDialog(Dlg, 0); return true;}
+	}///fin de "switch (Mensaje)"
+	return false;///el return false
+}
+BOOL CALLBACK Clases     (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam) {
+	static HWND hVerComb3 = 0;
+	static HWND hVerComb4 = 0;
+	static HWND hlist1 = 0;
+	static Sem *Saux=0;
+	static char Sem[60];
+	static char mes[50];
+	static char year[10];
+
+	switch (Mensaje)
+	{
+	case WM_INITDIALOG: {
+		icon(Dlg);
+		hVerComb3=  GetDlgItem(Dlg, IDC_COMBO_S01);
+		//IDC_COMBO_S01
+		Saux = S_Inicio;
+		while (Saux != NULL) {
+			strcat(Sem,Saux->MesMes);
+			strcat(Sem, "  ");
+			strcat(Sem, Saux->year);
+				SendMessage(hVerComb3, CB_ADDSTRING, 0, (LPARAM)Sem);
+				strcpy(Sem,"");
+			Saux = Saux->sig;
+		}
+
+		return true;
+	}
+	case WM_COMMAND:
+	{
+		
+
+		switch (HIWORD(wParam))
+		{
+		case CBN_SELCHANGE: {
+			
+			break;
+		}//fin hihgword
+		}//fin de switch (HIWORD(wParam))
+
+		switch (LOWORD(wParam))
+		{
+		case IDC_Aceptar:
+
+
+			break;
+		}/// fin de "switch (LOWORD(wParam))"
+		return true;
+	}/// fin de "case WM_COMMAND"
+	case WM_CLOSE: {EndDialog(Dlg, 0); return true; }
 	}///fin de "switch (Mensaje)"
 	return false;///el return false
 }

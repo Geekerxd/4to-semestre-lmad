@@ -1,7 +1,10 @@
 ﻿  Codigo_Plataforma.cpp
-c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(341): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(559): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(854): warning C4102: 'finmate': unreferenced label
-c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(874): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(1227): warning C4060: switch statement contains no 'case' or 'default' labels
+c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(342): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(560): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(855): warning C4102: 'finmate': unreferenced label
+c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(875): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(1231): warning C4060: switch statement contains no 'case' or 'default' labels
+  funciones.cpp
+c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\funciones.cpp(67): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
   Plataforma para Coordinadores y Alumnos.vcxproj -> C:\Users\Dell 66895\Desktop\Repositorio ~estructuras\Departamento Escolar de una Universidad\Debug\Plataforma para Coordinadores y Alumnos.exe

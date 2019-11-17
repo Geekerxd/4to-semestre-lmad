@@ -19,11 +19,13 @@
 #define IDD_ALUM_MATE                   125
 #define IDD_MATE_ALUM                   127
 #define IDD_Kardex                      129
+#define IDD_Listas_Clases               131
 #define IDC_STATIC_01                   1001
 #define IDC_COMBO1                      1002
 #define IDC_STATIC_3                    1002
 #define IDC_EDIT1                       1003
 #define IDC_STATIC_4                    1003
+#define IDC_COMBO_M01                   1003
 #define IDC_EDIT2                       1004
 #define IDC_EDIT8                       1005
 #define IDC_STATIC_iz                   1006
@@ -69,11 +71,13 @@
 #define IDC_LIST_unic                   1043
 #define IDC_LIST_ALUMN                  1043
 #define IDC_LIST_KARDEX                 1043
+#define IDC_LIST_Clase                  1043
 #define IDC_BU_Edi                      1044
 #define IDC_LIST_ALUMN_SELECCION        1044
 #define IDC_BUTTON2                     1045
 #define IDC_BU_Gu_Ca                    1045
 #define IDC_Boton_Busca                 1045
+#define IDC_Aceptar                     1045
 #define IDC_STATIC101                   1046
 #define IDC_BU_Borrar                   1046
 #define IDC_STATIC4                     1047
@@ -98,6 +102,7 @@
 #define IDC_B_INSCRI                    1064
 #define IDC_EDIT_MATRICUAL              1065
 #define IDC_STATIC_NAME                 1066
+#define IDC_COMBO_S01                   1067
 #define ID_OPCIONES_ATRAS               40001
 #define ID_OPCIONES_Regresar            40002
 #define ID_OPCIONES_SALIRYGUARDAR       40003
@@ -108,14 +113,15 @@
 #define ID_MATERIAS                     40008
 #define ID_OPCIONES_REGRESAR            40009
 #define ID_OPCIONES_GUARDARYSALIR       40010
+#define ID_CONSULTAS_LISTASDECLASE      40011
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        131
-#define _APS_NEXT_COMMAND_VALUE         40011
-#define _APS_NEXT_CONTROL_VALUE         1067
+#define _APS_NEXT_RESOURCE_VALUE        133
+#define _APS_NEXT_COMMAND_VALUE         40012
+#define _APS_NEXT_CONTROL_VALUE         1068
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
