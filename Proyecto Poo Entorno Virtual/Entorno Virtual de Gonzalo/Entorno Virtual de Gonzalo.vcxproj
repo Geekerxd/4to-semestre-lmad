@@ -155,6 +155,7 @@
     <ClInclude Include="Primitive.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="spritesec.h" />
+    <ClInclude Include="structs.h" />
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="TheSkyDome.h" />
     <ClInclude Include="Triangle.h" />

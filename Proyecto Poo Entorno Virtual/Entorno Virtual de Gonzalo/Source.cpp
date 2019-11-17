@@ -124,9 +124,6 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 		hRC = wglCreateContext(hDC);
 		wglMakeCurrent(hDC, hRC);
 
-		cout << " count " << i++ << endl;
-
-
 
 		break;
 	}
@@ -136,7 +133,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 			if (manager->S_arriba) {
 				
 				manager->salto += 2;
-				if (manager->salto >= 50) { manager->S_arriba= false; manager->S_abajo = true; }
+				if (manager->salto >= 30) { manager->S_arriba= false; manager->S_abajo = true; }
 			}
 			else if(manager->S_abajo){
 				

@@ -84,6 +84,7 @@ void Manager::Render(HDC hDC)
 			saltar = false;
 			S_abajo = false;
 			salto = 0;
+			M_Saltar = false;
 		}
 	}
 
@@ -211,7 +212,10 @@ void Manager::Actualiza(double a, int est) {
 		c = -a;
 		break;
 	case posicion:
-		cout << "x= " << camera->_position.x << " y= " << camera->_position.y << " z= " << camera->_position.z << endl;
+		cout << "x= " << camera->_position.x <<
+			" y= " << camera->_position.y <<
+			" z= " << camera->_position.z
+			<< endl;
 
 		break;
 
@@ -224,19 +228,41 @@ void Manager::Actualiza(double a, int est) {
 
 void Manager::VerifyGamepad()
 {
-	if (gamepad->IsConnected()) {
-		lX = gamepad->GetState().Gamepad.sThumbLX / 32767;
-		lY = gamepad->GetState().Gamepad.sThumbLY / 32767;
-		rX = gamepad->GetState().Gamepad.sThumbRX / 32767;
-		rY = gamepad->GetState().Gamepad.sThumbRY / 32767;
+	//_gamePad->Update();
 
-		if ((gamepad->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A) != 0) {
+
+
+	//_gamePadData.UpdateGamepad(_gamePad);
+
+	if (gamepad->IsConnected()) {
+		/*
+		(float)gamepad->GetState().Gamepad.sThumbLX / 32767
+		(float)gamepad->GetState().Gamepad.sThumbLY / 32767
+		(float)gamepad->GetState().Gamepad.sThumbRX / 5000 
+		 (float)gamepad->GetState().Gamepad.sThumbRY / 5000
+		*/
+		camera->MoveForward((float)gamepad->GetState().Gamepad.sThumbLY / 5000);//w,s
+		camera->StrafeRight((float)gamepad->GetState().Gamepad.sThumbLX / 5000);//a,d
+		camera->RotateX    ((float)gamepad->GetState().Gamepad.sThumbRY / 5000 );//derecha, izquierda
+		camera->RotateY   ( -(float)gamepad->GetState().Gamepad.sThumbRX / 5000 );//arriba, abajo
+
+		//*******************************
+		if ((gamepad->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_B) != 0) {
 			aPress = !aPress;
 			gamepad->Vibrate(32767, 32767);
 		}
 		else {
 			gamepad->Vibrate(0, 0);
 		}
+
+		if ((gamepad->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A) != 0) {
+			cout << " Habilidad Especial: Saltar \n";
+			M_Saltar = !M_Saltar;
+			saltar = true;
+			S_arriba = true;
+		}	
+
+		//*******************************
 	}
 }
 

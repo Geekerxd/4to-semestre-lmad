@@ -1,4 +1,5 @@
 #pragma once
+#include "structs.h"
 
 #include <windows.h>
 
@@ -28,6 +29,8 @@ private:
 
 	double c{ 0 };
 	bool aPress{ true };
+
+	bool M_Saltar{ false };
 	float a;
 
 	Triangle* triangle{ NULL };     //"Triangle.h"
@@ -42,6 +45,9 @@ private:
 	Model* star2{ NULL };
 	Billboard* tree{ NULL };        //"Billboard.h"
 	Water* water{ NULL };           //"Water.h"
+
+	GamePadData _gamePadData{ NULL };
+	GamePad* _gamePad{ NULL };
 
 	spritesec *SpritesAnima{ NULL };//"spritesec.h"
 	spritesec *SpritesAnima2{ NULL };//"spritesec.h"
@@ -61,7 +67,10 @@ public:
 	int cont2 = -100;
 	int rotate = 90;
 	int salto= 0;
+
 	bool saltar=false,S_arriba = false,S_abajo=false;
+
+
 	float lastYposition;
 	
 	void Render(HDC hDC);
