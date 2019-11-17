@@ -1,0 +1,156 @@
+﻿  Billboard.cpp
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\billboard.cpp(49): error C2679: binary '=': no operator found which takes a right-hand operand of type 'Vector3' (or there is no acceptable conversion)
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.h(24): note: could be 'Vector3 &Vector3::operator =(Vector3 &)'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\billboard.cpp(49): note: while trying to match the argument list '(Vector3, Vector3)'
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\billboard.cpp(51): error C2679: binary '=': no operator found which takes a right-hand operand of type 'Vector3' (or there is no acceptable conversion)
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.h(24): note: could be 'Vector3 &Vector3::operator =(Vector3 &)'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\billboard.cpp(51): note: while trying to match the argument list '(Vector3, Vector3)'
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\billboard.cpp(52): warning C4244: '*=': conversion from 'double' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\billboard.cpp(53): warning C4244: '*=': conversion from 'double' to 'float', possible loss of data
+  Box.cpp
+  Camera.cpp
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\camera.cpp(7): error C2679: binary '=': no operator found which takes a right-hand operand of type 'Vector3' (or there is no acceptable conversion)
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.h(24): note: could be 'Vector3 &Vector3::operator =(Vector3 &)'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\camera.cpp(7): note: while trying to match the argument list '(Vector3, Vector3)'
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\camera.cpp(13): error C2679: binary '=': no operator found which takes a right-hand operand of type 'Vector3' (or there is no acceptable conversion)
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.h(24): note: could be 'Vector3 &Vector3::operator =(Vector3 &)'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\camera.cpp(13): note: while trying to match the argument list '(Vector3, Vector3)'
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\camera.cpp(27): error C2679: binary '+': no operator found which takes a right-hand operand of type 'Vector3' (or there is no acceptable conversion)
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.h(23): note: could be 'Vector3 Vector3::operator +(Vector3 &)'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\camera.cpp(28): note: while trying to match the argument list '(Vector3, Vector3)'
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\camera.cpp(36): error C2679: binary '-': no operator found which takes a right-hand operand of type 'Vector3' (or there is no acceptable conversion)
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.h(22): note: could be 'Vector3 Vector3::operator -(Vector3 &)'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\camera.cpp(37): note: while trying to match the argument list '(Vector3, Vector3)'
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\camera.cpp(40): error C2679: binary '=': no operator found which takes a right-hand operand of type 'Vector3' (or there is no acceptable conversion)
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.h(24): note: could be 'Vector3 &Vector3::operator =(Vector3 &)'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\camera.cpp(40): note: while trying to match the argument list '(Vector3, Vector3)'
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\camera.cpp(48): error C2679: binary '+': no operator found which takes a right-hand operand of type 'Vector3' (or there is no acceptable conversion)
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.h(23): note: could be 'Vector3 Vector3::operator +(Vector3 &)'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\camera.cpp(49): note: while trying to match the argument list '(Vector3, Vector3)'
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\camera.cpp(57): error C2679: binary '+': no operator found which takes a right-hand operand of type 'Vector3' (or there is no acceptable conversion)
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.h(23): note: could be 'Vector3 Vector3::operator +(Vector3 &)'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\camera.cpp(57): note: while trying to match the argument list '(Vector3, Vector3)'
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\camera.cpp(62): error C2679: binary '+': no operator found which takes a right-hand operand of type 'Vector3' (or there is no acceptable conversion)
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.h(23): note: could be 'Vector3 Vector3::operator +(Vector3 &)'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\camera.cpp(62): note: while trying to match the argument list '(Vector3, Vector3)'
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\camera.cpp(67): error C2679: binary '+': no operator found which takes a right-hand operand of type 'Vector3' (or there is no acceptable conversion)
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.h(23): note: could be 'Vector3 Vector3::operator +(Vector3 &)'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\camera.cpp(67): note: while trying to match the argument list '(Vector3, Vector3)'
+  GamePad.cpp
+  glm.cpp
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\glm.cpp(289): warning C4473: 'sscanf_s' : not enough arguments passed for format string
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\glm.cpp(289): note: placeholders and their parameters expect 4 variadic arguments, but 2 were provided
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\glm.cpp(289): note: the missing variadic argument 3 is required by format string '%s'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\glm.cpp(289): note: this argument is used by a conversion specifier
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\glm.cpp(334): warning C4473: 'sscanf_s' : not enough arguments passed for format string
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\glm.cpp(334): note: placeholders and their parameters expect 4 variadic arguments, but 2 were provided
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\glm.cpp(334): note: the missing variadic argument 3 is required by format string '%s'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\glm.cpp(334): note: this argument is used by a conversion specifier
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\glm.cpp(459): error C2664: 'GLMgroup *glmAddGroup(GLMmodel *,char *)': cannot convert argument 2 from 'const char [8]' to 'char *'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\glm.cpp(459): note: Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\glm.cpp(497): warning C4473: 'sscanf_s' : not enough arguments passed for format string
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\glm.cpp(497): note: placeholders and their parameters expect 4 variadic arguments, but 2 were provided
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\glm.cpp(497): note: the missing variadic argument 3 is required by format string '%s'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\glm.cpp(497): note: this argument is used by a conversion specifier
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\glm.cpp(655): warning C4473: 'sscanf_s' : not enough arguments passed for format string
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\glm.cpp(655): note: placeholders and their parameters expect 4 variadic arguments, but 2 were provided
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\glm.cpp(655): note: the missing variadic argument 3 is required by format string '%s'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\glm.cpp(655): note: this argument is used by a conversion specifier
+  Goblin.cpp
+  Images.cpp
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\images.cpp(41): warning C4101: 'e': unreferenced local variable
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\images.cpp(60): warning C4101: 'e': unreferenced local variable
+  Log.cpp
+  Manager.cpp
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\spritesec.h(24): error C2440: 'initializing': cannot convert from 'const wchar_t [28]' to 'WCHAR *'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\spritesec.h(24): note: Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\spritesec.h(24): error C2440: 'initializing': cannot convert from 'const wchar_t [29]' to 'WCHAR *'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\spritesec.h(24): note: Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\spritesec.h(28): error C2440: 'initializing': cannot convert from 'const wchar_t [30]' to 'WCHAR *'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\spritesec.h(28): note: Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\manager.cpp(8): error C2664: 'Terrain::Terrain(const Terrain &)': cannot convert argument 2 from 'const wchar_t [27]' to 'WCHAR []'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\manager.cpp(8): note: Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\manager.cpp(12): error C2664: 'Model::Model(const Model &)': cannot convert argument 1 from 'const char [24]' to 'char *'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\manager.cpp(12): note: Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\manager.cpp(13): error C2664: 'Model::Model(const Model &)': cannot convert argument 1 from 'const char [30]' to 'char *'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\manager.cpp(13): note: Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\manager.cpp(15): error C2664: 'Model::Model(const Model &)': cannot convert argument 1 from 'const char [23]' to 'char *'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\manager.cpp(15): note: Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\manager.cpp(16): error C2664: 'Model::Model(const Model &)': cannot convert argument 1 from 'const char [23]' to 'char *'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\manager.cpp(16): note: Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\manager.cpp(19): error C2664: 'TheSkyDome::TheSkyDome(const TheSkyDome &)': cannot convert argument 5 from 'const wchar_t [25]' to 'WCHAR []'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\manager.cpp(19): note: Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\manager.cpp(22): error C2664: 'Goblin::Goblin(const Goblin &)': cannot convert argument 1 from 'const char [30]' to 'char *'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\manager.cpp(22): note: Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\manager.cpp(24): error C2664: 'Billboard::Billboard(const Billboard &)': cannot convert argument 2 from 'const wchar_t [29]' to 'WCHAR []'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\manager.cpp(24): note: Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\manager.cpp(26): error C2664: 'Water::Water(const Water &)': cannot convert argument 1 from 'const wchar_t [24]' to 'WCHAR *'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\manager.cpp(26): note: Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\manager.cpp(31): error C2664: 'void Log::log(char *)': cannot convert argument 1 from 'const char [15]' to 'char *'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\manager.cpp(31): note: Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+  Model.cpp
+  Primitive.cpp
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\primitive.cpp(20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\primitive.cpp(22): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\primitive.cpp(23): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\primitive.cpp(26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\primitive.cpp(28): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\primitive.cpp(29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\primitive.cpp(107): error C2679: binary '=': no operator found which takes a right-hand operand of type 'Vector3' (or there is no acceptable conversion)
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.h(24): note: could be 'Vector3 &Vector3::operator =(Vector3 &)'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\primitive.cpp(108): note: while trying to match the argument list '(Vector3, Vector3)'
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\primitive.cpp(114): error C2679: binary '=': no operator found which takes a right-hand operand of type 'Vector3' (or there is no acceptable conversion)
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.h(24): note: could be 'Vector3 &Vector3::operator =(Vector3 &)'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\primitive.cpp(115): note: while trying to match the argument list '(Vector3, Vector3)'
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\primitive.cpp(177): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\primitive.cpp(179): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\primitive.cpp(204): error C2679: binary '=': no operator found which takes a right-hand operand of type 'Vector3' (or there is no acceptable conversion)
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.h(24): note: could be 'Vector3 &Vector3::operator =(Vector3 &)'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\primitive.cpp(205): note: while trying to match the argument list '(Vector3, Vector3)'
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\primitive.cpp(211): error C2679: binary '=': no operator found which takes a right-hand operand of type 'Vector3' (or there is no acceptable conversion)
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.h(24): note: could be 'Vector3 &Vector3::operator =(Vector3 &)'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\primitive.cpp(212): note: while trying to match the argument list '(Vector3, Vector3)'
+  Source.cpp
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\spritesec.h(24): error C2440: 'initializing': cannot convert from 'const wchar_t [28]' to 'WCHAR *'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\spritesec.h(24): note: Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\spritesec.h(24): error C2440: 'initializing': cannot convert from 'const wchar_t [29]' to 'WCHAR *'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\spritesec.h(24): note: Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\spritesec.h(28): error C2440: 'initializing': cannot convert from 'const wchar_t [30]' to 'WCHAR *'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\spritesec.h(28): note: Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+  spritesec.cpp
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\spritesec.h(24): error C2440: 'initializing': cannot convert from 'const wchar_t [28]' to 'WCHAR *'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\spritesec.h(24): note: Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\spritesec.h(24): error C2440: 'initializing': cannot convert from 'const wchar_t [29]' to 'WCHAR *'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\spritesec.h(24): note: Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\spritesec.h(28): error C2440: 'initializing': cannot convert from 'const wchar_t [30]' to 'WCHAR *'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\spritesec.h(28): note: Conversion from string literal loses const qualifier (see /Zc:strictStrings)
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\spritesec.cpp(61): error C2679: binary '=': no operator found which takes a right-hand operand of type 'Vector3' (or there is no acceptable conversion)
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.h(24): note: could be 'Vector3 &Vector3::operator =(Vector3 &)'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\spritesec.cpp(61): note: while trying to match the argument list '(Vector3, Vector3)'
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\spritesec.cpp(63): error C2679: binary '=': no operator found which takes a right-hand operand of type 'Vector3' (or there is no acceptable conversion)
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.h(24): note: could be 'Vector3 &Vector3::operator =(Vector3 &)'
+  c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\spritesec.cpp(63): note: while trying to match the argument list '(Vector3, Vector3)'
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\spritesec.cpp(64): warning C4244: '*=': conversion from 'double' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\spritesec.cpp(66): warning C4244: '*=': conversion from 'double' to 'float', possible loss of data
+  Terrain.cpp
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\terrain.cpp(40): warning C4101: 'indice': unreferenced local variable
+  TheSkyDome.cpp
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\theskydome.cpp(41): warning C4101: 'indice': unreferenced local variable
+  Triangle.cpp
+  Vector2.cpp
+  Vector3.cpp
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.cpp(28): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.cpp(34): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.cpp(36): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.cpp(37): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.cpp(42): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.cpp(44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.cpp(45): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.cpp(50): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.cpp(52): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.cpp(53): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.cpp(105): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\vector3.cpp(114): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Water.cpp
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\water.cpp(49): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\dell 66895\desktop\repositorio ~estructuras\proyecto poo entorno virtual\entorno virtual de gonzalo\water.cpp(54): warning C4305: '-=': truncation from 'double' to 'float'
