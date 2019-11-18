@@ -28,9 +28,9 @@ void Water::Draw()
 	// U V
 	static float water_factor_min = 0.0f;
 	static float water_factor_max = 20.0f;
-	static float water_size = 800;
+	static float water_size = 1800;
 	static double modifier = 0;
-	float altura = 15.f;
+	float altura = 30.f;
 	// water_factor_min += 1;
 	modifier += .01;
 

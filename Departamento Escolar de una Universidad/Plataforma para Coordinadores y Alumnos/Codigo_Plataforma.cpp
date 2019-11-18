@@ -607,12 +607,7 @@ BOOL CALLBACK VerCooCarr (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		case IDC_BU_Borrar: {
 			if (aux != NULL) {
 				if (aux->encontrado) {
-					//borrar funcion
-
-					/*if (aux == Root) {
-						MessageBox(Dlg, "es la raiz", "", MB_OK);
-					}*/
-
+					
 						eliminarNodo(aux);
 					
 					
@@ -625,7 +620,7 @@ BOOL CALLBACK VerCooCarr (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			else
 				MessageBox(Dlg, "No se Borró", "", MB_OK | MB_ICONERROR);
 			break;
-		}//
+		}//fin de case IDC_BU_Borrar
 
 
 		}

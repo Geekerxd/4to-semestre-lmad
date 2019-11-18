@@ -2,21 +2,31 @@
 
 Manager::Manager(HWND hWnd)
 {
+	//habilitamos el control de profundidad en el render
+	glEnable(GL_DEPTH_TEST);
+
+	//glEnable(GL_DEPTH_TEST);
+	//glDepthMask(GL_TRUE);
+	//glDepthFunc(GL_LESS);
+	//glDepthRange(0.0f, 2.0f);
+
+
+
 	Su_hWnd = hWnd;
 	triangle = new Triangle();
 	box = new Box(5);
-	terrain = new Terrain(hWnd, L"assets/terrain/terreno.jpg", L"assets/terrain/texterr2.jpg", 1200, 1200);
-	camera = new Camera();
+	terrain = new Terrain(hWnd, L"assets/terrain/terreno.jpg", L"assets/terrain/texterr3.jpg", 2400, 2400);
+	MainCharacter = new Camera();
 	gamepad = new GamePad(1);
 	//***********************************************************************************
 	tank = new Model("assets/models/robot.obj",L"assets/models/robot_skin.jpg",200,50,200,50);
 	thing = new Model("assets/models/objectModel.obj", L"assets/models/flower.jpeg",-100,10,100, 10);
-	//dolphins = new Model("assets/models/dolphins.obj", L"assets/models/flower.jpeg", -50, 10, 50, 10);
+	dolphins = new Model("assets/models/dolphins.obj", L"assets/models/flower.jpeg", 0, 250, 450, 50);//-572,250, 890
 	star = new Model("assets/models/star.obj", L"assets/models/Tex_0221_0.jpg", -100, 10, 80, 10);
 	star2 = new Model("assets/models/star.obj", L"assets/models/Tex_0221_0.jpg", -100, 10, 60, 10);
 	//***********************************************************************************
 
-	sky = new TheSkyDome(hWnd, 32, 32, 900, L"assets/models/cielo2.jpg");
+	sky = new TheSkyDome(hWnd, 32, 32, 1800, L"assets/models/cielo2.jpg");
 	//esfer = new Primitive();
 	//Primitive
 	goblin = new Goblin("assets/models/SuperGoblin.obj", L"assets/models/NewGoblin_Color.png", 0, 10, -50, 10);
@@ -38,8 +48,8 @@ Manager::~Manager()
 		delete box;
 	if (terrain)
 		delete terrain;
-	if (camera)
-		delete camera;
+	if (MainCharacter)
+		delete MainCharacter;
 	if (gamepad)
 		delete gamepad;
 	if (tank)
@@ -58,99 +68,55 @@ Manager::~Manager()
 void Manager::Render(HDC hDC)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
 	glClearColor(0, 0, 0, 1);//color negro de fondo
+	glClearDepth(1.0f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
+	
+	
+	InitLights();
+	CheckLights();
+	//con GamePad
 	VerifyGamepad();
+	//con KeyBoard
+	MainCharacter->MoveForward(position.y);//w,s
+	MainCharacter->StrafeRight(position.x);//a,d
+	MainCharacter->RotateX(rY);//derecha, izquierda
+	MainCharacter->RotateY(rX);//arriba, abajo
 
-	/*camera->MoveForward(lY);
-	camera->StrafeRight(lX);*/
-	camera->MoveForward(position.y);//w,s
-	camera->StrafeRight(position.x);//a,d
-	camera->RotateX(rY);//derecha, izquierda
-	camera->RotateY(rX);//arriba, abajo
+	//camera->MoveUpward(c);//up,down
+	MainCharacter->Update();
+	MainCharacter->check_collition();
 
-	camera->MoveUpward(c);//up,down
-
-	if (saltar == false){
-		lastYposition = terrain->Surface(camera->GetPosition().x, camera->GetPosition().z);
-		camera->SetAltitudPosition(lastYposition) ;
-}
-	else
-	{
-		camera->SetAltitudPosition(lastYposition+salto);
-		if (terrain->Surface(camera->GetPosition().x, camera->GetPosition().z) >= lastYposition + salto) {
-			saltar = false;
-			S_abajo = false;
-			salto = 0;
-			M_Saltar = false;
-		}
-	}
-
-	//cout << salto<<endl;
-	camera->Update();
+	SaltaUpdate();
 
 
-	sky->Draw();        //   Cielo
-	//glPopMatrix();
-
-	
+	sky->Draw(); 
 	terrain->Draw();
+
 	
+
 
 	box->Draw();
-	//triangle->Draw(10);
-
-	goblin->Draw(cont2, 10, 50, rotate);
-
-	goblin->SetAltitudPosition(terrain->Surface(goblin->GetPosition().x, goblin->GetPosition().z));
-
-
-	if (cont2 == 600) { aPress = false; rotate = -90; }
-	
-	if (cont2 == -600) { aPress = true; rotate = 90; }
-	
-	if (aPress == true) { cont2++;
-	}
-	else { cont2--;  }
-		
-	 
-	
-	 
-	tree->Draw(camera->GetPosition());
+	GoblinUpdate();
+	tree->Draw(MainCharacter->GetPosition());
 
 	thing->Draw();
 	tank->Draw();
 	star->Draw();
 	star2->Draw();
-
+	dolphins->Draw();
 	SpritesAnima->SetAltitudPosition(terrain->Surface(SpritesAnima->GetPosition().x, SpritesAnima->GetPosition().z));
 
-	SpritesAnima->Draw(camera->GetPosition(),-200, 100,-50);
-	SpritesAnima2->Draw(camera->GetPosition(), -250, 100, -50);
+	SpritesAnima->Draw(MainCharacter->GetPosition(), -572,250, 890);
+	SpritesAnima2->Draw(MainCharacter->GetPosition(), -540, 250, 751);
 
 	water->Draw();
 
-	if (couner > 80)couner = 0;
 	
-	if (couner==0 || couner == 10 || couner == 20 || couner == 30 || couner == 40 || couner == 50
-		|| couner == 60 || couner == 70 ) {
-		if (SpritesAnima) {
-			delete (SpritesAnima);
-			SpritesAnima = new spritesec(Su_hWnd, 6, 6, position, couner/10);
-		}
-
-		if (SpritesAnima2) {
-			delete (SpritesAnima2);
-			SpritesAnima2 = new spritesec(Su_hWnd, 6, 6, position, couner / 10);
-		}
-	}
-
-	couner++;
-	
-	
-
+	PalmeraUpdate();
 
 	SwapBuffers(hDC);
 }
@@ -212,12 +178,12 @@ void Manager::Actualiza(double a, int est) {
 		c = -a;
 		break;
 	case posicion:
-		cout << "x= " << camera->_position.x <<
-			" y= " << camera->_position.y <<
-			" z= " << camera->_position.z
-			<< endl;
-
-		break;
+		cout << "x= " << MainCharacter->_position.x <<" y= " << MainCharacter->_position.y <<
+			" z= " << MainCharacter->_position.z<<" salto= "<< salto<< endl<<endl
+			<<" r= "<< _clearColor.r
+			<<" g= "<< _clearColor.g
+			<<" b= "<< _clearColor.b<<endl<<endl;
+	
 
 	default:
 		break;
@@ -225,26 +191,186 @@ void Manager::Actualiza(double a, int est) {
 
 }
 
+void Manager::SaltaUpdate()
+{
+	if (saltar == true) {
+		if (Salto_arriba) {
+
+			
+			if (salto >= 30) { Salto_arriba = false; S_abajo = true; }
+			else salto += 2;
+		}
+		else if (S_abajo) {
+
+			salto -= 2;
+		}
+
+	}
+
+
+	if (saltar == false) {
+		lastYposition = terrain->Surface(MainCharacter->GetPosition().x, MainCharacter->GetPosition().z);
+		MainCharacter->SetAltitudPosition(lastYposition);
+	}
+	else
+	{
+		MainCharacter->SetAltitudPosition(lastYposition + salto);
+		if (terrain->Surface(MainCharacter->GetPosition().x, MainCharacter->GetPosition().z) >= lastYposition + salto) {
+			saltar = false;
+			S_abajo = false;
+			salto = 0;
+
+		}
+	}
+
+
+}
+
+void Manager::PalmeraUpdate()
+{
+	if (couner > 80)couner = 0;
+
+	if (couner == 0 || couner == 10 || couner == 20 || couner == 30 || couner == 40 || couner == 50
+		|| couner == 60 || couner == 70) {
+		if (SpritesAnima) {
+			delete (SpritesAnima);
+			SpritesAnima = new spritesec(Su_hWnd, 6, 6, position, couner / 10);
+		}
+
+		if (SpritesAnima2) {
+			delete (SpritesAnima2);
+			SpritesAnima2 = new spritesec(Su_hWnd, 6, 6, position, couner / 10);
+		}
+	}
+
+	couner++;
+}
+
+void Manager::GoblinUpdate()
+{
+	goblin->Draw(cont2, 10, -748, rotate);
+
+	goblin->SetAltitudPosition(terrain->Surface(goblin->GetPosition().x, goblin->GetPosition().z));
+
+
+	if (cont2 >= -493) { aPress = false; rotate = -90; }
+
+	if (cont2 <= -1013) { aPress = true; rotate = 90; }
+
+	if (aPress == true) {
+		cont2++;
+	}
+	else { cont2--; }
+}
+
+void Manager::InitLights()
+{
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_NORMALIZE);
+
+	// Light model parameters:
+	// -------------------------------------------
+
+	GLfloat lmKa[] = { 10, 10, 10, 0};
+	//GLfloat lmKa[] = { _clearColor.r, _clearColor.g, 11, 11 };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lmKa);
+
+	glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, 1.0);
+	glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, 0.0);
+
+	// -------------------------------------------
+	// Spotlight Attenuation
+
+	GLfloat spot_direction[] = { 1.0, -1.0, -1.0 };
+	GLint spot_exponent = 30;
+	GLint spot_cutoff = 180;
+
+	glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, spot_direction);
+	glLighti(GL_LIGHT0, GL_SPOT_EXPONENT, spot_exponent);
+	glLighti(GL_LIGHT0, GL_SPOT_CUTOFF, spot_cutoff);
+
+	GLfloat Kc = 1.0;
+	GLfloat Kl = 0.0;
+	GLfloat Kq = 0.0;
+
+	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, Kc);
+	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, Kl);
+	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, Kq);
+
+
+	// ------------------------------------------- 
+	// Lighting parameters:
+
+	GLfloat light_pos[] = { 0.0f, 1.0f, .0f, 1.0f };
+	GLfloat light_Ka[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	GLfloat light_Kd[] = { 1.0f, 0.1f, 0.1f, 1.0f };
+	GLfloat light_Ks[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+	glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, light_Ka);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_Kd);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, light_Ks);
+
+	// -------------------------------------------
+	// Material parameters:
+
+	GLfloat material_Ka[] = { 0.1f, 0.1f, 0.6f, 1.0f };
+	GLfloat material_Kd[] = { 0.4f, 0.4f, 0.5f, 1.0f };
+	GLfloat material_Ks[] = { 0.8f, 0.8f, 0.0f, 1.0f };
+	GLfloat material_Ke[] = { 0.1f, 0.0f, 0.0f, 0.0f };
+	GLfloat material_Se = 20.0f;
+
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material_Ka);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_Kd);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, material_Ks);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, material_Ke);
+	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, material_Se);
+}
+
+void Manager::CheckLights()
+{
+	//LuzAmbiente
+	if (_clearColor.r >= 20) { LuzAmbiente = false; /*baja luz*/ }
+	if (_clearColor.r <= -1) { LuzAmbiente = true;/*sube luz*/ }
+
+	if (LuzAmbiente) {
+		_clearColor.r += 0.1;
+		_clearColor.g += 0.1;
+		_clearColor.b += 0.1;
+
+	}
+	else{
+		_clearColor.r -= 0.1;
+		_clearColor.g -= 0.1;
+		_clearColor.b -= 0.1;
+}
+		/*_clearColor.g,
+		_clearColor.b,
+		_clearColor.a*/
+}
+
 
 void Manager::VerifyGamepad()
 {
-	//_gamePad->Update();
+	gamepad->Update();
 
-
-
-	//_gamePadData.UpdateGamepad(_gamePad);
-
+	_gamePadData.UpdateGamepad(gamepad);
+	if (MainCharacter) {
+		MainCharacter->MoveForward(_gamePadData.leftStick.y);//w,s
+		MainCharacter->StrafeRight(_gamePadData.leftStick.x);//a,d
+		MainCharacter->RotateX(_gamePadData.rightStick.y);//derecha, izquierda
+		MainCharacter->RotateY(-_gamePadData.rightStick.x);//arriba, abajo
+	}
 	if (gamepad->IsConnected()) {
-		/*
-		(float)gamepad->GetState().Gamepad.sThumbLX / 32767
-		(float)gamepad->GetState().Gamepad.sThumbLY / 32767
-		(float)gamepad->GetState().Gamepad.sThumbRX / 5000 
-		 (float)gamepad->GetState().Gamepad.sThumbRY / 5000
-		*/
-		camera->MoveForward((float)gamepad->GetState().Gamepad.sThumbLY / 5000);//w,s
-		camera->StrafeRight((float)gamepad->GetState().Gamepad.sThumbLX / 5000);//a,d
-		camera->RotateX    ((float)gamepad->GetState().Gamepad.sThumbRY / 5000 );//derecha, izquierda
-		camera->RotateY   ( -(float)gamepad->GetState().Gamepad.sThumbRX / 5000 );//arriba, abajo
+		
+		
+		//camera->MoveForward((float)gamepad->GetState().Gamepad.sThumbLY / 5000);//w,s
+		//camera->StrafeRight((float)gamepad->GetState().Gamepad.sThumbLX / 5000);//a,d
+		//camera->RotateX    ((float)gamepad->GetState().Gamepad.sThumbRY / 5000 );//derecha, izquierda
+		//camera->RotateY   ( -(float)gamepad->GetState().Gamepad.sThumbRX / 5000 );//arriba, abajo
+
+
 
 		//*******************************
 		if ((gamepad->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_B) != 0) {
@@ -254,15 +380,18 @@ void Manager::VerifyGamepad()
 		else {
 			gamepad->Vibrate(0, 0);
 		}
-
-		if ((gamepad->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_A) != 0) {
-			cout << " Habilidad Especial: Saltar \n";
-			M_Saltar = !M_Saltar;
-			saltar = true;
-			S_arriba = true;
-		}	
-
+	
 		//*******************************
 	}
+
+
+
+	if (_gamePadData.buttonA.getButtonDown) {
+		cout << " Habilidad Especial: Saltar \n";
+		saltar = true;
+		Salto_arriba = true;
+		_gamePadData.buttonA.getButtonDown = false;
+	}
+	
 }
 

@@ -3,11 +3,12 @@
 #include "Vector3.h"
 #include <corecrt_math_defines.h>
 #include <math.h>
+//#include "structs.h"
 
 class Camera : public Vector3
 {
 private:
-	Vector3 _viewDir{ Vector3(0,0,1) };
+	Vector3 _viewDir{ Vector3(0,0,-1) };
 	Vector3 _rightVector{ Vector3(0,1,0) };
 	Vector3 _upVector{ Vector3(0,1,0) };
 
@@ -19,7 +20,10 @@ private:
 
 	void Move(Vector3 direction);
 public:
-	Vector3 _position{ Vector3(0,0,-465) };
+	bool saltar = false, Salto_arriba = false, S_abajo = false;
+	int salto = 0;
+	float lastYposition;
+	Vector3 _position{ Vector3(0,0,565) };
 
 	void Update();
 
@@ -31,6 +35,8 @@ public:
 	void MoveUpward(float distance);
 	void StrafeRight(float distance);
 	void SetAltitudPosition(float altitude);
+
+	void check_collition();
 	Vector3 GetPosition();
 };
 

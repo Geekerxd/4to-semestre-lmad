@@ -129,18 +129,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 	}
 
 	case WM_TIMER: {
-		if (manager->saltar == true ) { 
-			if (manager->S_arriba) {
-				
-				manager->salto += 2;
-				if (manager->salto >= 30) { manager->S_arriba= false; manager->S_abajo = true; }
-			}
-			else if(manager->S_abajo){
-				
-				manager->salto -= 2;
-			}
-			
-		}
+		
 		
 		renderiza = true;
 		break;
@@ -214,15 +203,17 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 		
 		//PlaySound("mario-mamamia.WAV", NULL, SND_ASYNC);
 		//step-grass.WAV
-		manager->Actualiza(0, 11);//posicion
+		manager->Actualiza(0, manager->posicion);
 
 		break;
+	
+
 	case VK_SPACE:
 		cout << " Habilidad Especial: Saltar \n";
 		//PlaySound("mario-yippee.mp3", NULL, SND_ASYNC);
 		
 		manager->saltar = true;
-		manager->S_arriba = true;
+		manager->Salto_arriba = true;
 		break;
 
 

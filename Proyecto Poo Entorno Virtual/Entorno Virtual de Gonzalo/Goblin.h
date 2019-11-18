@@ -14,7 +14,7 @@ private:
 	float y;
 	float z;
 
-	Vector3 _position{ Vector3(0,10,0) };
+	Vector3 _position{ Vector3(-607,10,0) };
 public:
 	Goblin(char* path, float x, float y, float z, double ModelSize);
 	Goblin(char* path, WCHAR texture[], float x, float y, float z, double ModelSize);

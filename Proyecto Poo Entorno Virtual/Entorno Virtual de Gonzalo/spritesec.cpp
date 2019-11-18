@@ -74,10 +74,10 @@ void spritesec::Draw(Vector3 position, float x, float y, float z)
 	glVertex3f(_position.x + _right.x, _position.y + GetHeight(), _position.z + _right.z);
 
 	glTexCoord2f(1, 1);
-	glVertex3f(_position.x + _right.x, y, _position.z + _right.z);
+	glVertex3f(_position.x + _right.x, 0, _position.z + _right.z);
 
 	glTexCoord2f(0, 1);
-	glVertex3f(_position.x - _right.x, y, _position.z - _right.z);
+	glVertex3f(_position.x - _right.x, 0, _position.z - _right.z);
 
 	glEnd();
 	

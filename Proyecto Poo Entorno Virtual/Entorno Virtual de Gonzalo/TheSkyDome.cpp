@@ -50,6 +50,8 @@ void TheSkyDome:: Draw()
 	glDisable(GL_DEPTH_TEST);
 	//habilitamos la textura, podriamos mezclar colores y cambiar la tonalidad de la textura
 	//con glColorxf
+	
+
 	glEnable(GL_TEXTURE_2D);
 	//usamos modulate para que la textura sea afectada por el valor de la normal en cuanto
 	//a luz
@@ -74,4 +76,6 @@ void TheSkyDome:: Draw()
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
+
+	glColor3f(1, 1, 0);
 }

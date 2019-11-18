@@ -1,5 +1,6 @@
 #include "Camera.h"
 
+
 #define PIdiv180 (M_PI/180.0)
 
 void Camera::Move(Vector3 direction)
@@ -70,6 +71,13 @@ void Camera::StrafeRight(float distance)
 void Camera::SetAltitudPosition(float altitude)
 {
 	_position.y = altitude+10;
+}
+
+void Camera::check_collition()
+{
+	// glEnable(GL_DEPTH_TEST);
+	//if (_position.x >= 50)
+	//Log::log("helo it is more that 50 in x");
 }
 
 Vector3 Camera::GetPosition()

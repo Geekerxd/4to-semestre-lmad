@@ -3,12 +3,13 @@
 
 Terrain::Terrain(HWND hWnd, WCHAR height[], WCHAR texture[], float width, float depth)
 {
+	
 	_width = width;
 	_depth = depth;
 	//cargamos la textura de la figura
 	Load(height);
 	    //en caso del puntero de la imagen sea nulo se brica esta opcion
-	    terrain = Plane(GetWidth(), GetHeight(), width, depth, GetPath(), 10);//10 es cuantas veces se repite
+	    terrain = Plane(GetWidth(), GetHeight(), width, depth, GetPath(), 100);//10 es cuantas veces se repite
 	    _deltaX = _width / GetWidth();
 	    _deltaZ = _depth / GetHeight();
 	    vertexX = GetWidth();
@@ -23,7 +24,9 @@ Terrain::Terrain(HWND hWnd, WCHAR height[], WCHAR texture[], float width, float 
 	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST_MIPMAP_LINEAR);
 	    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
 	    gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, GetWidth(), GetHeight(), GL_RGBA, GL_UNSIGNED_BYTE, GetPath());
-	Unload();
+
+		
+		Unload();
 }
 
 Terrain::~Terrain()
@@ -34,8 +37,10 @@ Terrain::~Terrain()
 
 void Terrain::Draw()
 {
+	
 	glPushMatrix();
 	    glPushAttrib(GL_CURRENT_BIT | GL_COLOR_BUFFER_BIT | GL_COLOR_MATERIAL);
+		
 	         int ind = 0;
 	         int indice;
 	         
@@ -73,8 +78,11 @@ void Terrain::Draw()
 	             glDisableClientState(GL_NORMAL_ARRAY);
 	             glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	         glDisable(GL_CULL_FACE);
+			 
 	    glPopAttrib();
 	glPopMatrix();
+	glEnable(GL_DEPTH_TEST);
+
 }
 
 float Terrain::Surface(float x, float z)
@@ -134,6 +142,8 @@ float Terrain::Surface(float x, float z)
 
 		height = ((-normalPlane.x * x - normalPlane.z * z - D) / normalPlane.y);
 	}
+
+
 
 	return height;
 }

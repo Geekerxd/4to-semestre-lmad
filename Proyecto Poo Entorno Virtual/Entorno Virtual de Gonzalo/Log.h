@@ -4,6 +4,6 @@ using namespace std;
 class Log
 {
 public:
-	void static log(char* text);
+	void  static log(char* text);
 };
 

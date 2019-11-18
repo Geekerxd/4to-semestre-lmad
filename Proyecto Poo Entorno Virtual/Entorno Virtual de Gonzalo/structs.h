@@ -82,8 +82,8 @@ struct GamePadData {
 		if (gamepad) {
 			if (gamepad->IsConnected()) {
 				double deathZone = 0.1;//aqui 0.1
-				leftStick.x = (double)gamepad->GetState().Gamepad.sThumbLX / 32767;
-				leftStick.y = (double)gamepad->GetState().Gamepad.sThumbLY / 32767;
+				leftStick.x = (double)gamepad->GetState().Gamepad.sThumbLX / 5000;
+				leftStick.y = (double)gamepad->GetState().Gamepad.sThumbLY / 5000;
 				rightStick.x = (double)gamepad->GetState().Gamepad.sThumbRX / 5000;//
 				rightStick.y = (double)gamepad->GetState().Gamepad.sThumbRY / 5000;
 				if (leftStick.x < deathZone && leftStick.x > -deathZone) leftStick.x = 0;
