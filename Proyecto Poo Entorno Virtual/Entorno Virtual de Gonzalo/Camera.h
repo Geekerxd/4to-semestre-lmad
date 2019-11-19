@@ -23,8 +23,8 @@ public:
 	bool saltar = false, Salto_arriba = false, S_abajo = false;
 	int salto = 0;
 	float lastYposition;
-	Vector3 _position{ Vector3(0,0,565) };
-
+	Vector3 _position{ Vector3(761, 350, -766) };
+	Vector3 _LastPosition{ Vector3(0,0,0) };
 	void Update();
 
 	void RotateX(float angle);
@@ -38,5 +38,7 @@ public:
 
 	void check_collition();
 	Vector3 GetPosition();
+	void SaveLastPosition();
+	void StetToLastPosition(bool InX, bool InZ);
 };
 

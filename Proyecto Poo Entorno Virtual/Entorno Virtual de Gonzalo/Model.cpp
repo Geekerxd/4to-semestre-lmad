@@ -32,7 +32,7 @@ void Model::Draw()
 
 //glRotated(90, 0, 1, 0);
 	        glTranslated(x, y, z);
-	        glScaled(this->ModelSize, this->ModelSize, this->ModelSize);
+	        glScaled(this->ModelSize, this->ModelSize, -this->ModelSize);
 			glRotated(90, 0, 1, 0);
 
 	        glEnable(GL_CULL_FACE);

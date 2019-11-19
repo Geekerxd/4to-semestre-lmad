@@ -111,20 +111,4 @@ struct GamePadData {
 		}
 	}
 };
-//
-//struct Vertex {
-//	float posX, posY, posZ;
-//	float normX, normY, normZ;
-//	float u, v;
-//};
-//
-//struct Mesh {
-//	Vertex* mesh;
-//	unsigned int* indexes;
-//	void Unload() {
-//		if (mesh)
-//			delete mesh;
-//		if (indexes)
-//			delete indexes;
-//	}
-//};
+

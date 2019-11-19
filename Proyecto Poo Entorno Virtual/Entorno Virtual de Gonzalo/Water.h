@@ -13,7 +13,7 @@ public:
 	Water(WCHAR* texturePath);
 	~Water(void);
 
-	void Draw();
+	void Draw(float Alitud);
 	void Update();
 };
 

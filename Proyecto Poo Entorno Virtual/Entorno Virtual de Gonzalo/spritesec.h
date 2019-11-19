@@ -20,9 +20,6 @@ public:
 	"assets/billboards/Arbol3.png" ,"assets/billboards/Arbol4.png","assets/billboards/Arbol.jpg" };
 	*/
 
-	WCHAR *anima[10] = { L"assets/billboards/Arbol.png",L"assets/billboards/Arbol2.png",
-	L"assets/billboards/Arbol3.png",L"assets/billboards/Arbol4.png",L"assets/billboards/Arbol.jpg"  };
-
 	WCHAR *AnimaPalm[15] = { L"assets/PalmAnima/palma_00.png",L"assets/PalmAnima/palma_01.png",
 	L"assets/PalmAnima/palma_02.png",L"assets/PalmAnima/palma_01.png",L"assets/PalmAnima/palma_00.png"
 	,L"assets/PalmAnima/palma_10.png",L"assets/PalmAnima/palma_11.png",L"assets/PalmAnima/palma_10.png" };

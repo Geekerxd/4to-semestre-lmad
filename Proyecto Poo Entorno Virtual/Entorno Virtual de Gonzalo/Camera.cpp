@@ -84,3 +84,37 @@ Vector3 Camera::GetPosition()
 {
 	return _position;
 }
+
+void Camera::SaveLastPosition()
+{
+
+	_LastPosition.x = _position.x;
+	_LastPosition.z = _position.z;
+
+
+}
+
+void Camera::StetToLastPosition(bool InX, bool InZ)
+{
+	if (InX){
+		if (_LastPosition.x - _position.x > 0)
+		{
+			_position.x = _LastPosition.x + 2;
+		}
+		else {
+			_position.x = _LastPosition.x - 2;
+		}
+}
+
+	if (InZ) {
+		if (_LastPosition.z - _position.z > 0)
+		{
+			_position.z = _LastPosition.z + 2;
+		}
+		else {
+			_position.z = _LastPosition.z - 2;
+		}
+	}
+	
+	
+}

@@ -16,6 +16,9 @@
 #include "Goblin.h"
 
 #include "TheSkyDome.h"
+#include "Montana.h"
+#include "Colicion.h"
+
 
 //#include "Primitive.h"
 
@@ -38,14 +41,15 @@ private:
 	GamePad* gamepad{ NULL };       //"GamePad.h"
 	Model* tank{ NULL };            //"Model.h"
 	Model* dolphins{ NULL };        //"Model.h"
-	Model* thing{ NULL };           //"Model.h"
+	Model* Pajaro{ NULL };           //"Model.h"
 	Model* star{ NULL };
 	Model* star2{ NULL };
 	Billboard* tree{ NULL };        //"Billboard.h"
 	Water* water{ NULL };           //"Water.h"
+	Montana* montana{ NULL };
 
 	GamePadData _gamePadData{ NULL };
-	
+	Colicion *colicion{ NULL };
 
 	spritesec *SpritesAnima{ NULL };//"spritesec.h"
 	spritesec *SpritesAnima2{ NULL };//"spritesec.h"
@@ -59,12 +63,14 @@ public:
 	HWND Su_hWnd;
 	Vector3 position{ Vector3() };
 	Vector3 aux{ Vector3() };
+	
+	
 	Manager(HWND hWnd);
 	~Manager();
-	int couner = 0;
-	int cont2 = -607;
-	int rotate = 90;
-	int salto= 0;
+	int couner = 0;// de palmera
+	int cont2 = -607;//de goblin
+	int rotate = 90;//de goblin
+	int salto= 0;// de main character
 
 	bool saltar=false,Salto_arriba = false,S_abajo=false;
 
@@ -84,5 +90,9 @@ public:
 
 	void InitLights();
 	void CheckLights();
+	bool CheckCollitions();
+	void RestetCollitions();
 };
+
+
 

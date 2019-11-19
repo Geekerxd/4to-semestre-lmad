@@ -9,8 +9,10 @@ Manager::Manager(HWND hWnd)
 	//glDepthMask(GL_TRUE);
 	//glDepthFunc(GL_LESS);
 	//glDepthRange(0.0f, 2.0f);
-
-
+	
+	colicion = new Colicion(533, 624, -808, -574);
+		
+	//aColition->SetCollition(543, 624, -808, -588);
 
 	Su_hWnd = hWnd;
 	triangle = new Triangle();
@@ -20,13 +22,13 @@ Manager::Manager(HWND hWnd)
 	gamepad = new GamePad(1);
 	//***********************************************************************************
 	tank = new Model("assets/models/robot.obj",L"assets/models/robot_skin.jpg",200,50,200,50);
-	thing = new Model("assets/models/objectModel.obj", L"assets/models/flower.jpeg",-100,10,100, 10);
+	Pajaro = new Model("assets/models/objectModel.obj", L"assets/models/flower.jpeg", 761, 350, -766, 10);
 	dolphins = new Model("assets/models/dolphins.obj", L"assets/models/flower.jpeg", 0, 250, 450, 50);//-572,250, 890
 	star = new Model("assets/models/star.obj", L"assets/models/Tex_0221_0.jpg", -100, 10, 80, 10);
 	star2 = new Model("assets/models/star.obj", L"assets/models/Tex_0221_0.jpg", -100, 10, 60, 10);
 	//***********************************************************************************
-
-	sky = new TheSkyDome(hWnd, 32, 32, 1800, L"assets/models/cielo2.jpg");
+	montana = new Montana("assets/Montana/Mont01.obj", "assets/Montana/Mont02.obj", L"assets/Montana/roca.jpg", L"assets/Montana/roca02.jpg", 761, 350, -766,250);
+	sky = new TheSkyDome(hWnd, 32, 32, 1800, L"assets/SkyFiles/cielo2.jpg");
 	//esfer = new Primitive();
 	//Primitive
 	goblin = new Goblin("assets/models/SuperGoblin.obj", L"assets/models/NewGoblin_Color.png", 0, 10, -50, 10);
@@ -56,8 +58,8 @@ Manager::~Manager()
 		delete tank;
 	if (dolphins)
 		delete dolphins;
-	if (thing)
-		delete thing;
+	if (Pajaro)
+		delete Pajaro;
 	if (tree)
 		delete tree;
 	if (SpritesAnima)
@@ -78,14 +80,27 @@ void Manager::Render(HDC hDC)
 	
 	InitLights();
 	CheckLights();
-	//con GamePad
-	VerifyGamepad();
-	//con KeyBoard
-	MainCharacter->MoveForward(position.y);//w,s
-	MainCharacter->StrafeRight(position.x);//a,d
-	MainCharacter->RotateX(rY);//derecha, izquierda
-	MainCharacter->RotateY(rX);//arriba, abajo
 
+		//con GamePad
+		VerifyGamepad();
+		//con KeyBoard
+
+		if (!CheckCollitions()) {
+		MainCharacter->MoveForward(position.y);//w,s
+		MainCharacter->StrafeRight(position.x);//a,d
+		MainCharacter->RotateX(rY);//derecha, izquierda
+		MainCharacter->RotateY(rX);//arriba, abajo
+
+		MainCharacter->SaveLastPosition();
+
+		}
+		else {
+			cout << "\n Colicion \n";
+			
+			MainCharacter->StetToLastPosition(colicion->InX, colicion->InZ);
+			RestetCollitions();
+		}
+		
 	//camera->MoveUpward(c);//up,down
 	MainCharacter->Update();
 	MainCharacter->check_collition();
@@ -100,10 +115,12 @@ void Manager::Render(HDC hDC)
 
 
 	box->Draw();
+
 	GoblinUpdate();
+
 	tree->Draw(MainCharacter->GetPosition());
 
-	thing->Draw();
+	Pajaro->Draw();
 	tank->Draw();
 	star->Draw();
 	star2->Draw();
@@ -112,8 +129,8 @@ void Manager::Render(HDC hDC)
 
 	SpritesAnima->Draw(MainCharacter->GetPosition(), -572,250, 890);
 	SpritesAnima2->Draw(MainCharacter->GetPosition(), -540, 250, 751);
-
-	water->Draw();
+	montana->Draw();
+	water->Draw(_clearColor.r);
 
 	
 	PalmeraUpdate();
@@ -250,7 +267,8 @@ void Manager::GoblinUpdate()
 {
 	goblin->Draw(cont2, 10, -748, rotate);
 
-	goblin->SetAltitudPosition(terrain->Surface(goblin->GetPosition().x, goblin->GetPosition().z));
+	goblin->SetAltitudPosition(terrain->Surface(goblin->GetPosition().x,
+		goblin->GetPosition().z));
 
 
 	if (cont2 >= -493) { aPress = false; rotate = -90; }
@@ -272,8 +290,8 @@ void Manager::InitLights()
 	// Light model parameters:
 	// -------------------------------------------
 
-	GLfloat lmKa[] = { 10, 10, 10, 0};
-	//GLfloat lmKa[] = { _clearColor.r, _clearColor.g, 11, 11 };
+	//GLfloat lmKa[] = { 10, 10, 10, 0};
+	GLfloat lmKa[] = { _clearColor.r, _clearColor.g, 11, 11 };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lmKa);
 
 	glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, 1.0);
@@ -350,39 +368,52 @@ void Manager::CheckLights()
 		_clearColor.a*/
 }
 
+bool Manager::CheckCollitions()
+{
+	if (colicion->isCollition(MainCharacter->_position.x, MainCharacter->_position.z)) {
+	return true;
+	}
+	else false;
+
+}
+
+void Manager::RestetCollitions()
+{
+	colicion->InX = false;
+	colicion->InZ = false;
+}
+
 
 void Manager::VerifyGamepad()
 {
 	gamepad->Update();
 
 	_gamePadData.UpdateGamepad(gamepad);
+
 	if (MainCharacter) {
-		MainCharacter->MoveForward(_gamePadData.leftStick.y);//w,s
-		MainCharacter->StrafeRight(_gamePadData.leftStick.x);//a,d
-		MainCharacter->RotateX(_gamePadData.rightStick.y);//derecha, izquierda
-		MainCharacter->RotateY(-_gamePadData.rightStick.x);//arriba, abajo
-	}
-	if (gamepad->IsConnected()) {
-		
-		
-		//camera->MoveForward((float)gamepad->GetState().Gamepad.sThumbLY / 5000);//w,s
-		//camera->StrafeRight((float)gamepad->GetState().Gamepad.sThumbLX / 5000);//a,d
-		//camera->RotateX    ((float)gamepad->GetState().Gamepad.sThumbRY / 5000 );//derecha, izquierda
-		//camera->RotateY   ( -(float)gamepad->GetState().Gamepad.sThumbRX / 5000 );//arriba, abajo
+		if (!colicion->isCollition(MainCharacter->_position.x, MainCharacter->_position.z)) {
+			MainCharacter->MoveForward(_gamePadData.leftStick.y);//w,s
+			MainCharacter->StrafeRight(_gamePadData.leftStick.x);//a,d
+			MainCharacter->RotateX(_gamePadData.rightStick.y);//derecha, izquierda
+			MainCharacter->RotateY(-_gamePadData.rightStick.x);//arriba, abajo
 
-
-
-		//*******************************
-		if ((gamepad->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_B) != 0) {
-			aPress = !aPress;
-			gamepad->Vibrate(32767, 32767);
 		}
 		else {
-			gamepad->Vibrate(0, 0);
+			cout << "\n Colicion \n";
 		}
-	
-		//*******************************
+
 	}
+	
+		
+	if ((gamepad->GetState().Gamepad.wButtons & XINPUT_GAMEPAD_B) != 0) {
+		aPress = !aPress;
+		gamepad->Vibrate(32767, 32767);
+	}
+	else {
+		gamepad->Vibrate(0, 0);
+	}
+	
+	
 
 
 

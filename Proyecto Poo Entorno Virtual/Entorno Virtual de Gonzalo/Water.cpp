@@ -20,7 +20,7 @@ Water::~Water(void)
 	glDeleteTextures(1, &_texture);
 }
 
-void Water::Draw()
+void Water::Draw(float Alitud)
 {
 	glPushAttrib(GL_CURRENT_BIT | GL_TEXTURE_BIT);
 	glBindTexture(GL_TEXTURE_2D, _texture);
@@ -30,7 +30,7 @@ void Water::Draw()
 	static float water_factor_max = 20.0f;
 	static float water_size = 1800;
 	static double modifier = 0;
-	float altura = 30.f;
+	float altura = Alitud*4+30.f;
 	// water_factor_min += 1;
 	modifier += .01;
 
