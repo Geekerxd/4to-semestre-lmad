@@ -1,14 +1,12 @@
 #include "Manager.h"
-
+#include <time.h>
 Manager::Manager(HWND hWnd)
 {
 	//habilitamos el control de profundidad en el render
 	glEnable(GL_DEPTH_TEST);
 
-	//glEnable(GL_DEPTH_TEST);
-	//glDepthMask(GL_TRUE);
-	//glDepthFunc(GL_LESS);
-	//glDepthRange(0.0f, 2.0f);
+	Random = GetRandomNumer();
+	Random2 = GetRandomNumer();
 	
 	colicion01 = new Colicion(533, 624, -808, -574);
 	colicion02 = new Colicion(533, 983, -921, -808);
@@ -31,7 +29,20 @@ Manager::Manager(HWND hWnd)
 	llave = new key("assets/models/Boss_Key.obj", L"assets/models/Boss_Key.jpg");//Boss Key
 	llave2 = new key("assets/models/Boss_Key.obj", L"assets/models/Boss_Key.jpg");//Boss Key
 	llave3 = new key("assets/models/Boss_Key.obj", L"assets/models/Boss_Key.jpg");//Boss Key
-																					 ///borrar
+	tiburon = new Tiburon("assets/models/tiburon.obj", L"assets/models/tiburon.png");
+	barco = new Barco("assets/models/Barco.obj", L"assets/models/Tex_0002_0.png");
+	pirate = new Pirate("assets/models/pirateguy.obj", L"assets/models/161e59a8.png");
+	
+	concha  = new ConchaDeMar	  ("assets/models/seashell_obj.obj", L"assets/models/shell_basecolour.jpg");
+	tortuga = new Tortuga		  ("assets/models/Sea_Turtle.obj", L"assets/models/Sea_Turtle_Body Texture.png");
+	sombrero= new SombreroPirata("assets/models/piratehat.obj", L"assets/models/pirate.png");
+	spez    = new SuperPez	      ("assets/models/floppyfish.obj", L"assets/models/Handle1Tex.png");
+	espada  = new Espada		  ("assets/models/dark_repulser.obj", L"assets/models/wpn_dark_repulser.png");
+	cangr   = new cangrejo	      ("assets/models/Crab_bot.obj", L"assets/models/Crabmeat_d.png");
+	barril  = new Barril 		  ("assets/models/Barril.obj", L"assets/models/009.png");
+	Timon   = new Wheel 		  ("assets/models/ui_3dicon_wheel.obj", L"assets/models/wood_yellow.RW3.png");
+
+	///borrar
 	//dolphins = new Model("assets/models/dolphins.obj", L"assets/models/flower.jpeg", 0, 250, 450, 50);//-572,250, 890
 	star = new Model("assets/models/star.obj", L"assets/models/Tex_0221_0.jpg");//, -100, 10, 80, 10
 	star2 = new Model("assets/models/star.obj", L"assets/models/Tex_0221_0.jpg");//
@@ -77,6 +88,13 @@ Manager::~Manager()
 		delete llave2;
 	if (llave3)
 		delete llave3;
+	//tiburon
+	if (tiburon)
+		delete tiburon;
+	if (barco)
+		delete barco;
+	if (pirate)
+		delete pirate;
 	if (tree)
 		delete tree;
 	if (SpritesAnima)
@@ -89,6 +107,26 @@ Manager::~Manager()
 		delete SpritesAnima4;
 	if (SpritesAnima5)
 		delete SpritesAnima5;
+
+	if (concha)
+		delete concha;
+	if (tortuga)
+		delete tortuga;
+	if (sombrero)
+		delete sombrero;
+	if (spez)
+		delete spez;
+	if (espada)
+		delete espada;
+	if (cangr)
+		delete cangr;
+	if (barril)
+		delete barril;
+	if (Timon)
+		delete Timon;
+
+	
+
 }
 void Manager::Render(HDC hDC)
 {
@@ -149,12 +187,12 @@ void Manager::Render(HDC hDC)
 		terrain->Surface(Estatua->GetPosition().x, Estatua->GetPosition().z)+10,-766,
 		10, EstaEsca,10,90,0,1,0);
 	//tank->Draw();
-	star->Draw(755,
-		terrain->Surface(star->GetPosition().x, star->GetPosition().z) + 10, -766,
-		10, 10, 10, 90, 0, 1, 0);
-	star2->Draw(775,
-		terrain->Surface(star->GetPosition().x, star->GetPosition().z) + 10, -766,
-		10, 10, 10, 90, 0, 1, 0);
+	star->Draw(Random,
+		terrain->Surface(star->GetPosition().x, star->GetPosition().z) + 10, -Random,
+		10, 10, 10, cont2, 0, 0, 1);
+	star2->Draw(-Random,
+		terrain->Surface(star->GetPosition().x, star->GetPosition().z) + 10, Random,
+		10, 10, 10, cont2, 0, 0, 1);
 	llave->Draw(761,
 		terrain->Surface(llave->GetPosition().x, llave->GetPosition().z) + 10, -600,
 		10, 10, 10, cont2, 0, 1, 0);
@@ -163,9 +201,29 @@ void Manager::Render(HDC hDC)
 		10, 10, 10, cont2, 0, 1, 0);
 	llave3->Draw(-218,
 		terrain->Surface(llave3->GetPosition().x, llave3->GetPosition().z) + 10, 928,
-		10, 10, 10, cont2, 0, 1, 0);
-	//dolphins->Draw();
-	SpritesAnima->SetAltitudPosition(terrain->Surface(SpritesAnima->GetPosition().x, SpritesAnima->GetPosition().z));
+		10,10,10, cont2, 0, 1, 0);
+	tiburon->Draw(cont3,
+		terrain->Surface(tiburon->GetPosition().x, tiburon->GetPosition().z) + 40+ _clearColor.r*4, cont3,
+		150, 150, 150, rotate, 0, 1, 0);
+
+	barco->Draw(cont4,
+		terrain->Surface(barco->GetPosition().x, barco->GetPosition().z) + 120+ _clearColor.r*4, cont5,
+		150, 150, 150, rotate2, 0, 1, 0);
+	BarcoUpdate();
+	pirate->Draw(cont3,
+		terrain->Surface(pirate->GetPosition().x, pirate->GetPosition().z) + 15, 842,
+		15, 15, 15, rotate, 0, 1, 0);
+
+	concha  ->Draw(130, terrain->Surface(concha  ->GetPosition().x, concha  ->GetPosition().z) + 7, 728, 10, 10, 10, 0, 0, 1, 0);
+	tortuga ->Draw(156, terrain->Surface(tortuga ->GetPosition().x, tortuga ->GetPosition().z) + 2, 945, 10, 10, 10, 0, 0, 1, 0);
+	sombrero->Draw(-155, terrain->Surface(sombrero->GetPosition().x, sombrero->GetPosition().z)+ 7, 1077, 10, 10, 10, 180, 0, 1, 0);
+	spez    ->Draw(839, terrain->Surface(spez    ->GetPosition().x, spez    ->GetPosition().z) , -736, 10, 10, 10, 0, 0, 1, 0);
+	espada  ->Draw(678, terrain->Surface(espada  ->GetPosition().x, espada  ->GetPosition().z) + 5, -717, 10, 10, 10, 90, 1, 0, 0);
+	cangr   ->Draw(793, terrain->Surface(cangr   ->GetPosition().x, cangr   ->GetPosition().z) + 7, -669, 10, 10, 10, 0, 0, 1, 0);
+	barril  ->Draw(-636, terrain->Surface(barril  ->GetPosition().x, barril  ->GetPosition().z)+ 7, -646, 10, 10, 10, 0, 0, 1, 0);
+	Timon   ->Draw(-844, terrain->Surface(Timon   ->GetPosition().x, Timon   ->GetPosition().z)+ 3, -882, 10, 10, 10, 0, 0, 1, 0);
+
+
 
 	SpritesAnima->Draw(MainCharacter->GetPosition(), -572,250, 890);
 	SpritesAnima2->Draw(MainCharacter->GetPosition(), -540, 250, 751);
@@ -238,13 +296,19 @@ void Manager::Actualiza(double a, int est) {
 		c = -a;
 		break;
 	case posicion:
-		cout << "x= " << MainCharacter->_position.x <<" y= " << MainCharacter->_position.y <<
+		cout << "\nx= " << MainCharacter->_position.x <<" y= " << MainCharacter->_position.y <<
 			" z= " << MainCharacter->_position.z<<" salto= "<< salto<< endl<<endl
 			<<" r= "<< _clearColor.r
 			<<" g= "<< _clearColor.g
-			<<" b= "<< _clearColor.b<<endl<<endl;
-	
-
+			<<" b= "<< _clearColor.b
+			<<"\n Random 1 y 2= " << Random <<" "<< Random2 <<endl<<endl;
+		break;
+	case UnoRandom:
+		Random = 0;
+		Random = GetRandomNumer();
+		Random2 = 0;
+		Random2 = GetRandomNumer();
+		break;
 	default:
 		break;
 	}
@@ -329,8 +393,11 @@ void Manager::GoblinUpdate()
 
 	if (aPress == true) {
 		cont2++;
+		cont3++;
 	}
-	else { cont2--; }
+	else {
+		cont2--; cont3--;
+	}
 }
 
 void Manager::InitLights()
@@ -449,6 +516,35 @@ void Manager::RestetBoolCollitions()
 	colicion03->InZ = false;
 	_InX=false;
 	_InZ=false;
+}
+
+double Manager::GetRandomNumer()
+{
+	srand(time(NULL));
+	return (rand() % 2400) - 1200;;
+}
+
+void Manager::BarcoUpdate()
+{
+	
+
+	if (CasesShip == 0) {
+		cont4+=3;
+		if (cont4 >= 627) { CasesShip = 1; rotate2 = 0; }
+	}
+	else if(CasesShip == 1){
+		cont5-= 3;
+		if (cont5 <= -278) { CasesShip = 2; rotate2 = 270; }
+	}
+	else if (CasesShip == 2) {
+		cont4-= 3;
+		if (cont4 <= -745) { CasesShip = 3; rotate2 = 180; }
+	}
+	else if (CasesShip == 3) {
+		cont5+= 3;
+		if (cont5 >= 400) { CasesShip = 0; rotate2 = 90; }
+	}
+
 }
 
 

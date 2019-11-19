@@ -8,7 +8,7 @@
 class Camera : public Vector3
 {
 private:
-	Vector3 _viewDir{ Vector3(0,0,-1) };
+	Vector3 _viewDir{ Vector3(0,0,1) };
 	Vector3 _rightVector{ Vector3(0,1,0) };
 	Vector3 _upVector{ Vector3(0,1,0) };
 
@@ -23,7 +23,7 @@ public:
 	bool saltar = false, Salto_arriba = false, S_abajo = false;
 	int salto = 0;
 	float lastYposition;
-	Vector3 _position{ Vector3(761, 350, -766) };
+	Vector3 _position{ Vector3(761, 350, -750) };
 	Vector3 _LastPosition{ Vector3(0,0,0) };
 	void Update();
 

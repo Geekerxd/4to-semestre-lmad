@@ -215,6 +215,10 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 		manager->saltar = true;
 		manager->Salto_arriba = true;
 		break;
+	case 'R':
+		cout << " Coomando Especial: Dispersar las estrellas\n";
+		manager->Actualiza(a, manager->UnoRandom);
+		break;
 
 
 

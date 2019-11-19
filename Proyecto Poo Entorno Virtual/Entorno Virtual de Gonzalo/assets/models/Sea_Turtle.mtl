@@ -1,0 +1,13 @@
+# Blender3D MTL File: Sea Turtle.blend
+# Material Count: 1
+newmtl body_Sea_Turtle_Body_T
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Sea_Turtle_Body Texture.png
+
+

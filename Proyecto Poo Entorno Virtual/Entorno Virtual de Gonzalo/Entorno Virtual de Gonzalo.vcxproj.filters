@@ -81,6 +81,39 @@
     <ClCompile Include="key.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Tiburon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Barco.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Pirate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Barril.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cangrejo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Espada.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SuperPez.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SombreroPirata.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tortuga.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConchaDeMar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Wheel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Billboard.h">
@@ -153,6 +186,39 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="key.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiburon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Barco.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Pirate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Barril.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cangrejo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Espada.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SuperPez.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SombreroPirata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tortuga.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConchaDeMar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Wheel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

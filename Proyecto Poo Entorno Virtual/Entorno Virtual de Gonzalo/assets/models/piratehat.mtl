@@ -1,0 +1,11 @@
+# Material file for piratehat.obj
+
+newmtl Part1Mtl
+	Ns 2295
+	d 1
+	illum 2
+	Kd 1.0 1.0 1.0
+	Ks 0.255686 0.254118 0.258824
+	Ka 0.639216 0.635294 0.647059
+	map_Kd pirate.png
+

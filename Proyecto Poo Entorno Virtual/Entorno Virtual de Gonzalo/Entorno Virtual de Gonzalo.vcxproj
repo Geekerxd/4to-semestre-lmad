@@ -120,10 +120,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Barco.cpp" />
+    <ClCompile Include="Barril.cpp" />
     <ClCompile Include="Billboard.cpp" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="cangrejo.cpp" />
     <ClCompile Include="Colicion.cpp" />
+    <ClCompile Include="ConchaDeMar.cpp" />
+    <ClCompile Include="Espada.cpp" />
     <ClCompile Include="GamePad.cpp" />
     <ClCompile Include="glm.cpp" />
     <ClCompile Include="Goblin.cpp" />
@@ -133,22 +138,33 @@
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Montana.cpp" />
+    <ClCompile Include="Pirate.cpp" />
     <ClCompile Include="Primitive.cpp" />
+    <ClCompile Include="SombreroPirata.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="spritesec.cpp" />
+    <ClCompile Include="SuperPez.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="TheSkyDome.cpp" />
+    <ClCompile Include="Tiburon.cpp" />
+    <ClCompile Include="Tortuga.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="Water.cpp" />
+    <ClCompile Include="Wheel.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Barco.h" />
+    <ClInclude Include="Barril.h" />
     <ClInclude Include="Billboard.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="cangrejo.h" />
     <ClInclude Include="Colicion.h" />
+    <ClInclude Include="ConchaDeMar.h" />
     <ClInclude Include="Console.h" />
+    <ClInclude Include="Espada.h" />
     <ClInclude Include="GamePad.h" />
     <ClInclude Include="glm.h" />
     <ClInclude Include="Goblin.h" />
@@ -158,16 +174,22 @@
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Montana.h" />
+    <ClInclude Include="Pirate.h" />
     <ClInclude Include="Primitive.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="SombreroPirata.h" />
     <ClInclude Include="spritesec.h" />
     <ClInclude Include="structs.h" />
+    <ClInclude Include="SuperPez.h" />
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="TheSkyDome.h" />
+    <ClInclude Include="Tiburon.h" />
+    <ClInclude Include="Tortuga.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="Water.h" />
+    <ClInclude Include="Wheel.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="glew32.lib" />
