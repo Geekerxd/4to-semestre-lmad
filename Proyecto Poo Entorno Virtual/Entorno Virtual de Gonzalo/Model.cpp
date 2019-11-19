@@ -1,16 +1,9 @@
 #include "Model.h"
 
-Model::Model(char* path, float x, float y, float z, double ModelSize)
-	: x(x), y(y), z(z), ModelSize(ModelSize)
-{
-	_model = glmReadOBJ(path);
-	glmUnitize(_model);
-}
 
-Model::Model(char* path, WCHAR texture[], float x, float y, float z, double ModelSize)
-	:x(x), y(y), z(z), ModelSize(ModelSize)
-{
-	_model = glmReadOBJ(path);
+Model::Model(char* path, WCHAR texture[])
+	
+{	_model = glmReadOBJ(path);
 	glmUnitize(_model);
 	Load(texture);
 	glGenTextures(1, &_texture);
@@ -25,15 +18,19 @@ Model::~Model()
 		delete _model;
 }
 
-void Model::Draw()
+void Model::Draw(float x, float y, float z, float Sx, float Sy, float Sz, float angle,
+	int Rx, int Ry, int Rz)
 {
+	_position.x = x;
+	_position.y = y;
+	_position.z = z;
+
 	glPushMatrix();
 	    glPushAttrib(GL_CURRENT_BIT | GL_COLOR_BUFFER_BIT | GL_COLOR_MATERIAL);
 
-//glRotated(90, 0, 1, 0);
-	        glTranslated(x, y, z);
-	        glScaled(this->ModelSize, this->ModelSize, -this->ModelSize);
-			glRotated(90, 0, 1, 0);
+	        glTranslated(_position.x, _position.y, _position.z);
+	        glScaled(Sx, Sy, -Sz);
+			glRotated(angle, Rx, Ry, Rz);
 
 	        glEnable(GL_CULL_FACE);
 	        glCullFace(GL_FRONT_FACE);
@@ -47,4 +44,8 @@ void Model::Draw()
 	        glDisable(GL_CULL_FACE);
 	    glPopAttrib();
 	glPopMatrix();
+}
+Vector3 Model::GetPosition()
+{
+	return _position;
 }

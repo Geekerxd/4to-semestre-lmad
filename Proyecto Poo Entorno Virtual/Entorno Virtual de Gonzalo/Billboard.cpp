@@ -27,7 +27,7 @@ Billboard::~Billboard() {
 
 void Billboard::Draw(Vector3 position) {
 	glPushMatrix();
-	glTranslated(0, 5, -50);
+	glTranslated(-1044, 250, 3);
 	glScaled(0.09, 0.09, 0.09);
 	
 	//habilitamos el culling para reducir tiempo de procesamiento de las texturas
@@ -46,7 +46,7 @@ void Billboard::Draw(Vector3 position) {
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 	glBindTexture(GL_TEXTURE_2D, _texture);
 	//calculamos el vector de la camara al billboard
-	_forward = Vector3(position.x - _position.x, position.y - _position.y-5, position.z - _position.z+50);
+	_forward = Vector3(position.x - _position.x+ 1044, position.y - _position.y- 250, position.z - _position.z- 3);
 	//obtenemos 
 	_right = Normalize(Cross(_up, _forward));
 	_right.x *= GetWidth() / 2.0;

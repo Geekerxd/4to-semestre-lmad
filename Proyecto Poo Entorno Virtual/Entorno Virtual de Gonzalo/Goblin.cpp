@@ -30,7 +30,7 @@ Goblin::~Goblin()
 void Goblin::Draw(float x, float y, float z, int rot)
 {
 	_position.x = x;
-	//_position.y = y;
+	_position.y = y;
 	_position.z = z;
 
 	glPushMatrix();

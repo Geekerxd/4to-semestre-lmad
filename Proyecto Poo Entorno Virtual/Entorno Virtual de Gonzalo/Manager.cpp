@@ -10,62 +10,85 @@ Manager::Manager(HWND hWnd)
 	//glDepthFunc(GL_LESS);
 	//glDepthRange(0.0f, 2.0f);
 	
-	colicion = new Colicion(533, 624, -808, -574);
+	colicion01 = new Colicion(533, 624, -808, -574);
+	colicion02 = new Colicion(533, 983, -921, -808);
+	colicion03 = new Colicion(909, 983, -808, -574);
 		
 	//aColition->SetCollition(543, 624, -808, -588);
 
 	Su_hWnd = hWnd;
+	///borrar
 	triangle = new Triangle();
-	box = new Box(5);
+	///borrar
+	//box = new Box(5);
 	terrain = new Terrain(hWnd, L"assets/terrain/terreno.jpg", L"assets/terrain/texterr3.jpg", 2400, 2400);
 	MainCharacter = new Camera();
 	gamepad = new GamePad(1);
 	//***********************************************************************************
-	tank = new Model("assets/models/robot.obj",L"assets/models/robot_skin.jpg",200,50,200,50);
-	Pajaro = new Model("assets/models/objectModel.obj", L"assets/models/flower.jpeg", 761, 350, -766, 10);
-	dolphins = new Model("assets/models/dolphins.obj", L"assets/models/flower.jpeg", 0, 250, 450, 50);//-572,250, 890
-	star = new Model("assets/models/star.obj", L"assets/models/Tex_0221_0.jpg", -100, 10, 80, 10);
-	star2 = new Model("assets/models/star.obj", L"assets/models/Tex_0221_0.jpg", -100, 10, 60, 10);
+	///borrar
+	//tank = new Model("assets/models/robot.obj",L"assets/models/robot_skin.jpg",200,50,200,50);
+	Estatua = new Model("assets/models/EstatuaZ.obj", L"assets/models/EstatuaZ.png");//, 761, 270, -766, 10
+	llave = new key("assets/models/Boss_Key.obj", L"assets/models/Boss_Key.jpg");//Boss Key
+	llave2 = new key("assets/models/Boss_Key.obj", L"assets/models/Boss_Key.jpg");//Boss Key
+	llave3 = new key("assets/models/Boss_Key.obj", L"assets/models/Boss_Key.jpg");//Boss Key
+																					 ///borrar
+	//dolphins = new Model("assets/models/dolphins.obj", L"assets/models/flower.jpeg", 0, 250, 450, 50);//-572,250, 890
+	star = new Model("assets/models/star.obj", L"assets/models/Tex_0221_0.jpg");//, -100, 10, 80, 10
+	star2 = new Model("assets/models/star.obj", L"assets/models/Tex_0221_0.jpg");//
 	//***********************************************************************************
 	montana = new Montana("assets/Montana/Mont01.obj", "assets/Montana/Mont02.obj", L"assets/Montana/roca.jpg", L"assets/Montana/roca02.jpg", 761, 350, -766,250);
 	sky = new TheSkyDome(hWnd, 32, 32, 1800, L"assets/SkyFiles/cielo2.jpg");
-	//esfer = new Primitive();
-	//Primitive
+
 	goblin = new Goblin("assets/models/SuperGoblin.obj", L"assets/models/NewGoblin_Color.png", 0, 10, -50, 10);
-
 	tree = new Billboard(hWnd, L"assets/billboards/Arbol3.png", 6, 6, position);
-
-	water = new Water(L"assets/water/water3.jpg");
+	Agua = new Water(L"assets/water/water3.jpg");
 
 	SpritesAnima = new spritesec(hWnd, 6, 6, position,0);
 	SpritesAnima2 = new spritesec(hWnd, 6, 6, position, 0);
+	SpritesAnima3 = new spritesec(hWnd, 6, 6, position, 0);
+	SpritesAnima4 = new spritesec(hWnd, 6, 6, position, 0);
+	SpritesAnima5 = new spritesec(hWnd, 6, 6, position, 0);
 
-	Log::log("Finish Loading");
+	Log::log("Se Cargaron Los Objetos");
 }
 Manager::~Manager()
 {
 	if (triangle)
 		delete triangle;
+	/*
 	if (box)
 		delete box;
+		*/
 	if (terrain)
 		delete terrain;
 	if (MainCharacter)
 		delete MainCharacter;
 	if (gamepad)
 		delete gamepad;
-	if (tank)
-		delete tank;
-	if (dolphins)
-		delete dolphins;
-	if (Pajaro)
-		delete Pajaro;
+	/*if (tank)
+		delete tank;*/
+	/*if (dolphins)
+		delete dolphins;*/
+	if (Estatua)
+		delete Estatua;
+	if (llave)
+		delete llave;
+	if (llave2)
+		delete llave2;
+	if (llave3)
+		delete llave3;
 	if (tree)
 		delete tree;
 	if (SpritesAnima)
 		delete SpritesAnima;
 	if (SpritesAnima2)
 		delete SpritesAnima2;
+	if (SpritesAnima3)
+		delete SpritesAnima3;
+	if (SpritesAnima4)
+		delete SpritesAnima4;
+	if (SpritesAnima5)
+		delete SpritesAnima5;
 }
 void Manager::Render(HDC hDC)
 {
@@ -75,7 +98,7 @@ void Manager::Render(HDC hDC)
 	glClearDepth(1.0f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
+	
 	
 	
 	InitLights();
@@ -84,23 +107,24 @@ void Manager::Render(HDC hDC)
 		//con GamePad
 		VerifyGamepad();
 		//con KeyBoard
-
 		if (!CheckCollitions()) {
 		MainCharacter->MoveForward(position.y);//w,s
 		MainCharacter->StrafeRight(position.x);//a,d
 		MainCharacter->RotateX(rY);//derecha, izquierda
 		MainCharacter->RotateY(rX);//arriba, abajo
 
-		MainCharacter->SaveLastPosition();
+
+		MainCharacter->_LastPosition.x =MainCharacter->_position.x;
+		MainCharacter->_LastPosition.z =MainCharacter->_position.z;
 
 		}
 		else {
 			cout << "\n Colicion \n";
 			
-			MainCharacter->StetToLastPosition(colicion->InX, colicion->InZ);
-			RestetCollitions();
+			MainCharacter->StetToLastPosition(_InX, _InZ);
+			RestetBoolCollitions();
 		}
-		
+
 	//camera->MoveUpward(c);//up,down
 	MainCharacter->Update();
 	MainCharacter->check_collition();
@@ -114,23 +138,42 @@ void Manager::Render(HDC hDC)
 	
 
 
-	box->Draw();
+	//box->Draw();
 
 	GoblinUpdate();
 
 	tree->Draw(MainCharacter->GetPosition());
+	triangle->Draw(100);
 
-	Pajaro->Draw();
-	tank->Draw();
-	star->Draw();
-	star2->Draw();
-	dolphins->Draw();
+	Estatua->Draw(761,
+		terrain->Surface(Estatua->GetPosition().x, Estatua->GetPosition().z)+10,-766,
+		10, EstaEsca,10,90,0,1,0);
+	//tank->Draw();
+	star->Draw(755,
+		terrain->Surface(star->GetPosition().x, star->GetPosition().z) + 10, -766,
+		10, 10, 10, 90, 0, 1, 0);
+	star2->Draw(775,
+		terrain->Surface(star->GetPosition().x, star->GetPosition().z) + 10, -766,
+		10, 10, 10, 90, 0, 1, 0);
+	llave->Draw(761,
+		terrain->Surface(llave->GetPosition().x, llave->GetPosition().z) + 10, -600,
+		10, 10, 10, cont2, 0, 1, 0);
+	llave2->Draw(-635, 
+		terrain->Surface(llave2->GetPosition().x, llave2->GetPosition().z) + 10, -807,
+		10, 10, 10, cont2, 0, 1, 0);
+	llave3->Draw(-218,
+		terrain->Surface(llave3->GetPosition().x, llave3->GetPosition().z) + 10, 928,
+		10, 10, 10, cont2, 0, 1, 0);
+	//dolphins->Draw();
 	SpritesAnima->SetAltitudPosition(terrain->Surface(SpritesAnima->GetPosition().x, SpritesAnima->GetPosition().z));
 
 	SpritesAnima->Draw(MainCharacter->GetPosition(), -572,250, 890);
 	SpritesAnima2->Draw(MainCharacter->GetPosition(), -540, 250, 751);
+	SpritesAnima3->Draw(MainCharacter->GetPosition(), -748, 250, -607);
+	SpritesAnima4->Draw(MainCharacter->GetPosition(), 244, 250, 833);
+	SpritesAnima5->Draw(MainCharacter->GetPosition(), 964, 250, 374);
 	montana->Draw();
-	water->Draw(_clearColor.r);
+	Agua->Draw(_clearColor.r);
 
 	
 	PalmeraUpdate();
@@ -249,15 +292,23 @@ void Manager::PalmeraUpdate()
 
 	if (couner == 0 || couner == 10 || couner == 20 || couner == 30 || couner == 40 || couner == 50
 		|| couner == 60 || couner == 70) {
-		if (SpritesAnima) {
+		
 			delete (SpritesAnima);
 			SpritesAnima = new spritesec(Su_hWnd, 6, 6, position, couner / 10);
-		}
+		
 
-		if (SpritesAnima2) {
 			delete (SpritesAnima2);
 			SpritesAnima2 = new spritesec(Su_hWnd, 6, 6, position, couner / 10);
-		}
+		
+			/*delete (SpritesAnima3);
+			SpritesAnima3 = new spritesec(Su_hWnd, 6, 6, position, couner / 10);
+		
+			delete (SpritesAnima4);
+			SpritesAnima4 = new spritesec(Su_hWnd, 6, 6, position, couner / 10);
+		
+			delete (SpritesAnima5);
+			SpritesAnima5 = new spritesec(Su_hWnd, 6, 6, position, couner / 10);*/
+		
 	}
 
 	couner++;
@@ -265,10 +316,11 @@ void Manager::PalmeraUpdate()
 
 void Manager::GoblinUpdate()
 {
-	goblin->Draw(cont2, 10, -748, rotate);
+	goblin->Draw(cont2,
+		terrain->Surface(goblin->GetPosition().x,goblin->GetPosition().z)+10,
+		-748, rotate);
 
-	goblin->SetAltitudPosition(terrain->Surface(goblin->GetPosition().x,
-		goblin->GetPosition().z));
+	//goblin->SetAltitudPosition();
 
 
 	if (cont2 >= -493) { aPress = false; rotate = -90; }
@@ -356,12 +408,13 @@ void Manager::CheckLights()
 		_clearColor.r += 0.1;
 		_clearColor.g += 0.1;
 		_clearColor.b += 0.1;
-
+		EstaEsca += 0.01;
 	}
 	else{
 		_clearColor.r -= 0.1;
 		_clearColor.g -= 0.1;
 		_clearColor.b -= 0.1;
+		EstaEsca -= 0.01;
 }
 		/*_clearColor.g,
 		_clearColor.b,
@@ -370,17 +423,32 @@ void Manager::CheckLights()
 
 bool Manager::CheckCollitions()
 {
-	if (colicion->isCollition(MainCharacter->_position.x, MainCharacter->_position.z)) {
-	return true;
+	if (colicion01->isCollition(MainCharacter->_position.x, MainCharacter->_position.z)) {
+		_InX = colicion01->InX; _InZ = colicion01->InZ;
+		return true;
+	}
+	else if (colicion02->isCollition(MainCharacter->_position.x, MainCharacter->_position.z)) {
+		_InX = colicion02->InX; _InZ = colicion02->InZ;
+		return true;
+	}
+	else if (colicion03->isCollition(MainCharacter->_position.x, MainCharacter->_position.z)) {
+		_InX = colicion03->InX; _InZ = colicion03->InZ;
+		return true;
 	}
 	else false;
 
 }
 
-void Manager::RestetCollitions()
+void Manager::RestetBoolCollitions()
 {
-	colicion->InX = false;
-	colicion->InZ = false;
+	colicion01->InX = false;
+	colicion01->InZ = false;
+	colicion02->InX = false;
+	colicion02->InZ = false;
+	colicion03->InX = false;
+	colicion03->InZ = false;
+	_InX=false;
+	_InZ=false;
 }
 
 
@@ -391,7 +459,7 @@ void Manager::VerifyGamepad()
 	_gamePadData.UpdateGamepad(gamepad);
 
 	if (MainCharacter) {
-		if (!colicion->isCollition(MainCharacter->_position.x, MainCharacter->_position.z)) {
+		if (!CheckCollitions()) {
 			MainCharacter->MoveForward(_gamePadData.leftStick.y);//w,s
 			MainCharacter->StrafeRight(_gamePadData.leftStick.x);//a,d
 			MainCharacter->RotateX(_gamePadData.rightStick.y);//derecha, izquierda
@@ -400,6 +468,9 @@ void Manager::VerifyGamepad()
 		}
 		else {
 			cout << "\n Colicion \n";
+
+			MainCharacter->StetToLastPosition(_InX, _InZ);
+			RestetBoolCollitions();
 		}
 
 	}

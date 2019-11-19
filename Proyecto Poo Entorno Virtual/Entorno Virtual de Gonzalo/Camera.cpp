@@ -87,10 +87,7 @@ Vector3 Camera::GetPosition()
 
 void Camera::SaveLastPosition()
 {
-
-	_LastPosition.x = _position.x;
-	_LastPosition.z = _position.z;
-
+	/*nada*/
 
 }
 
@@ -99,20 +96,20 @@ void Camera::StetToLastPosition(bool InX, bool InZ)
 	if (InX){
 		if (_LastPosition.x - _position.x > 0)
 		{
-			_position.x = _LastPosition.x + 2;
+			_position.x = _LastPosition.x + 5;
 		}
 		else {
-			_position.x = _LastPosition.x - 2;
+			_position.x = _LastPosition.x - 5;
 		}
 }
 
 	if (InZ) {
 		if (_LastPosition.z - _position.z > 0)
 		{
-			_position.z = _LastPosition.z + 2;
+			_position.z = _LastPosition.z + 5;
 		}
 		else {
-			_position.z = _LastPosition.z - 2;
+			_position.z = _LastPosition.z - 5;
 		}
 	}
 	

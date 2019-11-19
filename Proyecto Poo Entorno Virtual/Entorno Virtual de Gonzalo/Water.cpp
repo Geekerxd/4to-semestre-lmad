@@ -35,9 +35,6 @@ void Water::Draw(float Alitud)
 	modifier += .01;
 
 
-
-
-
 	//cout << cont2<< endl;
 	
 	if (water_factor_max > 30) { aPress = false; /*rotate = -90;*/ }

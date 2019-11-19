@@ -20,7 +20,7 @@ void Images::Load(WCHAR name[])
 	Bitmap* bitmap = new Bitmap(name);
 	BitmapData* bitmapData = new BitmapData;
 
-	_width = bitmap->GetWidth();//****
+	_width = bitmap->GetWidth();
 	_height = bitmap->GetHeight();
 
 	Rect rect(0, 0, _width, _height);
@@ -30,7 +30,7 @@ void Images::Load(WCHAR name[])
 	unsigned char* pixels = (unsigned char*)bitmapData->Scan0;
 
 	int size;
-	size = _width * _height * 4;
+	size = _width * _height*4 ;
 	//hagamos un try de la reserva de memoria
 	try
 	{

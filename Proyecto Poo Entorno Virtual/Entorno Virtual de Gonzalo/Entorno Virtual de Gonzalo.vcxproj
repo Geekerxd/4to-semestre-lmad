@@ -128,6 +128,7 @@
     <ClCompile Include="glm.cpp" />
     <ClCompile Include="Goblin.cpp" />
     <ClCompile Include="Images.cpp" />
+    <ClCompile Include="key.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Model.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="glm.h" />
     <ClInclude Include="Goblin.h" />
     <ClInclude Include="Images.h" />
+    <ClInclude Include="key.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Model.h" />

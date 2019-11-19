@@ -19,6 +19,7 @@
 #include "Montana.h"
 #include "Colicion.h"
 
+#include "key.h"
 
 //#include "Primitive.h"
 
@@ -41,18 +42,25 @@ private:
 	GamePad* gamepad{ NULL };       //"GamePad.h"
 	Model* tank{ NULL };            //"Model.h"
 	Model* dolphins{ NULL };        //"Model.h"
-	Model* Pajaro{ NULL };           //"Model.h"
+	Model* Estatua{ NULL };           //"Model.h"
 	Model* star{ NULL };
 	Model* star2{ NULL };
 	Billboard* tree{ NULL };        //"Billboard.h"
-	Water* water{ NULL };           //"Water.h"
+	Water* Agua{ NULL };           //"Water.h"
 	Montana* montana{ NULL };
-
+	key* llave{NULL};
+	key* llave2{ NULL };
+	key* llave3{ NULL };
 	GamePadData _gamePadData{ NULL };
-	Colicion *colicion{ NULL };
+	Colicion *colicion01{ NULL };
+	Colicion *colicion02{ NULL };
+	Colicion *colicion03{ NULL };
 
 	spritesec *SpritesAnima{ NULL };//"spritesec.h"
 	spritesec *SpritesAnima2{ NULL };//"spritesec.h"
+	spritesec *SpritesAnima3{ NULL };//"spritesec.h"
+	spritesec *SpritesAnima4{ NULL };//"spritesec.h"
+	spritesec *SpritesAnima5{ NULL };//"spritesec.h"
 	Goblin *goblin{ NULL };
 
 	//Primitive *esfer{ NULL };
@@ -71,9 +79,10 @@ public:
 	int cont2 = -607;//de goblin
 	int rotate = 90;//de goblin
 	int salto= 0;// de main character
-
+	bool _InX{false};// de coliciones
+	bool _InZ{false};// de coliciones
 	bool saltar=false,Salto_arriba = false,S_abajo=false;
-
+	float EstaEsca = 10;
 
 	float lastYposition;
 	
@@ -91,7 +100,7 @@ public:
 	void InitLights();
 	void CheckLights();
 	bool CheckCollitions();
-	void RestetCollitions();
+	void RestetBoolCollitions();
 };
 
 

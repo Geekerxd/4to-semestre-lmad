@@ -1,6 +1,7 @@
 #pragma once
 #include "glm.h"
 #include "Images.h"
+#include "Vector3.h"
 class Model: public Images
 {
 private: 
@@ -11,11 +12,13 @@ private:
 	float x;
 	float y;
 	float z;
-public:
-	Model(char* path, float x, float y, float z, double ModelSize);
-	Model(char* path, WCHAR texture[], float x, float y, float z, double ModelSize);
-	~Model();
+	Vector3 _position{ Vector3(-607,10,0) };
 
-	void Draw();
+public:
+	Model(char* path, WCHAR texture[]);
+	~Model();
+	Vector3 GetPosition();
+	void Draw(float x, float y, float z, float Sx, float Sy, float Sz, float angle,
+		int Rx, int Ry, int Rz);
 };
 

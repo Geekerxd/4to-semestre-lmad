@@ -18,9 +18,11 @@ bool Colicion::isCollition(float x, float z)
 		{
 			if (x >= MenorX && x <= MayorX)
 				InX = true;
-			else if (z >= MenorZ && z <= MayorZ)
+			if (z >= MenorZ && z <= MayorZ)
 				InZ = true;
+
 			return true;
+
 		}else return false;
 
 }
