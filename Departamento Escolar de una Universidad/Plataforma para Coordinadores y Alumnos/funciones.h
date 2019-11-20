@@ -63,3 +63,6 @@ alumnos* middle(alumnos* start, alumnos* last);
 
 void GuardaHeapSort();
 void GuardaQuickSort();
+
+void _quickSort(materias** l, materias** h);
+materias **partition(materias** l, materias** h);

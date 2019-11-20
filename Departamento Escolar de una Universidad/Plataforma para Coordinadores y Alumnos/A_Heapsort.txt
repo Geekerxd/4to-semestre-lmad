@@ -1,88 +1,32 @@
 HeapSort
 
-Materia: la mega materia. | Carrera: Licenciatura en Multimedia y Animacion Digital
+Materia: Matematicas 1 . | Carrera: LIC Matematicas
   Nombre:		Apellidos:		Calificacion Final:		
 
 ------
-Materia: Calculo Integral. | Carrera: Licenciatura en Fisica
-  Nombre:		Apellidos:		Calificacion Final:		
-
-• miguel.		jose.		9
-• Super Apellido.	El Primer Alumno .		38
-• Aguilar.		Gonzalo.		1827046
-------
-Materia: Calculo Integral2. | Carrera: Licenciatura en Fisica
-  Nombre:		Apellidos:		Calificacion Final:		
-
-• miguel.		jose.		9
-• Super Apellido.	El Primer Alumno .		38
-• Aguilar.		Gonzalo.		1827046
-------
-Materia: programacion dificil. | Carrera: senor pelo
+Materia: Calculo integral 1. | Carrera: LIC Matematicas
   Nombre:		Apellidos:		Calificacion Final:		
 
 ------
-Materia: haaaaaaaaaa. | Carrera: senor pelo
+Materia: Bologia 1. | Carrera: LIC Quimicas
+  Nombre:		Apellidos:		Calificacion Final:		
+
+• gallegos.		Isabel.		70
+• gallegos.		hermes.		37
+• aguirre.		julion.		80
+------
+Materia: experimentacion. | Carrera: LIC Quimicas
+  Nombre:		Apellidos:		Calificacion Final:		
+
+• gallegos.		Isabel.		70
+• gallegos.		hermes.		37
+• aguirre.		julion.		80
+------
+Materia: Programacion 3. | Carrera: Multimedia
   Nombre:		Apellidos:		Calificacion Final:		
 
 ------
-Materia: Programacion Orientada a objetos. | Carrera: Licenciatura en Multimedia y Animacion Digital
-  Nombre:		Apellidos:		Calificacion Final:		
-
-------
-Materia: Estructura de Datos. | Carrera: Licenciatura en Multimedia y Animacion Digital
-  Nombre:		Apellidos:		Calificacion Final:		
-
-------
-Materia: videojuegos 1. | Carrera: Licenciatura en Videojuegos
-  Nombre:		Apellidos:		Calificacion Final:		
-
-------
-Materia: videojuegos 2. | Carrera: Licenciatura en Videojuegos
-  Nombre:		Apellidos:		Calificacion Final:		
-
-------
-Materia: videojuegos 3. | Carrera: Licenciatura en Videojuegos
-  Nombre:		Apellidos:		Calificacion Final:		
-
-------
-Materia: Nueva Materia. | Carrera: Licenciatura en Fisica
-  Nombre:		Apellidos:		Calificacion Final:		
-
-• miguel.		jose.		9
-• Super Apellido.	El Primer Alumno .		38
-• Aguilar.		Gonzalo.		1827046
-------
-Materia: La Mas nueva. | Carrera: Licenciatura en Fisica
-  Nombre:		Apellidos:		Calificacion Final:		
-
-• miguel.		jose.		9
-• Super Apellido.	El Primer Alumno .		38
-• Aguilar.		Gonzalo.		1827046
-------
-Materia: Programacion Orientada a La Web. | Carrera: Licenciatura en Multimedia y Animacion Digital
-  Nombre:		Apellidos:		Calificacion Final:		
-
-------
-Materia: a. | Carrera: l actuaria
-  Nombre:		Apellidos:		Calificacion Final:		
-
-• si.		ElActuario.		99
-• apellido.		Alumno de actuaria.		88
-------
-Materia: b. | Carrera: l actuaria
-  Nombre:		Apellidos:		Calificacion Final:		
-
-• si.		ElActuario.		99
-• apellido.		Alumno de actuaria.		88
-------
-Materia: c. | Carrera: l actuaria
-  Nombre:		Apellidos:		Calificacion Final:		
-
-• si.		ElActuario.		99
-• apellido.		Alumno de actuaria.		88
-------
-Materia: poo. | Carrera: fewfw
+Materia: produccion multimedia. | Carrera: Multimedia
   Nombre:		Apellidos:		Calificacion Final:		
 
 ------

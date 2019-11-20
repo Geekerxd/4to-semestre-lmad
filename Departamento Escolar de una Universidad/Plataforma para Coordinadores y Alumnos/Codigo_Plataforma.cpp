@@ -71,8 +71,8 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, PSTR cmd, int show)
 	strcat(a_file8, file8);//semestres
 	strcat(a_file9, file9);//materias
 	strcat(a_file10, file10);//calif
-	strcpy(a_file11, Heapsort);
-	strcpy(a_file12, Quicksort);
+	strcat(a_file11, Heapsort);
+	strcat(a_file12, Quicksort);
 
 	_hInst = hInst;
 	_show = show;
@@ -2127,6 +2127,12 @@ void GuardaHeapSort() {
 	alumnos *aux = 0;
 	materias *Maux = 0;
 	Calif*cali = 0;
+
+	
+
+
+
+
 	ofstream archivaldo;
 	archivaldo.open(a_file11, ios::binary);
 	if (archivaldo.is_open())
@@ -2190,6 +2196,20 @@ void GuardaQuickSort() {
 	alumnos *aux = 0;
 	materias *Maux = 0;
 	Calif*cali = 0;
+	
+
+	//_quickSort(&M_Inicio, &M_Last);
+
+	while (M_Inicio!=NULL)
+	{
+		M_Inicio = M_Inicio->ant;
+	}
+	while (M_Last!=NULL)
+	{
+		M_Last = M_Last->sig;
+	}
+
+
 	ofstream archivaldo;
 	archivaldo.open(a_file12, ios::binary);
 	if (archivaldo.is_open())
@@ -2244,5 +2264,74 @@ void GuardaQuickSort() {
 		MessageBox(ghDlg, "El archivo no se pudo abrir.", "", MB_OK | MB_ICONERROR);
 
 
+	}
+}
+
+materias **partition(materias** l, materias** h) {
+	int x = atoi((*h)->Clave);
+	materias** i = &(*l)->ant;
+	for (materias** j = &(*l); (*j) != (*h); (*j) = (*j)->sig)
+	{
+		if (atoi((*j)->Clave) <= x) {
+			(*i) = ((*i) == NULL) ? (*l) : (*i)->sig;
+			swap((*i), (*j));
+			/*materias* temp;
+			temp = (*i);
+			(*i) = (*j);
+			(*j) = temp;*/
+			//NewSwap();
+		}
+	}
+	(*i) = ((*i) == NULL) ? (*l) : (*i)->sig;
+	swap((*i), (*h));
+	/*materias* temp;
+	temp = (*i);
+	(*i) = (*h);
+	(*h) = temp;*/
+
+	//NewSwap();
+	return i;
+}
+
+void _quickSort(materias** l, materias** h) {
+	if ((*h) != NULL && (*l) != (*h) && (*l) != (*h)->sig)
+	{
+		materias** p = partition(&(*l), &(*h));
+
+		_quickSort(&(*l), &(*p)->ant);
+		_quickSort(&(*p)->sig, &(*h));
+	}
+}
+void heapSort (int arr[], int n)
+{
+ // Build heap rearrange array)
+ for( int i = n / 2- 1; i >= 0; i--)
+	 heapify( arr, n, i);
+ // One by one extract an element from heap
+ for( int i = n- 1; i >= 0; i--)
+ {
+    // Move current root to end
+    swap(arr[0], arr[i]);
+    // call max heapify on the reduced heap
+    heapify( arr, i, 0);
+ }
+}
+void heapify(int arr[], int n, int i)
+{
+	int largest = i; // Initialize largest as root
+	int l = 2 * i + 1; // left = 2*i + 1
+	int r = 2 * i + 2; // right = 2*i + 2
+	// If left child is larger than root
+	if (l < n && arr[l] > arr[largest])
+		largest = l;
+	// If right child is larger than largest so far
+	if (r < n && arr[r] > arr[largest])
+		largest = r;
+	// If largest is not root
+	if (largest != i)
+	{
+		swap(arr[i], arr[largest]);
+		// Recursively heapify the affected sub-tree
+		heapify(arr, n, largest);
 	}
 }
