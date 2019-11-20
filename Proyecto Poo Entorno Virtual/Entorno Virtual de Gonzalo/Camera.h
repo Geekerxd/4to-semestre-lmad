@@ -40,5 +40,8 @@ public:
 	Vector3 GetPosition();
 	void SaveLastPosition();
 	void StetToLastPosition(bool InX, bool InZ);
+
+	bool isDead=false;
+	bool HasWon = false;
 };
 

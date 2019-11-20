@@ -9,7 +9,7 @@
 #include "Triangle.h"
 #include "Box.h"
 #include "Terrain.h"
-#include "Camera.h"
+#include "Camera.h"//camara main character
 #include "GamePad.h"
 #include "Model.h"
 #include "Log.h"
@@ -144,6 +144,15 @@ public:
 	void RestetBoolCollitions();
 	double GetRandomNumer();
 	void BarcoUpdate();
+	bool llave01= false;
+	bool llave02 = false;
+	bool llave03 = false;
+	void checkIfWin();
+	void checkIfLoose();
+	void check_Keys();
+	bool isDead();
+	bool hasWon();
+	
 };
 
 

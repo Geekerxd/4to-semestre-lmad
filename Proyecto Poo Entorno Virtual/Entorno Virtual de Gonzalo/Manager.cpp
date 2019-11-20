@@ -33,7 +33,7 @@ Manager::Manager(HWND hWnd)
 	barco = new Barco("assets/models/Barco.obj", L"assets/models/Tex_0002_0.png");
 	pirate = new Pirate("assets/models/pirateguy.obj", L"assets/models/161e59a8.png");
 	
-	concha  = new ConchaDeMar	  ("assets/models/seashell_obj.obj", L"assets/models/shell_basecolour.jpg");
+	concha  = new ConchaDeMar	  ("assets/models/Concha.obj", L"assets/models/shell_basecolour.jpg");
 	tortuga = new Tortuga		  ("assets/models/Sea_Turtle.obj", L"assets/models/Sea_Turtle_Body Texture.png");
 	sombrero= new SombreroPirata("assets/models/piratehat.obj", L"assets/models/pirate.png");
 	spez    = new SuperPez	      ("assets/models/floppyfish.obj", L"assets/models/Handle1Tex.png");
@@ -130,38 +130,45 @@ Manager::~Manager()
 }
 void Manager::Render(HDC hDC)
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	
+	check_Keys();
+
+	checkIfWin();
+	checkIfLoose();
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	glClearColor(0, 0, 0, 1);//color negro de fondo
 	glClearDepth(1.0f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	
-	
-	
+
+
+
 	InitLights();
 	CheckLights();
 
-		//con GamePad
-		VerifyGamepad();
-		//con KeyBoard
-		if (!CheckCollitions()) {
+	//con GamePad
+	VerifyGamepad();
+	//con KeyBoard
+	if (!CheckCollitions()) {
 		MainCharacter->MoveForward(position.y);//w,s
 		MainCharacter->StrafeRight(position.x);//a,d
 		MainCharacter->RotateX(rY);//derecha, izquierda
 		MainCharacter->RotateY(rX);//arriba, abajo
 
 
-		MainCharacter->_LastPosition.x =MainCharacter->_position.x;
-		MainCharacter->_LastPosition.z =MainCharacter->_position.z;
+		MainCharacter->_LastPosition.x = MainCharacter->_position.x;
+		MainCharacter->_LastPosition.z = MainCharacter->_position.z;
 
-		}
-		else {
-			cout << "\n Colicion \n";
-			
-			MainCharacter->StetToLastPosition(_InX, _InZ);
-			RestetBoolCollitions();
-		}
+	}
+	else {
+		cout << "\n Colicion \n";
+
+		MainCharacter->StetToLastPosition(_InX, _InZ);
+		RestetBoolCollitions();
+	}
 
 	//camera->MoveUpward(c);//up,down
 	MainCharacter->Update();
@@ -170,10 +177,10 @@ void Manager::Render(HDC hDC)
 	SaltaUpdate();
 
 
-	sky->Draw(); 
+	sky->Draw();
 	terrain->Draw();
 
-	
+
 
 
 	//box->Draw();
@@ -184,24 +191,39 @@ void Manager::Render(HDC hDC)
 	triangle->Draw(100);
 
 	Estatua->Draw(761,
-		terrain->Surface(Estatua->GetPosition().x, Estatua->GetPosition().z)+10,-766,
-		10, EstaEsca,10,90,0,1,0);
+		terrain->Surface(Estatua->GetPosition().x, Estatua->GetPosition().z) + 10, -766,
+		10, EstaEsca, 10, 90, 0, 1, 0);
 	//tank->Draw();
 	star->Draw(Random,
 		terrain->Surface(star->GetPosition().x, star->GetPosition().z) + 10, -Random,
 		10, 10, 10, cont2, 0, 0, 1);
 	star2->Draw(-Random,
-		terrain->Surface(star->GetPosition().x, star->GetPosition().z) + 10, Random,
-		10, 10, 10, cont2, 0, 0, 1);
-	llave->Draw(761,
-		terrain->Surface(llave->GetPosition().x, llave->GetPosition().z) + 10, -600,
-		10, 10, 10, cont2, 0, 1, 0);
-	llave2->Draw(-635, 
-		terrain->Surface(llave2->GetPosition().x, llave2->GetPosition().z) + 10, -807,
-		10, 10, 10, cont2, 0, 1, 0);
-	llave3->Draw(-218,
-		terrain->Surface(llave3->GetPosition().x, llave3->GetPosition().z) + 10, 928,
-		10,10,10, cont2, 0, 1, 0);
+	terrain->Surface(star->GetPosition().x, star->GetPosition().z) + 10, Random,
+	10, 10, 10, cont2, 0, 0, 1);
+	if (llave)
+	{
+		llave->Draw(761,
+			terrain->Surface(llave->GetPosition().x, llave->GetPosition().z) + 10, -600,
+			10, 10, 10, cont2, 0, 1, 0);
+	}
+	if (llave2)
+	{
+		llave2->Draw(-635,
+			terrain->Surface(llave2->GetPosition().x, llave2->GetPosition().z) + 10, -807,
+			10, 10, 10, cont2, 0, 1, 0);
+
+	}
+	if (llave3)
+	{
+		llave3->Draw(-218,
+			terrain->Surface(llave3->GetPosition().x, llave3->GetPosition().z) + 10, 928,
+			10, 10, 10, cont2, 0, 1, 0);
+
+	}
+	
+
+	
+	
 	tiburon->Draw(cont3,
 		terrain->Surface(tiburon->GetPosition().x, tiburon->GetPosition().z) + 40+ _clearColor.r*4, cont3,
 		150, 150, 150, rotate, 0, 1, 0);
@@ -214,7 +236,7 @@ void Manager::Render(HDC hDC)
 		terrain->Surface(pirate->GetPosition().x, pirate->GetPosition().z) + 15, 842,
 		15, 15, 15, rotate, 0, 1, 0);
 
-	concha  ->Draw(130, terrain->Surface(concha  ->GetPosition().x, concha  ->GetPosition().z) + 7, 728, 10, 10, 10, 0, 0, 1, 0);
+	concha  ->Draw(130, terrain->Surface(concha  ->GetPosition().x, concha  ->GetPosition().z) + 1, 728, 15, 15, 15, 0, 0, 1, 0);
 	tortuga ->Draw(156, terrain->Surface(tortuga ->GetPosition().x, tortuga ->GetPosition().z) + 2, 945, 10, 10, 10, 0, 0, 1, 0);
 	sombrero->Draw(-155, terrain->Surface(sombrero->GetPosition().x, sombrero->GetPosition().z)+ 7, 1077, 10, 10, 10, 180, 0, 1, 0);
 	spez    ->Draw(839, terrain->Surface(spez    ->GetPosition().x, spez    ->GetPosition().z) , -736, 10, 10, 10, 0, 0, 1, 0);
@@ -232,9 +254,12 @@ void Manager::Render(HDC hDC)
 	SpritesAnima5->Draw(MainCharacter->GetPosition(), 964, 250, 374);
 	montana->Draw();
 	Agua->Draw(_clearColor.r);
+	PalmeraUpdate();
 
 	
-	PalmeraUpdate();
+
+
+
 
 	SwapBuffers(hDC);
 }
@@ -545,6 +570,81 @@ void Manager::BarcoUpdate()
 		if (cont5 >= 400) { CasesShip = 0; rotate2 = 90; }
 	}
 
+}
+
+void Manager::checkIfWin()
+{
+	if (llave01 && llave02&&llave03)
+	{
+		MainCharacter->HasWon = true;
+	}
+}
+
+void Manager::checkIfLoose()
+{
+	if (MainCharacter->GetPosition().y <= 21) { MainCharacter->isDead = true; }
+}
+
+void Manager::check_Keys()
+{
+	if (llave)
+	{
+		if (MainCharacter->_position.x >= llave->GetPosition().x - 5
+			&& MainCharacter->_position.x <= llave->GetPosition().x + 5
+			&& MainCharacter->_position.z >= llave->GetPosition().z - 5 &&
+			MainCharacter->_position.z <= llave->GetPosition().z + 5)
+		{
+			llave01 = true;
+			
+				llave = NULL;
+
+				PlaySound("enter-painting.WAV", NULL, SND_ASYNC);
+
+			cout << "LLave 1" << endl;
+		}
+	}
+	if (llave2)
+	{
+		if (MainCharacter->_position.x >= llave2->GetPosition().x - 5
+			&& MainCharacter->_position.x <= llave2->GetPosition().x + 5
+			&& MainCharacter->_position.z >= llave2->GetPosition().z - 5 &&
+			MainCharacter->_position.z <= llave2->GetPosition().z + 5)
+		{
+			llave02 = true;
+			
+				 llave2=NULL;
+				 PlaySound("enter-painting.WAV", NULL, SND_ASYNC);
+
+			cout << "LLave 2" << endl;
+		}
+	}
+	if (llave3)
+	{
+		if (MainCharacter->_position.x >= llave3->GetPosition().x - 5
+			&& MainCharacter->_position.x <= llave3->GetPosition().x + 5
+			&& MainCharacter->_position.z >= llave3->GetPosition().z - 5 &&
+			MainCharacter->_position.z <= llave3->GetPosition().z + 5)
+		{
+			llave03 = true;
+		
+				 llave3=NULL;
+				 PlaySound("enter-painting.WAV", NULL, SND_ASYNC);
+
+			cout << "LLave 3" << endl;
+		}
+	}
+	
+
+}
+
+bool Manager::isDead()
+{
+	return 	MainCharacter->isDead;
+}
+
+bool Manager::hasWon()
+{
+	return MainCharacter->HasWon;
 }
 
 

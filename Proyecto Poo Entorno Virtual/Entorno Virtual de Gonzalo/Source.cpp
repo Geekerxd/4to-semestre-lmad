@@ -91,13 +91,11 @@ int APIENTRY  WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 		}
 		else
 		{
-
-			//en este lazo estara ejecutandose el render
-			//"renderiza" controla si se hace el render o no a traves
-			//del timer Timer1
 			if (renderiza)
 			{
 				manager->Render(gHDC);
+
+				
 				renderiza = false;
 			}
 		}
@@ -130,7 +128,32 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 
 	case WM_TIMER: {
 		
-		
+		if (manager->isDead())
+		{
+
+			
+			KillTimer(hWnd, Timer1);
+			//en caso de salir desocupar los recursos del opengl
+			wglMakeCurrent(hDC, NULL);
+			wglDeleteContext(hRC);
+			PlaySound("mario-mamamia.WAV", NULL, SND_ASYNC);
+			MessageBox(hWnd, "has Perdido.", "Oh no", MB_OK);
+			renderiza = false;
+			PostQuitMessage(0);
+		}
+		if (manager->hasWon())
+		{
+			KillTimer(hWnd, Timer1);
+			//en caso de salir desocupar los recursos del opengl
+			wglMakeCurrent(hDC, NULL);
+			wglDeleteContext(hRC);
+			PlaySound("mario-yippee.mp3", NULL, SND_ASYNC);
+			//enter-painting
+			MessageBox(hWnd, " ¡¡ Ganaste !! ", " Felicidades ", MB_OK | MB_ICONINFORMATION);
+			renderiza = false;
+			PostQuitMessage(0);
+		}
+
 		renderiza = true;
 		break;
 	}
@@ -201,7 +224,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 	case 'M':
 		//cout << " Habilidad Especial : Mamamia \n";
 		
-		//PlaySound("mario-mamamia.WAV", NULL, SND_ASYNC);
+		
 		//step-grass.WAV
 		manager->Actualiza(0, manager->posicion);
 
@@ -210,7 +233,6 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 
 	case VK_SPACE:
 		cout << " Habilidad Especial: Saltar \n";
-		//PlaySound("mario-yippee.mp3", NULL, SND_ASYNC);
 		
 		manager->saltar = true;
 		manager->Salto_arriba = true;
@@ -309,7 +331,9 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPara
 		glLoadIdentity();
 		break;
 	}
-	
+	case WM_CLOSE:
+	{PostQuitMessage(0); }
+
 
 	}//from switch (message)
 	return DefWindowProc(hWnd, message, wParam, lParam);
