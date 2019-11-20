@@ -27,6 +27,7 @@ OPENFILENAME ofn;
 
 CooCarr *Root = 0, *nuevo = 0;
 CooCarr*aux, *coor; // Coordinador de Carrera Actual.
+int MTemp=0;
 
 alumnos  *A_Inicio = 0, *A_Last = 0;
 materias *M_Inicio = 0, *M_Last = 0;
@@ -1245,6 +1246,8 @@ BOOL CALLBACK CapCalif   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	static int ID_MATE;
 	static bool encontrado2 = false;
 	static materias *Maux3;
+	static Calif*Caux3;
+
 	switch (Mensaje)
 	{
 	case WM_INITDIALOG: {
@@ -1268,13 +1271,13 @@ BOOL CALLBACK CapCalif   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	}
 	case WM_COMMAND:
 	{
-		
+
 		switch (HIWORD(wParam))
 		{
 		case CBN_SELCHANGE: {
-			 HWND hlist2 = GetDlgItem(Dlg, IDC_LIST_unic2);
-			 HWND hVerComb2 = GetDlgItem(Dlg, IDC_COMBO2);
-			
+			HWND hlist2 = GetDlgItem(Dlg, IDC_LIST_unic2);
+			HWND hVerComb2 = GetDlgItem(Dlg, IDC_COMBO2);
+
 			//***************
 			_ASSERTE(hlist2 != NULL);
 
@@ -1286,7 +1289,7 @@ BOOL CALLBACK CapCalif   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			}
 			// Get actual text in buffer
 			SendMessage(hlist2, LB_GETTEXT, (WPARAM)itemIndex, (LPARAM)InfList);
-			
+
 			//aqui busco la materia
 			//encontrado el nombre ahora buscara su calificacion *********************************************
 			if (M_Inicio != 0) {
@@ -1304,9 +1307,28 @@ BOOL CALLBACK CapCalif   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 			//**
 			if (A_encontrado) {
-				
+
 				SendDlgItemMessage(Dlg, IDC_EDIT10, WM_SETTEXT, 80, (LPARAM)A_encontrado->Nombres);
 				SendDlgItemMessage(Dlg, IDC_EDIT11, WM_SETTEXT, 80, (LPARAM)A_encontrado->carrera);
+				Caux3 = C_Inicio;
+				while (Caux3 != NULL)
+				{
+					if (A_encontrado->matricula == Caux3->GetID(2) && MTemp == Caux3->GetID(0))
+					{
+
+						break;
+					}
+
+					Caux3 = Caux3->sig;
+				}
+				if (Caux3)
+				{
+					SendDlgItemMessage(Dlg, IDC_EDIT19, WM_SETTEXT, 80, (LPARAM)Caux3->CalFinal);
+				}
+				else
+					SendDlgItemMessage(Dlg, IDC_EDIT19, WM_SETTEXT, 80, (LPARAM)"");
+
+				//A_encontrado
 			}
 			//********
 		llena2:
@@ -1314,14 +1336,15 @@ BOOL CALLBACK CapCalif   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 			GetWindowText(hVerComb2, InfCmbx, 256);
 
-			
+
 			//**
 			Maux3 = M_Inicio;
 			while (Maux3 != NULL) {
 
-				if (strcmp(InfCmbx, Maux3->NombreMate) == 0) { 
-					/*ID_MATE = Maux3->GetID(0);*/
-					break; }
+				if (strcmp(InfCmbx, Maux3->NombreMate) == 0) {
+					MTemp = Maux3->GetID(0);
+					break;
+				}
 
 				Maux3 = Maux3->sig;
 			}
@@ -1343,13 +1366,13 @@ BOOL CALLBACK CapCalif   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 					A_Aux = A_Inicio;
 					while (A_Aux != NULL) {
 						int j = A_Aux->count;
-						for (int i = 0 ; i <j;i++) {
+						for (int i = 0; i < j; i++) {
 							if (A_Aux->Sus_Materias[i] == Maux3->GetID(0)) {
 								SendMessage(hlist2, LB_ADDSTRING, 0, (LPARAM)A_Aux->Nombres);
-								
+
 							}
 						}
-						
+
 
 						A_Aux = A_Aux->sig;
 					}
@@ -1357,7 +1380,7 @@ BOOL CALLBACK CapCalif   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 
 				}
 
-				
+
 				encontrado2 = false;
 			}//fin if
 
@@ -1385,9 +1408,9 @@ BOOL CALLBACK CapCalif   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			SendDlgItemMessage(Dlg, IDC_EDIT11, WM_GETTEXT, (WPARAM)100, (LPARAM)carre);
 			SendDlgItemMessage(Dlg, IDC_EDIT19, WM_GETTEXT, (WPARAM)100, (LPARAM)calif);
 			materias *Maux5 = M_Inicio;
-			while (Maux5 !=NULL)
+			while (Maux5 != NULL)
 			{
-				if (strcmp(Maux5->NombreMate, mate)==0)
+				if (strcmp(Maux5->NombreMate, mate) == 0)
 				{
 					newo->SetID(Maux5->GetID(0), 0);
 					break;
@@ -1397,14 +1420,14 @@ BOOL CALLBACK CapCalif   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			alumnos *Aaux = A_Inicio;
 			while (Aaux != NULL)
 			{
-				if (strcmp(Aaux->Nombres , nombre)==0)
+				if (strcmp(Aaux->Nombres, nombre) == 0)
 				{
-					newo->SetID(Aaux->GetID(2), 2);
+					newo->SetID(Aaux->matricula, 2);
 					break;
 				}
 				Aaux = Aaux->sig;
 			}
-			strcpy(newo->carrera,coor->D_DegreeName);
+			strcpy(newo->carrera, coor->D_DegreeName);
 			strcpy(newo->CalFinal, calif);
 
 			newo->SetID(S_Last->GetID(3), 3);//obtiene la ID del semestre actual y lo guarda en la calificacion
@@ -1478,7 +1501,7 @@ BOOL CALLBACK Kardex     (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam){
 							while (Caux5 != NULL)
 							{
 								if (Aaux5->Sus_Materias[i] == Caux5->GetID(0)
-									&& Aaux5->GetID(2)== Caux5->GetID(2))
+									&& Aaux5->matricula== Caux5->GetID(2))
 								{
 									break;
 								}
@@ -1546,49 +1569,175 @@ BOOL CALLBACK Kardex     (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam){
 	}///fin de "switch (Mensaje)"
 	return false;///el return false
 }
-BOOL CALLBACK Clases     (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam) {
+BOOL CALLBACK Clases(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam) {
 	static HWND hVerComb3 = 0;
 	static HWND hVerComb4 = 0;
 	static HWND hlist1 = 0;
-	static Sem *Saux=0;
-	static char Sem[60];
+	static Sem *Saux = 0;
+	static char Seme[60];
 	static char mes[50];
 	static char year[10];
+	static char NomMate[100];
+	static char InfList[100];
+	static materias *Maux3;
+	static Calif*Caux3;
+	static alumnos *A_encontrado = NULL;
 
 	switch (Mensaje)
 	{
 	case WM_INITDIALOG: {
 		icon(Dlg);
-		hVerComb3=  GetDlgItem(Dlg, IDC_COMBO_S01);
+		hVerComb3 = GetDlgItem(Dlg, IDC_COMBO_S01);
+		hVerComb4 = GetDlgItem(Dlg, IDC_COMBO_M01);
+
 		//IDC_COMBO_S01
 		Saux = S_Inicio;
 		while (Saux != NULL) {
-			strcat(Sem,Saux->MesMes);
-			strcat(Sem, "  ");
-			strcat(Sem, Saux->year);
-				SendMessage(hVerComb3, CB_ADDSTRING, 0, (LPARAM)Sem);
-				strcpy(Sem,"");
+			strcpy(Seme, "");
+			strcat(Seme, Saux->MesMes);
+			strcat(Seme, " ");
+			strcat(Seme, Saux->year);
+			SendMessage(hVerComb3, CB_ADDSTRING, 0, (LPARAM)Seme);
 			Saux = Saux->sig;
 		}
 
+		Maux3 = M_Inicio;
+		while (Maux3 != NULL) {
+
+			if (strcmp(coor->D_DegreeName, Maux3->NombreDegree) == 0) {
+				SendMessage(hVerComb4, CB_ADDSTRING, 0, (LPARAM)Maux3->NombreMate);
+			}
+			Maux3 = Maux3->sig;
+		}
+
+
+
 		return true;
 	}
-	case WM_COMMAND:
-	{
-		
-
+	case WM_COMMAND: {
 		switch (HIWORD(wParam))
 		{
-		case CBN_SELCHANGE: {
-			
-			break;
-		}//fin hihgword
+		case LBN_SELCHANGE: {
+			HWND hlist2 = GetDlgItem(Dlg, IDC_LIST_Clase);
+			_ASSERTE(hlist2 != NULL);
+
+			// Get current selection index in listbox
+			int itemIndex = (int)SendMessage(hlist2, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+			if (itemIndex == LB_ERR)
+			{
+				goto llena2;
+			}
+			// Get actual text in buffer
+			SendMessage(hlist2, LB_GETTEXT, (WPARAM)itemIndex, (LPARAM)InfList);
+			if (M_Inicio != 0) {
+				alumnos *Aaux2 = A_Inicio;
+				while (Aaux2 != NULL) {
+					if (strcmp(InfList, Aaux2->Nombres) == 0) {
+						A_encontrado = Aaux2;
+						break;
+					}
+					Aaux2 = Aaux2->sig;
+				}
+
+			}
+			if (A_encontrado) {
+
+				Caux3 = C_Inicio;
+				while (Caux3 != NULL)
+				{
+					if (A_encontrado->matricula == Caux3->GetID(2) && MTemp == Caux3->GetID(0)) { break; }
+					Caux3 = Caux3->sig;
+				}
+				if (Caux3)
+				{
+					SendDlgItemMessage(Dlg, IDC_EDIT2, WM_SETTEXT, 80, (LPARAM)Caux3->CalFinal);
+				}
+				else
+					SendDlgItemMessage(Dlg, IDC_EDIT2, WM_SETTEXT, 80, (LPARAM)"");
+			llena2:
+
+				break;
+			}//fin de case LBN_SELCHANGE
+		}//case LBN_SELCHANGE
 		}//fin de switch (HIWORD(wParam))
+
 
 		switch (LOWORD(wParam))
 		{
 		case IDC_Aceptar:
+			hVerComb3 = GetDlgItem(Dlg, IDC_COMBO_S01);
+			hVerComb4 = GetDlgItem(Dlg, IDC_COMBO_M01);
+			hlist1 = GetDlgItem(Dlg, IDC_LIST_Clase);
+			SendMessage(hlist1, LB_RESETCONTENT, 0, 0);
 
+			GetWindowText(hVerComb3, Seme, 256);
+			GetWindowText(hVerComb4, NomMate, 256);
+
+			if (Seme[0] == 'A')
+			{
+				strcpy(mes, "");
+				strcpy(mes, "Agosto-Diciembre");
+
+			}
+			else {
+				strcpy(mes, "");
+				strcpy(mes, "Enero-Agosto");
+			}
+
+			char * pch;
+
+
+			pch = strchr(Seme, ' ');
+			strcpy(year, pch);
+			int tamano = sizeof(year) / sizeof(char);
+			for (int i = 0; i < tamano; i++) {
+				year[i] = year[i + 1];
+			}
+
+			materias *Maux = M_Inicio;
+			while (Maux != NULL)
+			{
+				if (strcmp(Maux->NombreMate, NomMate) == 0)
+				{
+					MTemp = Maux->GetID(0);
+					break;
+				}
+				Maux = Maux->sig;
+			}
+			Sem *Saux = S_Inicio;
+			while (Saux != NULL)
+			{
+				if (strcmp(Saux->year, year) == 0 && strcmp(Saux->MesMes, mes) == 0)
+				{
+					break;
+				}
+				Saux = Saux->sig;
+			}
+			if (Maux && Saux)
+			{
+				Calif *cali = C_Inicio;
+				while (cali != NULL)
+				{
+					if (cali->GetID(3) == Saux->GetID(3) && cali->GetID(0) == Maux->GetID(0))
+					{
+						alumnos *alum = A_Inicio;
+						while (alum != NULL)
+						{
+							if (cali->GetID(2) == alum->matricula)
+							{
+								SendMessage(hlist1, LB_ADDSTRING, 0, (LPARAM)alum->Nombres);
+								break;
+							}
+
+							alum = alum->sig;
+						}
+
+					}
+					cali = cali->sig;
+				}
+
+
+			}
 
 			break;
 		}/// fin de "switch (LOWORD(wParam))"
@@ -1596,8 +1745,10 @@ BOOL CALLBACK Clases     (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam) 
 	}/// fin de "case WM_COMMAND"
 	case WM_CLOSE: {EndDialog(Dlg, 0); return true; }
 	}///fin de "switch (Mensaje)"
+
 	return false;///el return false
 }
+
 
 void AgregaDatosNodo(HWND Dlg) {
 

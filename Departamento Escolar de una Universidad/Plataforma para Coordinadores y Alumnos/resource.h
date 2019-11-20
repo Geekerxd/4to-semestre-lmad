@@ -77,6 +77,7 @@
 #define IDC_BUTTON2                     1045
 #define IDC_BU_Gu_Ca                    1045
 #define IDC_Boton_Busca                 1045
+#define IDC_Aceptar_mate                1045
 #define IDC_Aceptar                     1045
 #define IDC_STATIC101                   1046
 #define IDC_BU_Borrar                   1046
