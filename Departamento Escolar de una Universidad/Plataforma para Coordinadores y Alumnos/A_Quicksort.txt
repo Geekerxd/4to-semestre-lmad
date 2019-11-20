@@ -1,0 +1,34 @@
+QuickSort
+
+Nombre: jose miguel. | Carrera: Licenciatura en Fisica
+  Clave:		Materia:		
+
+• cc12.		Calculo Integral.		9.		
+• c159.		Nueva Materia.		15.		
+• vv15.		La Mas nueva.		60.		
+------
+Nombre: El Primer Alumno  Super Apellido. | Carrera: Licenciatura en Fisica
+  Clave:		Materia:		
+
+• cc12.		Calculo Integral.		38.		
+• c159.		Nueva Materia.		
+• vv15.		La Mas nueva.		10.		
+------
+Nombre: ElActuario si. | Carrera: l actuaria
+  Clave:		Materia:		
+
+• a.		a.		99.		
+• c.		c.		
+------
+Nombre: Alumno de actuaria apellido. | Carrera: l actuaria
+  Clave:		Materia:		
+
+• a.		a.		88.		
+------
+Nombre: Gonzalo Aguilar. | Carrera: Licenciatura en Fisica
+  Clave:		Materia:		
+
+• cc13.		Calculo Integral2.		1827046.		
+• c159.		Nueva Materia.		
+• vv15.		La Mas nueva.		50.		
+------

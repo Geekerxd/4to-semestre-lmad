@@ -20,12 +20,18 @@ char a_file7[_MAX_PATH]; //auxiliar
 char a_file8[_MAX_PATH]; //auxiliar
 char a_file9[_MAX_PATH]; //auxiliar
 char a_file10[_MAX_PATH]; //auxiliar
+char a_file12[_MAX_PATH]; //auxiliar
+char a_file11[_MAX_PATH]; //auxiliar
+
 
 char file6[]="CordiNamesSave.txt"; //carreras y coordinadores
 char file7[] = "ListaAlumnos.txt";
 char file8[] = "ListaSemestres.txt";
 char file9[] = "ListaMaterias.txt";
 char file10[] = "ListaCalif.txt";
+
+char Heapsort []  = "A_Heapsort.txt";
+char Quicksort[] = "A_Quicksort.txt";
 int a = 0;
 bool edit = false;
 

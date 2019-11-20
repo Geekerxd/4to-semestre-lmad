@@ -1,4 +1,4 @@
-
+f
  itoa (i,buffer,10);
  
  
@@ -23,7 +23,7 @@
  strcpy ( char * destination, const char * source );
                                                     //Char to Char
                                                     //copia el contenido de un char a otro (completo)
-													
+strlen(newoo);	//get the size of an array char
 													
 													
 													

@@ -63,12 +63,16 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, PSTR cmd, int show)
 	strcpy(a_file8, file0);
 	strcpy(a_file9, file0);
 	strcpy(a_file10, file0);
+	strcpy(a_file11, file0);
+	strcpy(a_file12, file0);
 
 	strcat(file0, file6);//coocare
 	strcat(a_file7, file7);//alumnos
 	strcat(a_file8, file8);//semestres
 	strcat(a_file9, file9);//materias
 	strcat(a_file10, file10);//calif
+	strcpy(a_file11, Heapsort);
+	strcpy(a_file12, Quicksort);
 
 	_hInst = hInst;
 	_show = show;
@@ -190,12 +194,16 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			MB_YESNO |
 			MB_ICONASTERISK | MB_DEFBUTTON1) == IDYES)
 		{
-			//MessageBox(Dlg, "Se guardó", "informacion", MB_OK | MB_ICONINFORMATION);
+			GuardaHeapSort();
+			GuardaQuickSort();
+
 			EscribirArchivo();
 			EscribirArchivo(M_Inicio, a_file9);//materias
 			EscribirArchivo(A_Inicio, a_file7);//alumnos
 			EscribirArchivo(S_Inicio, a_file8);//semestre
 			EscribirArchivo(C_Inicio, a_file10);//calif
+
+			
 			PostQuitMessage(0);
 		}
 		else {
@@ -268,12 +276,17 @@ BOOL CALLBACK VentaCooGee(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 				MB_YESNO |
 				MB_ICONASTERISK | MB_DEFBUTTON1) == IDYES)
 			{
-				//MessageBox(Dlg, "Se guardó", "informacion", MB_OK | MB_ICONINFORMATION);
+				GuardaHeapSort();
+				GuardaQuickSort();
+
+
 				EscribirArchivo();
 				EscribirArchivo(M_Inicio, a_file9);//materias
 				EscribirArchivo(A_Inicio, a_file7);//alumnos
 				EscribirArchivo(S_Inicio, a_file8);//semestre
 				EscribirArchivo(C_Inicio, a_file10);//calif
+
+
 				PostQuitMessage(0);
 			}
 			else {
@@ -904,12 +917,17 @@ BOOL CALLBACK CooCarrera (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 				MB_YESNO |
 				MB_ICONASTERISK | MB_DEFBUTTON1) == IDYES)
 			{
-				//MessageBox(Dlg, "Se guardó", "informacion", MB_OK | MB_ICONINFORMATION);
+				GuardaHeapSort();
+				GuardaQuickSort();
+
+
 				EscribirArchivo();
 				EscribirArchivo(M_Inicio, a_file9);//materias
 				EscribirArchivo(A_Inicio, a_file7);//alumnos
 				EscribirArchivo(S_Inicio, a_file8);//semestre
 				EscribirArchivo(C_Inicio, a_file10);//calif
+
+
 				PostQuitMessage(0);
 			}
 			else {
@@ -2028,7 +2046,8 @@ void LeeArchivo(claseX **inicio, claseX **last, char *file)
 	}
 	else
 	{
-		printf("El archivo no se pudo abrir.");
+		MessageBox(ghDlg, "El archivo no se pudo abrir.", "", MB_OK | MB_ICONERROR);
+
 	}
 };
 template <class claseY>
@@ -2054,7 +2073,9 @@ void EscribirArchivo(claseY *inicio, char *file)
 	}
 	else
 	{
-		printf("El archivo no se pudo abrir.");
+		MessageBox(ghDlg, "El archivo no se pudo abrir.", "", MB_OK | MB_ICONERROR);
+
+		
 	}
 
 
@@ -2099,3 +2120,129 @@ bool NodoOrdenar(alumnos *nuevo) {
 	return true;
 }
 
+
+void GuardaHeapSort() {
+
+
+	alumnos *aux = 0;
+	materias *Maux = 0;
+	Calif*cali = 0;
+	ofstream archivaldo;
+	archivaldo.open(a_file11, ios::binary);
+	if (archivaldo.is_open())
+	{
+		archivaldo << "HeapSort" << endl << endl;
+
+		Maux = M_Inicio;
+		while (Maux != 0)
+		{
+			archivaldo << "Materia: " << Maux->NombreMate << ". | Carrera: " << Maux->NombreDegree << endl;
+			archivaldo << "  Nombre:" << "\t\t" << "Apellidos:" << "\t\t" << "Calificacion Final:" << "\t\t" << endl << endl;
+
+			aux = A_Inicio;
+			while (aux != 0)
+			{
+				if (strcmp(Maux->NombreDegree, aux->carrera) == 0) {
+					cali = C_Inicio;
+					while (cali != NULL)
+					{
+						if (cali->GetID(2) == aux->matricula)
+						{
+							break;
+						}
+						cali = cali->sig;
+					}
+					if (cali) {
+						int y = strlen(aux->Apellidos);
+						if (y <10)
+							archivaldo << "• " << aux->Apellidos << ".\t\t" << aux->Nombres << ".\t\t" << cali->CalFinal << endl;
+						else
+							archivaldo << "• " << aux->Apellidos << ".\t" << aux->Nombres << ".\t\t" << cali->CalFinal << endl;
+					}
+					else{
+						int y = strlen(aux->Apellidos);
+						if (y < 10)
+							archivaldo << "• " << aux->Apellidos << ".\t\t" << aux->Nombres << ".\t\t" << endl;
+						else
+							archivaldo << "• " << aux->Apellidos << ".\t" << aux->Nombres << ".\t\t" << endl;
+				}
+				}
+
+				aux = aux->sig;
+			}
+			archivaldo << "------" << endl;
+			Maux = Maux->sig;
+		}
+		archivaldo.close();
+	}
+	else
+	{
+		MessageBox(ghDlg, "El archivo no se pudo abrir.", "", MB_OK | MB_ICONERROR);
+
+
+	}
+	
+
+}
+void GuardaQuickSort() {
+
+
+	alumnos *aux = 0;
+	materias *Maux = 0;
+	Calif*cali = 0;
+	ofstream archivaldo;
+	archivaldo.open(a_file12, ios::binary);
+	if (archivaldo.is_open())
+	{
+		archivaldo << "QuickSort" << endl << endl;
+
+		aux = A_Inicio;
+		while (aux != 0)
+		{
+			archivaldo << "Nombre: " << aux->Nombres <<" "<<aux->Apellidos<< ". | Carrera: " << aux->carrera << endl;
+			archivaldo << "  Clave:" << "\t\t" << "Materia:" << "\t\t" << endl << endl;
+			int j = aux->count;
+			for (int i = 0; i <j ; i++)
+			{
+				Maux = M_Inicio;
+				while (Maux != 0)
+				{
+					if (aux->Sus_Materias[i]==Maux->GetID(0))
+					{
+						cali = C_Inicio;
+						while (cali!=NULL)
+						{
+							if (cali->GetID(0)==Maux->GetID(0) && cali->GetID(2)==aux->matricula)
+							{
+								break;
+							}
+							cali = cali->sig;
+						}
+						if (cali)
+						{
+							archivaldo << "• " << Maux->Clave << ".\t\t" << Maux->NombreMate << ".\t\t" << cali->CalFinal << ".\t\t" << endl;
+
+						}
+						else {
+							archivaldo << "• " << Maux->Clave << ".\t\t" << Maux->NombreMate << ".\t\t" << endl;
+
+						}
+
+					}
+
+					Maux = Maux->sig;
+				}
+			}
+			
+			archivaldo << "------" << endl;
+			aux = aux->sig;
+		}
+		archivaldo.close();
+	}
+	else
+	{
+		MessageBox(ghDlg, "El archivo no se pudo abrir.", "", MB_OK | MB_ICONERROR);
+
+
+	}
+}

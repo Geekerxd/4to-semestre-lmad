@@ -59,3 +59,7 @@ template <class claseZ> void AgregaDatosNodo(claseZ ** inicio, claseZ **last, cl
 bool NodoOrdenar(alumnos *nuevo);
 alumnos* binarySearch(alumnos *head, int value);
 alumnos* middle(alumnos* start, alumnos* last);
+
+
+void GuardaHeapSort();
+void GuardaQuickSort();
