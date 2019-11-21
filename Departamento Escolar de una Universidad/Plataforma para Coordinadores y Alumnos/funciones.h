@@ -66,9 +66,11 @@ void GuardaQuickSort();
 
 //void _quickSort(materias** l, materias** h);
 //materias **partition(materias** l, materias** h);
-void heapify(int arr[], int n, int i);
-
+void heapify(alumnos *arr[], int n, int i);
+void heapSort(alumnos *arr[], int n);
+void insertionSort(alumnos *arr[], int n);
 void quickSort(materias *arr[], int left, int right);
 
 
-int cmaterias(materias *cantidad);
+int cMaterias(materias *cantidad);
+int cAlumnos(alumnos*cantidad);

@@ -1,31 +1,19 @@
 QuickSort
 
-Nombre: Roberto Morua. | Carrera: Multimedia. | Matricula: 556. | Numero de materias: 0
+Nombre: Francisco David . | Carrera: LIC Quimicas. | Matricula: 353. | Numero de materias: 2
   Clave:		Materia:		Calificacion:
 
+• 452.		Matematica Industriales.		85.		
+• 7853.		laboratorio 1.		75.		
 ------
-Nombre: Isabel gallegos. | Carrera: LIC Quimicas. | Matricula: 45632. | Numero de materias: 5
+Nombre: Antonio  José . | Carrera: LIC Quimicas. | Matricula: 610. | Numero de materias: 2
   Clave:		Materia:		Calificacion:
 
-• 78.		experimentacion.		70.		
-• 452.		Matematica Industriales.		NP.		
-• 456.		laboratorio 2.		100.		
-• 4532.		Bologia 1.		39.		
-• 7853.		laboratorio 1.		NP.		
+• 452.		Matematica Industriales.		46.		
+• 4532.		Bologia 1.		88.		
 ------
-Nombre: hermes gallegos. | Carrera: LIC Quimicas. | Matricula: 45872. | Numero de materias: 1
+Nombre: María  Carmen . | Carrera: LIC Quimicas. | Matricula: 660. | Numero de materias: 1
   Clave:		Materia:		Calificacion:
 
-• 4532.		Bologia 1.		37.		
-------
-Nombre: julion aguirre. | Carrera: LIC Quimicas. | Matricula: 95413. | Numero de materias: 1
-  Clave:		Materia:		Calificacion:
-
-• 78.		experimentacion.		80.		
-------
-Nombre: Gonzalo Aguilar. | Carrera: Multimedia. | Matricula: 1827045. | Numero de materias: 2
-  Clave:		Materia:		Calificacion:
-
-• 4869.		Programacion 3.		95.		
-• 7863.		produccion multimedia.		95.		
+• 7853.		laboratorio 1.		88.		
 ------

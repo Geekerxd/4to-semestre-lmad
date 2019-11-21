@@ -1,57 +1,53 @@
 HeapSort
 
 Materia: Matematicas 1 . | Carrera: LIC Matematicas
-  Nombre:		Apellidos:		Calificacion Final:		
+  Apellidos:		Nombre:		Calificacion Final:		
 
 ------
 Materia: Calculo integral 1. | Carrera: LIC Matematicas
-  Nombre:		Apellidos:		Calificacion Final:		
+  Apellidos:		Nombre:		Calificacion Final:		
 
 ------
 Materia: Bologia 1. | Carrera: LIC Quimicas
-  Nombre:		Apellidos:		Calificacion Final:		
+  Apellidos:		Nombre:		Calificacion Final:		
 
-• gallegos.		Isabel.		70
-• gallegos.		hermes.		37
-• aguirre.		julion.		80
+• Carmen .		María .		88
+• David .		Francisco.		75
+• José .		Antonio .		88
 ------
 Materia: experimentacion. | Carrera: LIC Quimicas
-  Nombre:		Apellidos:		Calificacion Final:		
+  Apellidos:		Nombre:		Calificacion Final:		
 
-• gallegos.		Isabel.		70
-• gallegos.		hermes.		37
-• aguirre.		julion.		80
+• Carmen .		María .		88
+• David .		Francisco.		75
+• José .		Antonio .		88
 ------
 Materia: Programacion 3. | Carrera: Multimedia
-  Nombre:		Apellidos:		Calificacion Final:		
+  Apellidos:		Nombre:		Calificacion Final:		
 
-• Morua.		Roberto.		
-• Aguilar.		Gonzalo.		95
 ------
 Materia: produccion multimedia. | Carrera: Multimedia
-  Nombre:		Apellidos:		Calificacion Final:		
+  Apellidos:		Nombre:		Calificacion Final:		
 
-• Morua.		Roberto.		
-• Aguilar.		Gonzalo.		95
 ------
 Materia: Matematica Industriales. | Carrera: LIC Quimicas
-  Nombre:		Apellidos:		Calificacion Final:		
+  Apellidos:		Nombre:		Calificacion Final:		
 
-• gallegos.		Isabel.		70
-• gallegos.		hermes.		37
-• aguirre.		julion.		80
+• Carmen .		María .		88
+• David .		Francisco.		75
+• José .		Antonio .		88
 ------
 Materia: laboratorio 1. | Carrera: LIC Quimicas
-  Nombre:		Apellidos:		Calificacion Final:		
+  Apellidos:		Nombre:		Calificacion Final:		
 
-• gallegos.		Isabel.		70
-• gallegos.		hermes.		37
-• aguirre.		julion.		80
+• Carmen .		María .		88
+• David .		Francisco.		75
+• José .		Antonio .		88
 ------
 Materia: laboratorio 2. | Carrera: LIC Quimicas
-  Nombre:		Apellidos:		Calificacion Final:		
+  Apellidos:		Nombre:		Calificacion Final:		
 
-• gallegos.		Isabel.		70
-• gallegos.		hermes.		37
-• aguirre.		julion.		80
+• Carmen .		María .		88
+• David .		Francisco.		75
+• José .		Antonio .		88
 ------

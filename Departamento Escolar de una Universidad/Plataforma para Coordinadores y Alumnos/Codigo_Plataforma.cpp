@@ -30,6 +30,7 @@ CooCarr*aux, *coor; // Coordinador de Carrera Actual.
 int MTemp=0;
 
 materias **Arr;
+alumnos **Arr2;
 
 alumnos  *A_Inicio = 0, *A_Last = 0;
 materias *M_Inicio = 0, *M_Last = 0;
@@ -119,7 +120,8 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		LeeArchivo(&A_Inicio,&A_Last, a_file7);//alumnos
 		LeeArchivo(&S_Inicio,&S_Last, a_file8);//semestre
 		LeeArchivo(&C_Inicio,&C_Last, a_file10);//calif
-		numMate = cmaterias(M_Inicio); //el nnumero de materias
+		numMate = cMaterias(M_Inicio); //el nnumero de materias
+		numAlumn = cAlumnos(A_Inicio); //el nnumero de Alumnos
 
 		icon(Dlg); //icono
 		PonImagen(Dlg, IDC_STATIC_iz, file, 75, 75); //logos de uanl
@@ -1003,10 +1005,10 @@ BOOL CALLBACK RegiAlum   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 				if (NodoOrdenar(newo)){
 					
 					MessageBox(Dlg, "Se Guardó", "", MB_OK | MB_ICONINFORMATION);
-			}
+			    }
 			}
 			
-			
+			numAlumn++;
 			SendDlgItemMessage(Dlg, IDC_EDIT1, WM_SETTEXT, (WPARAM)0, (LPARAM)"");//limpio pantalla
 			SendDlgItemMessage(Dlg, IDC_EDIT2, WM_SETTEXT, (WPARAM)0, (LPARAM)"");
 			SendDlgItemMessage(Dlg, IDC_EDIT8, WM_SETTEXT, (WPARAM)0, (LPARAM)"" );
@@ -2134,9 +2136,28 @@ void GuardaHeapSort() {
 	Calif*cali = 0;
 
 	
+	Arr2 = new alumnos*[numAlumn];
+	aux = A_Inicio; 
+	int i = 0;
+	while (aux != NULL)
+	{
+		Arr2[i] = aux;//apunta a todos con un arreglo
 
+		i++;
+		aux = aux->sig;
+	}
 
+	//heapSort(Arr2, numAlumn);
+	insertionSort(Arr2, numAlumn);
 
+	/*aux = A_Inicio;  i = 0;
+	while (aux != NULL)
+	{
+		Arr2[i] ;
+
+		i++;
+		aux = aux->sig;
+	}*/
 
 	ofstream archivaldo;
 	archivaldo.open(a_file11, ios::binary);
@@ -2148,39 +2169,37 @@ void GuardaHeapSort() {
 		while (Maux != 0)
 		{
 			archivaldo << "Materia: " << Maux->NombreMate << ". | Carrera: " << Maux->NombreDegree << endl;
-			archivaldo << "  Nombre:" << "\t\t" << "Apellidos:" << "\t\t" << "Calificacion Final:" << "\t\t" << endl << endl;
-
-			aux = A_Inicio;
-			while (aux != 0)
-			{
-				if (strcmp(Maux->NombreDegree, aux->carrera) == 0) {
+			archivaldo << "  Apellidos:" << "\t\t" << "Nombre:" << "\t\t" << "Calificacion Final:" << "\t\t" << endl << endl;
+			
+			for (int k = 0; k < numAlumn; k++)
+			{//Arr2[k]
+				if (strcmp(Maux->NombreDegree, Arr2[k]->carrera) == 0) {
 					cali = C_Inicio;
 					while (cali != NULL)
 					{
-						if (cali->GetID(2) == aux->matricula)
+						if (cali->GetID(2) == Arr2[k]->matricula)
 						{
 							break;
 						}
 						cali = cali->sig;
 					}
 					if (cali) {
-						int y = strlen(aux->Apellidos);
-						if (y <10)
-							archivaldo << "• " << aux->Apellidos << ".\t\t" << aux->Nombres << ".\t\t" << cali->CalFinal << endl;
-						else
-							archivaldo << "• " << aux->Apellidos << ".\t" << aux->Nombres << ".\t\t" << cali->CalFinal << endl;
-					}
-					else{
-						int y = strlen(aux->Apellidos);
+						int y = strlen(Arr2[k]->Apellidos);
 						if (y < 10)
-							archivaldo << "• " << aux->Apellidos << ".\t\t" << aux->Nombres << ".\t\t" << endl;
+							archivaldo << "• " << Arr2[k]->Apellidos << ".\t\t" << Arr2[k]->Nombres << ".\t\t" << cali->CalFinal << endl;
 						else
-							archivaldo << "• " << aux->Apellidos << ".\t" << aux->Nombres << ".\t\t" << endl;
+							archivaldo << "• " << Arr2[k]->Apellidos << ".\t" << Arr2[k]->Nombres << ".\t\t" << cali->CalFinal << endl;
+					}
+					else {
+						int y = strlen(Arr2[k]->Apellidos);
+						if (y < 10)
+							archivaldo << "• " << Arr2[k]->Apellidos << ".\t\t" << Arr2[k]->Nombres << ".\t\t" << endl;
+						else
+							archivaldo << "• " << Arr2[k]->Apellidos << ".\t" << Arr2[k]->Nombres << ".\t\t" << endl;
+					}
 				}
-				}
-
-				aux = aux->sig;
 			}
+			
 			archivaldo << "------" << endl;
 			Maux = Maux->sig;
 		}
@@ -2212,7 +2231,7 @@ void GuardaQuickSort() {
 		Maux = Maux->sig;
 	}
 
-	quickSort(&(*Arr),0,numMate-1);
+	quickSort(Arr,0,numMate-1);        // Quick-sort
 
 
 	ofstream archivaldo;
@@ -2309,7 +2328,7 @@ void quickSort(materias *arr[], int left, int right) {
 		quickSort(arr, i, right);
 }
 
-void heapSort (int arr[], int n)
+void heapSort (alumnos *arr[], int n)
 {
  // Build heap rearrange array)
  for( int i = n / 2- 1; i >= 0; i--)
@@ -2323,7 +2342,7 @@ void heapSort (int arr[], int n)
     heapify( arr, i, 0);
  }
 }
-void heapify(int arr[], int n, int i)
+void heapify(alumnos *arr[], int n, int i)
 {
 	int largest = i; // Initialize largest as root
 	int l = 2 * i + 1; // left = 2*i + 1
@@ -2342,7 +2361,24 @@ void heapify(int arr[], int n, int i)
 		heapify(arr, n, largest);
 	}
 }
+void insertionSort(alumnos *arr[], int n) {
 
+	int i, j;
+	alumnos*key;
+	for (i = 1; i < n; i++) {
+		key = arr[i];
+		j = i - 1;
+		/* Move elements of arr[0..i-1], that are
+		greater than key, to one position ahead
+		of their current position */
+		while (j >= 0 && strcmp (arr[j]->Apellidos , key->Apellidos)>0) {
+			arr[j + 1] = arr[j];
+			Arr2[j + 1] = arr[j];
+			j = j - 1;
+		}
+		arr[j + 1] = key;
+		Arr2[j + 1] = key;
+	}}
 
 
 //materias **partition(materias** l, materias** h) {

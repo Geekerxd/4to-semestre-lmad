@@ -37,5 +37,5 @@ bool edit = false;
 
 int numMate = 0;// numero de materias
 
-
+int numAlumn = 0;
 
