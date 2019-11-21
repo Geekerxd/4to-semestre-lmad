@@ -25,8 +25,33 @@ Materia: experimentacion. | Carrera: LIC Quimicas
 Materia: Programacion 3. | Carrera: Multimedia
   Nombre:		Apellidos:		Calificacion Final:		
 
+• Morua.		Roberto.		
+• Aguilar.		Gonzalo.		95
 ------
 Materia: produccion multimedia. | Carrera: Multimedia
   Nombre:		Apellidos:		Calificacion Final:		
 
+• Morua.		Roberto.		
+• Aguilar.		Gonzalo.		95
+------
+Materia: Matematica Industriales. | Carrera: LIC Quimicas
+  Nombre:		Apellidos:		Calificacion Final:		
+
+• gallegos.		Isabel.		70
+• gallegos.		hermes.		37
+• aguirre.		julion.		80
+------
+Materia: laboratorio 1. | Carrera: LIC Quimicas
+  Nombre:		Apellidos:		Calificacion Final:		
+
+• gallegos.		Isabel.		70
+• gallegos.		hermes.		37
+• aguirre.		julion.		80
+------
+Materia: laboratorio 2. | Carrera: LIC Quimicas
+  Nombre:		Apellidos:		Calificacion Final:		
+
+• gallegos.		Isabel.		70
+• gallegos.		hermes.		37
+• aguirre.		julion.		80
 ------

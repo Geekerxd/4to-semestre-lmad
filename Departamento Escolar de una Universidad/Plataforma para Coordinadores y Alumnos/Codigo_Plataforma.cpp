@@ -29,6 +29,8 @@ CooCarr *Root = 0, *nuevo = 0;
 CooCarr*aux, *coor; // Coordinador de Carrera Actual.
 int MTemp=0;
 
+materias **Arr;
+
 alumnos  *A_Inicio = 0, *A_Last = 0;
 materias *M_Inicio = 0, *M_Last = 0;
 Sem      *S_Inicio = 0, *S_Last= 0;
@@ -117,6 +119,7 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		LeeArchivo(&A_Inicio,&A_Last, a_file7);//alumnos
 		LeeArchivo(&S_Inicio,&S_Last, a_file8);//semestre
 		LeeArchivo(&C_Inicio,&C_Last, a_file10);//calif
+		numMate = cmaterias(M_Inicio); //el nnumero de materias
 
 		icon(Dlg); //icono
 		PonImagen(Dlg, IDC_STATIC_iz, file, 75, 75); //logos de uanl
@@ -491,6 +494,7 @@ BOOL CALLBACK RegiMate   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 	*/
 			AgregaDatosNodo<materias>(&M_Inicio, &M_Last, newo, 0); // Agrega el nodo a la lista
 			MessageBox(Dlg, "Se Guardó", "", MB_OK | MB_ICONINFORMATION);
+			numMate++; // incrementa el numero de materias para el arreglo
 			
 			SendDlgItemMessage(Dlg, IDC_EDIT1, WM_SETTEXT, (WPARAM)100, (LPARAM)0);
 			SendDlgItemMessage(Dlg, IDC_EDIT2, WM_SETTEXT, (WPARAM)80,  (LPARAM)0);
@@ -1504,28 +1508,29 @@ BOOL CALLBACK Kardex     (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam){
 			//Aqui busqueda binaria.
 			Aaux5 = binarySearch(A_Inicio, Num1);//busco la matricula. Busqueda Binaria.
 
-			if (Aaux5 != NULL)//encontro al alumno
+			if (Aaux5 )//encontro al alumno
 			{
-				SendDlgItemMessage(Dlg, IDC_STATIC_NAME, WM_SETTEXT, (WPARAM)100, (LPARAM)Aaux5->Nombres);
+				if (strcmp( Aaux5->carrera,coor->D_DegreeName)==0){//ver si es de esta carrera
+					SendDlgItemMessage(Dlg, IDC_STATIC_NAME, WM_SETTEXT, (WPARAM)100, (LPARAM)Aaux5->Nombres);
 				int j = Aaux5->count;
 				for (int i = 0; i < j; i++)
 				{
 					Maux5 = M_Inicio;
-					while (Maux5!=NULL)
+					while (Maux5 != NULL)
 					{
-						if (Aaux5->Sus_Materias[i]== Maux5->GetID(0))
+						if (Aaux5->Sus_Materias[i] == Maux5->GetID(0))
 						{
 							Caux5 = C_Inicio;
 							while (Caux5 != NULL)
 							{
 								if (Aaux5->Sus_Materias[i] == Caux5->GetID(0)
-									&& Aaux5->matricula== Caux5->GetID(2))
+									&& Aaux5->matricula == Caux5->GetID(2))
 								{
 									break;
 								}
 								Caux5 = Caux5->sig;
 							}
-							if (Caux5!=NULL)
+							if (Caux5 != NULL)
 							{
 								Saux5 = S_Inicio;
 								while (Saux5 != NULL)
@@ -1533,8 +1538,8 @@ BOOL CALLBACK Kardex     (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam){
 									if (Caux5->GetID(3) == Saux5->GetID(3))
 									{
 										strcat(newoo, Saux5->MesMes);
-										int y= strlen(newoo);
-										if(y<16)
+										int y = strlen(newoo);
+										if (y < 16)
 											strcat(newoo, "        ");
 										strcat(newoo, " ");
 										strcat(newoo, Saux5->year);
@@ -1542,7 +1547,7 @@ BOOL CALLBACK Kardex     (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam){
 									}
 									Saux5 = Saux5->sig;
 								}
-								if (Saux5!=NULL)
+								if (Saux5 != NULL)
 								{
 
 									strcat(newoo, "      ");
@@ -1566,14 +1571,14 @@ BOOL CALLBACK Kardex     (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam){
 
 
 							}
-							
+
 						}
 						Maux5 = Maux5->sig;
 					}
-					
+
 
 				}
-
+			}
 			}
 			else MessageBox(Dlg, "No se encontro Alumnos Registrados con esta materia", "", MB_ICONERROR);
 
@@ -2197,17 +2202,17 @@ void GuardaQuickSort() {
 	materias *Maux = 0;
 	Calif*cali = 0;
 	
-
-	//_quickSort(&M_Inicio, &M_Last);
-
-	while (M_Inicio!=NULL)
+	Arr = new materias*[numMate];
+	Maux = M_Inicio; int i = 0;
+	while (Maux!=NULL)
 	{
-		M_Inicio = M_Inicio->ant;
+		Arr[i] = Maux;//apunta a todos con un arreglo
+
+		i++;
+		Maux = Maux->sig;
 	}
-	while (M_Last!=NULL)
-	{
-		M_Last = M_Last->sig;
-	}
+
+	quickSort(&(*Arr),0,numMate-1);
 
 
 	ofstream archivaldo;
@@ -2219,40 +2224,47 @@ void GuardaQuickSort() {
 		aux = A_Inicio;
 		while (aux != 0)
 		{
-			archivaldo << "Nombre: " << aux->Nombres <<" "<<aux->Apellidos<< ". | Carrera: " << aux->carrera << endl;
-			archivaldo << "  Clave:" << "\t\t" << "Materia:" << "\t\t" << endl << endl;
+			archivaldo << "Nombre: " << aux->Nombres <<" "<<aux->Apellidos<< ". | Carrera: " << aux->carrera << ". | Matricula: " << aux->matricula << ". | Numero de materias: " << aux->count << endl;
+			archivaldo << "  Clave:" << "\t\t" << "Materia:" << "\t\t" <<"Calificacion:"<< endl << endl;
 			int j = aux->count;
-			for (int i = 0; i <j ; i++)
-			{
-				Maux = M_Inicio;
-				while (Maux != 0)
-				{
-					if (aux->Sus_Materias[i]==Maux->GetID(0))
-					{
-						cali = C_Inicio;
-						while (cali!=NULL)
-						{
-							if (cali->GetID(0)==Maux->GetID(0) && cali->GetID(2)==aux->matricula)
-							{
-								break;
-							}
-							cali = cali->sig;
-						}
-						if (cali)
-						{
-							archivaldo << "• " << Maux->Clave << ".\t\t" << Maux->NombreMate << ".\t\t" << cali->CalFinal << ".\t\t" << endl;
 
-						}
-						else {
-							archivaldo << "• " << Maux->Clave << ".\t\t" << Maux->NombreMate << ".\t\t" << endl;
+			
+			int k = 0;
+			while (k < numMate)// utilizando el arreglo
+			{
+				for (int z = 0; z < j; z++)
+					{
+						if (aux->Sus_Materias[z] == Arr[k]->GetID(0))
+						{
+							cali = C_Inicio;
+							while (cali != NULL)
+							{
+								if (cali->GetID(0) == Arr[k]->GetID(0) && cali->GetID(2) == aux->matricula)
+								{
+									break;
+								}
+								cali = cali->sig;
+							}
+							if (cali)
+							{
+								archivaldo << "• " << Arr[k]->Clave << ".\t\t" << Arr[k]->NombreMate << ".\t\t" << cali->CalFinal << ".\t\t" << endl;
+
+							}
+							else {
+								archivaldo << "• " << Arr[k]->Clave << ".\t\t" << Arr[k]->NombreMate << ".\t\t" << endl;
+
+							}
 
 						}
 
 					}
+				
 
-					Maux = Maux->sig;
-				}
+				k++;
 			}
+			
+			
+			
 			
 			archivaldo << "------" << endl;
 			aux = aux->sig;
@@ -2267,41 +2279,36 @@ void GuardaQuickSort() {
 	}
 }
 
-materias **partition(materias** l, materias** h) {
-	int x = atoi((*h)->Clave);
-	materias** i = &(*l)->ant;
-	for (materias** j = &(*l); (*j) != (*h); (*j) = (*j)->sig)
-	{
-		if (atoi((*j)->Clave) <= x) {
-			(*i) = ((*i) == NULL) ? (*l) : (*i)->sig;
-			swap((*i), (*j));
-			/*materias* temp;
-			temp = (*i);
-			(*i) = (*j);
-			(*j) = temp;*/
-			//NewSwap();
+
+void quickSort(materias *arr[], int left, int right) {
+	
+	int i = left, j = right;
+	materias *tmp;
+	materias *pivot = arr[(left + right) / 2];
+	
+	/* partition */
+	while (i <= j) {
+		while (atoi(arr[i]->Clave) < atoi(pivot->Clave))
+			i++;
+		while (atoi(arr[j]->Clave) > atoi(pivot->Clave))
+			j--;
+		if (i <= j) {
+			tmp = arr[i];
+			arr[i] = arr[j];
+			Arr[i]= arr[j];
+			arr[j] = tmp;
+			Arr[j] = tmp;
+			i++;
+			j--;
 		}
-	}
-	(*i) = ((*i) == NULL) ? (*l) : (*i)->sig;
-	swap((*i), (*h));
-	/*materias* temp;
-	temp = (*i);
-	(*i) = (*h);
-	(*h) = temp;*/
-
-	//NewSwap();
-	return i;
+	};
+	/* recursion */
+	if (left < j)
+		quickSort(arr, left, j);
+	if (i < right)
+		quickSort(arr, i, right);
 }
 
-void _quickSort(materias** l, materias** h) {
-	if ((*h) != NULL && (*l) != (*h) && (*l) != (*h)->sig)
-	{
-		materias** p = partition(&(*l), &(*h));
-
-		_quickSort(&(*l), &(*p)->ant);
-		_quickSort(&(*p)->sig, &(*h));
-	}
-}
 void heapSort (int arr[], int n)
 {
  // Build heap rearrange array)
@@ -2335,3 +2342,41 @@ void heapify(int arr[], int n, int i)
 		heapify(arr, n, largest);
 	}
 }
+
+
+
+//materias **partition(materias** l, materias** h) {
+//	int x = atoi((*h)->Clave);
+//	materias** i = &(*l)->ant;
+//	for (materias** j = &(*l); (*j) != (*h); (*j) = (*j)->sig)
+//	{
+//		if (atoi((*j)->Clave) <= x) {
+//			(*i) = ((*i) == NULL) ? (*l) : (*i)->sig;
+//			swap((*i), (*j));
+//			/*materias* temp;
+//			temp = (*i);
+//			(*i) = (*j);
+//			(*j) = temp;*/
+//			//NewSwap();
+//		}
+//	}
+//	(*i) = ((*i) == NULL) ? (*l) : (*i)->sig;
+//	swap((*i), (*h));
+//	/*materias* temp;
+//	temp = (*i);
+//	(*i) = (*h);
+//	(*h) = temp;*/
+//
+//	//NewSwap();
+//	return i;
+//}
+//
+//void _quickSort(materias** l, materias** h) {
+//	if ((*h) != NULL && (*l) != (*h) && (*l) != (*h)->sig)
+//	{
+//		materias** p = partition(&(*l), &(*h));
+//
+//		_quickSort(&(*l), &(*p)->ant);
+//		_quickSort(&(*p)->sig, &(*h));
+//	}
+//}

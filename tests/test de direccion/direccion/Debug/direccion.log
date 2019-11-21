@@ -1,3 +1,13 @@
 ﻿  Pila_Ejemplo_01.cpp
-c:\users\dell 66895\desktop\repositorio ~estructuras\tests\test de direccion\direccion\pila_ejemplo_01.cpp(28): warning C4326: return type of 'main' should be 'int' instead of 'void'
+c:\users\dell 66895\desktop\repositorio ~estructuras\tests\test de direccion\direccion\pila_ejemplo_01.cpp(161): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\tests\test de direccion\direccion\pila_ejemplo_01.cpp(227): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\tests\test de direccion\direccion\pila_ejemplo_01.cpp(232): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\tests\test de direccion\direccion\pila_ejemplo_01.cpp(233): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\tests\test de direccion\direccion\pila_ejemplo_01.cpp(234): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\tests\test de direccion\direccion\pila_ejemplo_01.cpp(247): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\tests\test de direccion\direccion\pila_ejemplo_01.cpp(248): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\tests\test de direccion\direccion\pila_ejemplo_01.cpp(309): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\tests\test de direccion\direccion\pila_ejemplo_01.cpp(314): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\dell 66895\desktop\repositorio ~estructuras\tests\test de direccion\direccion\pila_ejemplo_01.cpp(357): warning C4101: 'info': unreferenced local variable
+c:\users\dell 66895\desktop\repositorio ~estructuras\tests\test de direccion\direccion\pila_ejemplo_01.cpp(381): warning C4101: 'info': unreferenced local variable
   direccion.vcxproj -> C:\Users\Dell 66895\Desktop\Repositorio ~estructuras\tests\test de direccion\Debug\direccion.exe

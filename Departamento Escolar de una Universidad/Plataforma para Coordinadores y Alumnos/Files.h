@@ -35,7 +35,7 @@ char Quicksort[] = "A_Quicksort.txt";
 int a = 0;
 bool edit = false;
 
-
+int numMate = 0;// numero de materias
 
 
 

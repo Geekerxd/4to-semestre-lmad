@@ -14,6 +14,9 @@ public:
 	
 	void SetID(int id, int num);
 	int GetID(int num);
+	void  swap(int *xp, int *yp);
+	void  bubbleSort();
+	void ordena();
 
 	alumnos();
 	~alumnos();

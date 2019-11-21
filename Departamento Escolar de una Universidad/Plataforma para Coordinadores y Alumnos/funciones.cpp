@@ -160,3 +160,14 @@ alumnos* middle(alumnos* start, alumnos* last) {
 }
 
 
+int cmaterias(materias *cantidad) {
+	int numMate=0;
+	while (cantidad != NULL)
+	{
+
+		numMate++;
+
+		cantidad = cantidad->sig;
+    }
+	return numMate;
+}
