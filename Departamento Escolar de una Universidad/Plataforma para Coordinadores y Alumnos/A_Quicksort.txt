@@ -1,19 +1,24 @@
 QuickSort
 
-Nombre: Francisco David . | Carrera: LIC Quimicas. | Matricula: 353. | Numero de materias: 2
+Nombre: Eloy  Ramírez . | Carrera: LIC Matematicas. | Matricula: 45123. | Numero de materias: 2
   Clave:		Materia:		Calificacion:
 
-• 452.		Matematica Industriales.		85.		
-• 7853.		laboratorio 1.		75.		
+• 455.		calculo 4.		98.		
+• 785.		calculo 3.		88.		
 ------
-Nombre: Antonio  José . | Carrera: LIC Quimicas. | Matricula: 610. | Numero de materias: 2
+Nombre: Marcos Flores. | Carrera: LIC Matematicas. | Matricula: 45612. | Numero de materias: 1
   Clave:		Materia:		Calificacion:
 
-• 452.		Matematica Industriales.		46.		
-• 4532.		Bologia 1.		88.		
+• 785.		calculo 3.		76.		
 ------
-Nombre: María  Carmen . | Carrera: LIC Quimicas. | Matricula: 660. | Numero de materias: 1
+Nombre: Lucas Castro. | Carrera: LIC Quimicas. | Matricula: 78213. | Numero de materias: 2
   Clave:		Materia:		Calificacion:
 
-• 7853.		laboratorio 1.		88.		
+• 754.		Química general.		
+• 7854.		Física mecánica.		77.		
+------
+Nombre: Carlos Martínez . | Carrera: LIC Matematicas. | Matricula: 8632123. | Numero de materias: 1
+  Clave:		Materia:		Calificacion:
+
+• 785.		calculo 3.		
 ------

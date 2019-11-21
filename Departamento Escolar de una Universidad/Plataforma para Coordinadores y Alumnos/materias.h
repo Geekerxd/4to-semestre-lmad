@@ -8,8 +8,8 @@ public:
 	char NombreDegree[60];
 	char Clave[10];
 	char Descrip[300];
-	int creditos[15];
-	int HrByWeek[15];
+	int creditos;
+	int HrByWeek;
 
 	materias();
 	~materias();

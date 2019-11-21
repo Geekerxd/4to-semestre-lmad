@@ -30,7 +30,7 @@ char file8[] = "ListaSemestres.txt";
 char file9[] = "ListaMaterias.txt";
 char file10[] = "ListaCalif.txt";
 
-char Heapsort []  = "A_Heapsort.txt";
+char Heapsort []  = "A_InsertSort.txt";//.txt
 char Quicksort[] = "A_Quicksort.txt";
 int a = 0;
 bool edit = false;

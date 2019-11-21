@@ -1,0 +1,32 @@
+InstertSort
+
+Materia: calculo 1. | Carrera: LIC Matematicas
+  Apellidos:		Nombre:		Calificacion Final:		
+
+------
+Materia: calculo 2. | Carrera: LIC Matematicas
+  Apellidos:		Nombre:		Calificacion Final:		
+
+------
+Materia: calculo 3. | Carrera: LIC Matematicas
+  Apellidos:		Nombre:		Calificacion Final:		
+
+• Flores.		Marcos.		76
+• Martínez .		Carlos.		
+• Ramírez .		Eloy .		88
+------
+Materia: calculo 4. | Carrera: LIC Matematicas
+  Apellidos:		Nombre:		Calificacion Final:		
+
+• Ramírez .		Eloy .		88
+------
+Materia: Física mecánica. | Carrera: LIC Quimicas
+  Apellidos:		Nombre:		Calificacion Final:		
+
+• Castro.		Lucas.		77
+------
+Materia: Química general. | Carrera: LIC Quimicas
+  Apellidos:		Nombre:		Calificacion Final:		
+
+• Castro.		Lucas.		77
+------

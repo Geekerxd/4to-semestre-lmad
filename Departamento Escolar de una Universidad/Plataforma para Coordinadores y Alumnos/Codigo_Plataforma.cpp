@@ -199,8 +199,16 @@ BOOL CALLBACK ProcDialog1(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			MB_YESNO |
 			MB_ICONASTERISK | MB_DEFBUTTON1) == IDYES)
 		{
-			GuardaHeapSort();
-			GuardaQuickSort();
+			if (A_Inicio)
+			{
+				GuardaHeapSort();
+
+			}
+			if (M_Inicio)
+			{
+				GuardaQuickSort();
+
+			}
 
 			EscribirArchivo();
 			EscribirArchivo(M_Inicio, a_file9);//materias
@@ -281,8 +289,16 @@ BOOL CALLBACK VentaCooGee(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 				MB_YESNO |
 				MB_ICONASTERISK | MB_DEFBUTTON1) == IDYES)
 			{
-				GuardaHeapSort();
-				GuardaQuickSort();
+				if (A_Inicio)
+				{
+					GuardaHeapSort();
+
+				}
+				if (M_Inicio)
+				{
+					GuardaQuickSort();
+
+				}
 
 
 				EscribirArchivo();
@@ -485,9 +501,9 @@ BOOL CALLBACK RegiMate   (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 			GetWindowText(GetDlgItem(Dlg, IDC_COMBO1), newo->NombreDegree, 256);
 			SendDlgItemMessage(Dlg, IDC_EDIT4, WM_GETTEXT, (WPARAM)300, (LPARAM)newo->Descrip);
 			SendDlgItemMessage(Dlg, IDC_EDIT8, WM_GETTEXT, (WPARAM)15, (LPARAM)creditos);
-			*newo->creditos = atoi(creditos);
+			newo->creditos = atoi(creditos);
 			SendDlgItemMessage(Dlg, IDC_EDIT9, WM_GETTEXT, (WPARAM)15, (LPARAM)horas);
-			*newo->HrByWeek= atoi(horas);
+			newo->HrByWeek= atoi(horas);
 			/*
 	EID_materia = 0
 	EID_carrera   = 1
@@ -728,8 +744,8 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 				}
 				//**
 				if (M_encontrado) {
-					_itoa(*M_encontrado->creditos, cre, 10);
-					_itoa(*M_encontrado->HrByWeek, hrs, 10);
+					_itoa(M_encontrado->creditos, cre, 10);
+					_itoa(M_encontrado->HrByWeek, hrs, 10);
 					SendDlgItemMessage(Dlg, IDC_EDIT1, WM_SETTEXT, 80, (LPARAM)M_encontrado->NombreMate);
 					SendDlgItemMessage(Dlg, IDC_EDIT2, WM_SETTEXT, 80, (LPARAM)M_encontrado->Clave);
 					SendDlgItemMessage(Dlg, IDC_EDIT3, WM_SETTEXT, 80, (LPARAM)M_encontrado->Descrip);
@@ -815,8 +831,8 @@ BOOL CALLBACK VerMate    (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 				SendDlgItemMessage(Dlg, IDC_EDIT3, WM_GETTEXT, 80, (LPARAM)M_encontrado->Descrip);
 				SendDlgItemMessage(Dlg, IDC_EDIT4, WM_GETTEXT, 80, (LPARAM)cre);
 				SendDlgItemMessage(Dlg, IDC_EDIT5, WM_GETTEXT, 80, (LPARAM)hrs);
-				*M_encontrado->creditos = atoi(cre);
-				*M_encontrado->HrByWeek = atoi(hrs);
+				M_encontrado->creditos = atoi(cre);
+				M_encontrado->HrByWeek = atoi(hrs);
 
 
 				MessageBox(Dlg, M_encontrado->NombreMate, "Se Actualizó", MB_OK);
@@ -888,9 +904,12 @@ BOOL CALLBACK CooCarrera (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 		SendDlgItemMessage(Dlg, IDC_STATIC_name_cc, WM_SETTEXT, 50, (LPARAM)aux->CC_Name);
 		SendDlgItemMessage(Dlg, IDC_STATIC_carr_cc, WM_SETTEXT, 50, (LPARAM)aux->D_DegreeName);
 		PonImagen(Dlg, IDC_Pho_CooCarr, aux->foto, 75, 97.65);
-
-		SendDlgItemMessage(Dlg, IDC_STATIC_3, WM_SETTEXT, 50, (LPARAM)S_Last->MesMes);//IDC_STATIC_4
-		SendDlgItemMessage(Dlg, IDC_STATIC_4, WM_SETTEXT, 50, (LPARAM)S_Last->year);  //
+		if (S_Inicio)
+		{
+			SendDlgItemMessage(Dlg, IDC_STATIC_3, WM_SETTEXT, 50, (LPARAM)S_Last->MesMes);//IDC_STATIC_4
+			SendDlgItemMessage(Dlg, IDC_STATIC_4, WM_SETTEXT, 50, (LPARAM)S_Last->year);  //
+		}
+		
         return true;
 	}
 	case WM_COMMAND:
@@ -923,8 +942,16 @@ BOOL CALLBACK CooCarrera (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)
 				MB_YESNO |
 				MB_ICONASTERISK | MB_DEFBUTTON1) == IDYES)
 			{
-				GuardaHeapSort();
-				GuardaQuickSort();
+				if (A_Inicio)
+				{
+					GuardaHeapSort();
+
+				}
+				if (M_Inicio)
+				{
+					GuardaQuickSort();
+
+				}
 
 
 				EscribirArchivo();
@@ -1490,6 +1517,8 @@ BOOL CALLBACK Kardex     (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam){
 	static int Num1;
 	static char newoo[150];
 	static char sem[15];
+	static int creditos;
+	static char creditosCH[10];
 	switch (Mensaje)
 	{
 	case WM_INITDIALOG: {
@@ -1503,6 +1532,7 @@ BOOL CALLBACK Kardex     (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam){
 		switch (LOWORD(wParam))
 		{
 		case IDC_Boton_Busca:{
+			creditos = 0;
 			hListaKardex=GetDlgItem(Dlg, IDC_LIST_KARDEX);
 			SendMessage(hListaKardex, LB_RESETCONTENT, 0, 0);
 			SendDlgItemMessage(Dlg, IDC_EDIT_MATRICUAL, WM_GETTEXT, (WPARAM)30, (LPARAM)matri);
@@ -1514,16 +1544,16 @@ BOOL CALLBACK Kardex     (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam){
 			{
 				if (strcmp( Aaux5->carrera,coor->D_DegreeName)==0){//ver si es de esta carrera
 					SendDlgItemMessage(Dlg, IDC_STATIC_NAME, WM_SETTEXT, (WPARAM)100, (LPARAM)Aaux5->Nombres);
-				int j = Aaux5->count;
-				for (int i = 0; i < j; i++)
-				{
-					Maux5 = M_Inicio;
-					while (Maux5 != NULL)
-					{
-						if (Aaux5->Sus_Materias[i] == Maux5->GetID(0))
-						{
-							Caux5 = C_Inicio;
-							while (Caux5 != NULL)
+				    int j = Aaux5->count;
+				    for (int i = 0; i < j; i++)
+				    {
+				    	Maux5 = M_Inicio;
+				    	while (Maux5 != NULL)
+				    	{
+				    		if (Aaux5->Sus_Materias[i] == Maux5->GetID(0))
+						    {
+						    	Caux5 = C_Inicio;
+						    	while (Caux5 != NULL)
 							{
 								if (Aaux5->Sus_Materias[i] == Caux5->GetID(0)
 									&& Aaux5->matricula == Caux5->GetID(2))
@@ -1532,7 +1562,7 @@ BOOL CALLBACK Kardex     (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam){
 								}
 								Caux5 = Caux5->sig;
 							}
-							if (Caux5 != NULL)
+						    	if (Caux5 != NULL)
 							{
 								Saux5 = S_Inicio;
 								while (Saux5 != NULL)
@@ -1561,11 +1591,16 @@ BOOL CALLBACK Kardex     (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam){
 									strcat(newoo, Maux5->NombreMate);
 									int z = strlen(newoo);
 									if (z < 68)
-										strcat(newoo, "                                       ");
-									strcat(newoo, "                     ");
+										strcat(newoo, "                       ");
+									strcat(newoo, "       ");
 									strcat(newoo, Caux5->CalFinal);
+									strcat(newoo, "      ");
+									char ch[10];
+									_itoa(Maux5->creditos, ch, 10);
+									strcat(newoo, ch);
 									SendMessage(hListaKardex, LB_ADDSTRING, 0, (LPARAM)newoo);
 									strcpy(newoo, "");
+									creditos = creditos + Maux5->creditos;//suma creditos
 
 								}
 
@@ -1574,13 +1609,19 @@ BOOL CALLBACK Kardex     (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam){
 
 							}
 
-						}
-						Maux5 = Maux5->sig;
-					}
-
-
-				}
-			}
+						    }
+							
+				    		Maux5 = Maux5->sig;
+				    	}
+				    
+				    
+				    }
+					//
+					
+					_itoa(creditos, creditosCH, 10);
+				SendDlgItemMessage(Dlg, IDC_STATIC_Creditos, WM_SETTEXT, (WPARAM)10, (LPARAM)creditosCH);
+			    }
+				
 			}
 			else MessageBox(Dlg, "No se encontro Alumnos Registrados con esta materia", "", MB_ICONERROR);
 
@@ -1690,6 +1731,8 @@ BOOL CALLBACK Clases(HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam) {
 		switch (LOWORD(wParam))
 		{
 		case IDC_Aceptar:
+			
+			SendDlgItemMessage(Dlg, IDC_EDIT2, WM_SETTEXT, 50, (LPARAM)0);//lo limpio
 			hVerComb3 = GetDlgItem(Dlg, IDC_COMBO_S01);
 			hVerComb4 = GetDlgItem(Dlg, IDC_COMBO_M01);
 			hlist1 = GetDlgItem(Dlg, IDC_LIST_Clase);
@@ -2020,7 +2063,7 @@ void LeeArchivo(claseX **inicio, claseX **last, char *file)
 	claseX *pinfo = 0;
 
 	ifstream archivaldo;
-	archivaldo.open(file, ios::binary);  // | ios::trunc
+	archivaldo.open(file, ios::binary );//| ios::trunc
 	if (archivaldo.is_open())
 	{
 		pinfo = new claseX;
@@ -2163,7 +2206,7 @@ void GuardaHeapSort() {
 	archivaldo.open(a_file11, ios::binary);
 	if (archivaldo.is_open())
 	{
-		archivaldo << "HeapSort" << endl << endl;
+		archivaldo << "InstertSort" << endl << endl;
 
 		Maux = M_Inicio;
 		while (Maux != 0)
@@ -2173,30 +2216,41 @@ void GuardaHeapSort() {
 			
 			for (int k = 0; k < numAlumn; k++)
 			{//Arr2[k]
-				if (strcmp(Maux->NombreDegree, Arr2[k]->carrera) == 0) {
-					cali = C_Inicio;
-					while (cali != NULL)
+				if (strcmp(Maux->NombreDegree, Arr2[k]->carrera) == 0 ) {
+					
+					for (int x = 0; x < Arr2[k]->count; x++)
 					{
-						if (cali->GetID(2) == Arr2[k]->matricula)
-						{
-							break;
+						if (Maux->GetID(0)== Arr2[k]->Sus_Materias[x]) {
+						
+							cali = C_Inicio;
+							while (cali != NULL)
+							{
+								if (cali->GetID(2) == Arr2[k]->matricula)
+								{
+									break;
+								}
+								cali = cali->sig;
+							}
+							if (cali) {
+								int y = strlen(Arr2[k]->Apellidos);
+								if (y < 10)
+									archivaldo << "• " << Arr2[k]->Apellidos << ".\t\t" << Arr2[k]->Nombres << ".\t\t" << cali->CalFinal << endl;
+								else
+									archivaldo << "• " << Arr2[k]->Apellidos << ".\t" << Arr2[k]->Nombres << ".\t\t" << cali->CalFinal << endl;
+							}
+							else {
+								int y = strlen(Arr2[k]->Apellidos);
+								if (y < 10)
+									archivaldo << "• " << Arr2[k]->Apellidos << ".\t\t" << Arr2[k]->Nombres << ".\t\t" << endl;
+								else
+									archivaldo << "• " << Arr2[k]->Apellidos << ".\t" << Arr2[k]->Nombres << ".\t\t" << endl;
+							}
+						
 						}
-						cali = cali->sig;
 					}
-					if (cali) {
-						int y = strlen(Arr2[k]->Apellidos);
-						if (y < 10)
-							archivaldo << "• " << Arr2[k]->Apellidos << ".\t\t" << Arr2[k]->Nombres << ".\t\t" << cali->CalFinal << endl;
-						else
-							archivaldo << "• " << Arr2[k]->Apellidos << ".\t" << Arr2[k]->Nombres << ".\t\t" << cali->CalFinal << endl;
-					}
-					else {
-						int y = strlen(Arr2[k]->Apellidos);
-						if (y < 10)
-							archivaldo << "• " << Arr2[k]->Apellidos << ".\t\t" << Arr2[k]->Nombres << ".\t\t" << endl;
-						else
-							archivaldo << "• " << Arr2[k]->Apellidos << ".\t" << Arr2[k]->Nombres << ".\t\t" << endl;
-					}
+					
+
+
 				}
 			}
 			

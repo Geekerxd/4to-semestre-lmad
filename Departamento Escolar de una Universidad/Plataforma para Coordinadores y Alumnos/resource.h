@@ -77,7 +77,6 @@
 #define IDC_BUTTON2                     1045
 #define IDC_BU_Gu_Ca                    1045
 #define IDC_Boton_Busca                 1045
-#define IDC_Aceptar_mate                1045
 #define IDC_Aceptar                     1045
 #define IDC_STATIC101                   1046
 #define IDC_BU_Borrar                   1046
@@ -104,6 +103,7 @@
 #define IDC_EDIT_MATRICUAL              1065
 #define IDC_STATIC_NAME                 1066
 #define IDC_COMBO_S01                   1067
+#define IDC_STATIC_Creditos             1068
 #define ID_OPCIONES_ATRAS               40001
 #define ID_OPCIONES_Regresar            40002
 #define ID_OPCIONES_SALIRYGUARDAR       40003
@@ -122,7 +122,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        133
 #define _APS_NEXT_COMMAND_VALUE         40012
-#define _APS_NEXT_CONTROL_VALUE         1068
+#define _APS_NEXT_CONTROL_VALUE         1069
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
