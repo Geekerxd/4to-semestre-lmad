@@ -3,5 +3,4 @@ c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una
 c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(596): warning C4305: 'argument': truncation from 'double' to 'float'
 c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(886): warning C4102: 'finmate': unreferenced label
 c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(906): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\dell 66895\desktop\repositorio ~estructuras\departamento escolar de una universidad\plataforma para coordinadores y alumnos\codigo_plataforma.cpp(1278): warning C4060: switch statement contains no 'case' or 'default' labels
   Plataforma para Coordinadores y Alumnos.vcxproj -> C:\Users\Dell 66895\Desktop\Repositorio ~estructuras\Departamento Escolar de una Universidad\Debug\Plataforma para Coordinadores y Alumnos.exe

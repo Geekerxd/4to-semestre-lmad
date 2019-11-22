@@ -24,9 +24,62 @@ Materia: Física mecánica. | Carrera: LIC Quimicas
   Apellidos:		Nombre:		Calificacion Final:		
 
 • Castro.		Lucas.		77
+• Cortez.		Martin.		58
 ------
 Materia: Química general. | Carrera: LIC Quimicas
   Apellidos:		Nombre:		Calificacion Final:		
 
 • Castro.		Lucas.		77
+• Cortez.		Martin.		58
+------
+Materia: GEOMETRIA. | Carrera: Lic. en Diseno Industrial
+  Apellidos:		Nombre:		Calificacion Final:		
+
+------
+Materia: ALGEBRA. | Carrera: Lic. en Diseno Industrial
+  Apellidos:		Nombre:		Calificacion Final:		
+
+------
+Materia: METODOLOGIA DE LA PROGRA. | Carrera: Lic. en Diseno Industrial
+  Apellidos:		Nombre:		Calificacion Final:		
+
+------
+Materia: CALCULO. | Carrera: Lic. en Diseno Industrial
+  Apellidos:		Nombre:		Calificacion Final:		
+
+------
+Materia: INGLES. | Carrera: Lic. en Diseno Industrial
+  Apellidos:		Nombre:		Calificacion Final:		
+
+------
+Materia: FRANCES. | Carrera: Lic. en Diseno Industrial
+  Apellidos:		Nombre:		Calificacion Final:		
+
+------
+Materia: GEOMETRIA. | Carrera: Lic en diseno industrial
+  Apellidos:		Nombre:		Calificacion Final:		
+
+• HAYEK.		SALMA .		78
+------
+Materia: ALGEBRA. | Carrera: Lic en diseno industrial
+  Apellidos:		Nombre:		Calificacion Final:		
+
+• HAYEK.		SALMA .		78
+------
+Materia: METO. DE LA PROGRA. | Carrera: Lic en diseno industrial
+  Apellidos:		Nombre:		Calificacion Final:		
+
+• HAYEK.		SALMA .		78
+------
+Materia: CALCULO DIFERENCIAL. | Carrera: Lic en diseno industrial
+  Apellidos:		Nombre:		Calificacion Final:		
+
+------
+Materia: INGLES. | Carrera: Lic en diseno industrial
+  Apellidos:		Nombre:		Calificacion Final:		
+
+------
+Materia: FRANCES. | Carrera: Lic en diseno industrial
+  Apellidos:		Nombre:		Calificacion Final:		
+
 ------

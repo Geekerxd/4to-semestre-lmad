@@ -1,5 +1,28 @@
 QuickSort
 
+Nombre: MARIA FELIX. | Carrera: Lic en diseno industrial. | Matricula: 4758. | Numero de materias: 0
+  Clave:		Materia:		Calificacion:
+
+------
+Nombre: SALMA  HAYEK. | Carrera: Lic en diseno industrial. | Matricula: 5623. | Numero de materias: 5
+  Clave:		Materia:		Calificacion:
+
+• 226.		METO. DE LA PROGRA.		96.		
+• 423.		ALGEBRA.		89.		
+• 452.		GEOMETRIA.		78.		
+• 855.		ALGEBRA.		
+• 4213.		GEOMETRIA.		
+------
+Nombre: DIEGO BONETA. | Carrera: Lic en diseno industrial. | Matricula: 5869. | Numero de materias: 0
+  Clave:		Materia:		Calificacion:
+
+------
+Nombre: Martin Cortez. | Carrera: LIC Quimicas. | Matricula: 7845. | Numero de materias: 2
+  Clave:		Materia:		Calificacion:
+
+• 754.		Química general.		
+• 7854.		Física mecánica.		58.		
+------
 Nombre: Eloy  Ramírez . | Carrera: LIC Matematicas. | Matricula: 45123. | Numero de materias: 2
   Clave:		Materia:		Calificacion:
 

@@ -1201,6 +1201,7 @@ BOOL CALLBACK AsiMasiv1  (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)/
 
 			break;
 		}//fin hihgword
+
 		}//fin switch HIWORD
 
 		switch (LOWORD(wParam))
@@ -1251,11 +1252,11 @@ BOOL CALLBACK AsiMasiv1  (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)/
 			break;
 		}
 
-		}
-		/// fin de "switch (LOWORD(wParam))"
+		}/// fin de "switch (LOWORD(wParam))"
+
+
 		return true;
-	}
-	/// fin de "case WM_COMMAND"
+	}/// fin de "case WM_COMMAND"
 	case WM_CLOSE: {EndDialog(Dlg, 0); return true; }
 	}
 	///fin de "switch (Mensaje)"
@@ -1263,18 +1264,146 @@ BOOL CALLBACK AsiMasiv1  (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)/
 }
 BOOL CALLBACK AsiMasiv2  (HWND Dlg, UINT Mensaje, WPARAM wParam, LPARAM lparam)//Mate a Alumn
 {
-
+	static HWND hVerComb2 = 0;
+	static HWND hlist1 = 0;
+	static HWND hlist2 = 0;
+	static materias *Maux4;
+	static alumnos *Aaux2;
+	static char lista1info[50];
+	static char lista1info2[50];
+	static char aux_alumn[50];
 	switch (Mensaje)
 	{
 	case WM_INITDIALOG: {
-		//
+		hVerComb2 = GetDlgItem(Dlg, IDC_COMBO1);
+		hlist1 = GetDlgItem(Dlg, IDC_LIST_MATE);
+
+		Maux4 = M_Inicio;//llena la lista de las materias
+		while (Maux4 != NULL) {
+
+			if (strcmp(Maux4->NombreDegree, coor->D_DegreeName) == 0) {
+				SendMessage(hlist1, LB_ADDSTRING, 0, (LPARAM)Maux4->NombreMate);
+			}
+
+
+			Maux4 = Maux4->sig;
+		}
+		
+		Aaux2 = A_Inicio;//llena el combo de alumnos
+		while (Aaux2 != NULL) {
+
+			if (strcmp(Aaux2->carrera, coor->D_DegreeName) == 0) {
+				SendMessage(hVerComb2, CB_ADDSTRING, 0, (LPARAM)Aaux2->Nombres);
+			}
+
+
+			Aaux2 = Aaux2->sig;
+		}
+
 		return true;
 	}
 	case WM_COMMAND:
 	{
+		switch (HIWORD(wParam))
+		{
+		case LBN_SELCHANGE: {
+			
+			hlist1 = GetDlgItem(Dlg, IDC_LIST_MATE);
+			hlist2 = GetDlgItem(Dlg, IDC_LIST_MATE_SELECCION);
+
+			_ASSERTE(hlist1 != NULL);
+
+			// Get current selection index in listbox
+			int itemIndex = (int)SendMessage(hlist1, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+			if (itemIndex == LB_ERR)
+			{
+				goto llenaB01;
+			}
+
+
+			// Get actual text in buffer
+			SendMessage(hlist1, LB_GETTEXT, (WPARAM)itemIndex, (LPARAM)lista1info);
+
+
+
+			//**
+			if (lista1info != NULL) {
+				//LB_DELETESTRING
+				SendMessage(hlist1, LB_DELETESTRING, (WPARAM)itemIndex, 0);
+				SendMessage(hlist2, LB_ADDSTRING, 0, (LPARAM)lista1info);
+
+
+				strcpy(lista1info, "");
+			}
+
+
+		llenaB01:
+			_ASSERTE(hlist2 != NULL);
+			int itemIndex2 = (int)SendMessage(hlist2, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+			if (itemIndex2 == LB_ERR)
+			{
+
+
+				goto llenaB02;
+			}
+			SendMessage(hlist2, LB_GETTEXT, (WPARAM)itemIndex2, (LPARAM)lista1info2);
+
+			if (lista1info2 != NULL) {
+
+				SendMessage(hlist2, LB_DELETESTRING, (WPARAM)itemIndex2, 0);
+				SendMessage(hlist1, LB_ADDSTRING, 0, (LPARAM)lista1info2);
+				strcpy(lista1info2, "");
+			}
+
+		llenaB02:
+
+
+			break;
+		}//fin hihgword
+
+		}//fin switch HIWORD
+
 		switch (LOWORD(wParam))
 		{
+		    case IDC_B_INSCRI:{
+				hVerComb2 = GetDlgItem(Dlg, IDC_COMBO1);
+				hlist2 = GetDlgItem(Dlg, IDC_LIST_MATE_SELECCION);
+				GetWindowText(hVerComb2, aux_alumn, 256);
+				alumnos *A_auxi=A_Inicio;
+				while (A_auxi!=NULL )
+				{
+					if (strcmp(A_auxi->Nombres, aux_alumn) == 0)
+					{
+						break;
+					}
+					A_auxi = A_auxi->sig;
+				}
+				if (A_auxi)
+				{
+					int sizeLBX = (int)SendMessage(hlist2, LB_GETCOUNT, (WPARAM)0, (LPARAM)0);
+					for (int i = 0; i < sizeLBX; i++) {
+						SendMessage(hlist2, LB_GETTEXT, (WPARAM)i, (LPARAM)lista1info2);
 
+						Maux4 = M_Inicio;
+						while (Maux4!=NULL)
+						{
+							if (strcmp(lista1info2, Maux4->NombreMate)==0)
+							{
+								A_auxi->Sus_Materias[A_auxi->count] = Maux4->GetID(0);
+								A_auxi->count++;
+							}
+
+							Maux4 = Maux4->sig;
+						}
+
+					}//fin of For
+
+					MessageBox(Dlg, "Se Inscribió en las materias", "", MB_OK);
+					strcpy(lista1info2, "");
+				}
+
+				break;
+		    }// fin de case IDC_B_INSCRI:
 		}
 		/// fin de "switch (LOWORD(wParam))"
 		return true;
@@ -2434,39 +2563,3 @@ void insertionSort(alumnos *arr[], int n) {
 		Arr2[j + 1] = key;
 	}}
 
-
-//materias **partition(materias** l, materias** h) {
-//	int x = atoi((*h)->Clave);
-//	materias** i = &(*l)->ant;
-//	for (materias** j = &(*l); (*j) != (*h); (*j) = (*j)->sig)
-//	{
-//		if (atoi((*j)->Clave) <= x) {
-//			(*i) = ((*i) == NULL) ? (*l) : (*i)->sig;
-//			swap((*i), (*j));
-//			/*materias* temp;
-//			temp = (*i);
-//			(*i) = (*j);
-//			(*j) = temp;*/
-//			//NewSwap();
-//		}
-//	}
-//	(*i) = ((*i) == NULL) ? (*l) : (*i)->sig;
-//	swap((*i), (*h));
-//	/*materias* temp;
-//	temp = (*i);
-//	(*i) = (*h);
-//	(*h) = temp;*/
-//
-//	//NewSwap();
-//	return i;
-//}
-//
-//void _quickSort(materias** l, materias** h) {
-//	if ((*h) != NULL && (*l) != (*h) && (*l) != (*h)->sig)
-//	{
-//		materias** p = partition(&(*l), &(*h));
-//
-//		_quickSort(&(*l), &(*p)->ant);
-//		_quickSort(&(*p)->sig, &(*h));
-//	}
-//}
